@@ -13,4 +13,5 @@
     #import <Foundation/Foundation.h>
     #import "AliSDK/Header/TopSDKBundle.h"
     #import "Config.h"
+    #import "UIImage+Utils.h"
 #endif
