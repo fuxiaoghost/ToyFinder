@@ -1,0 +1,465 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		794F0EC31744692700035EB5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794F0EC21744692700035EB5 /* UIKit.framework */; };
+		794F0EC51744692700035EB5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794F0EC41744692700035EB5 /* Foundation.framework */; };
+		794F0EC71744692700035EB5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794F0EC61744692700035EB5 /* CoreGraphics.framework */; };
+		794F0ECD1744692700035EB5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 794F0ECB1744692700035EB5 /* InfoPlist.strings */; };
+		794F0ECF1744692700035EB5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 794F0ECE1744692700035EB5 /* main.m */; };
+		794F0ED31744692700035EB5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 794F0ED21744692700035EB5 /* AppDelegate.m */; };
+		794F0ED51744692700035EB5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 794F0ED41744692700035EB5 /* Default.png */; };
+		794F0ED71744692700035EB5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 794F0ED61744692700035EB5 /* Default@2x.png */; };
+		794F0ED91744692700035EB5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 794F0ED81744692700035EB5 /* Default-568h@2x.png */; };
+		794F0F091744699100035EB5 /* libTOPIOSSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 794F0F051744699100035EB5 /* libTOPIOSSdk.a */; };
+		794F0F0A1744699100035EB5 /* libTOPIOSSdk.s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 794F0F061744699100035EB5 /* libTOPIOSSdk.s.a */; };
+		794F0F0B1744699100035EB5 /* barImg.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 794F0F081744699100035EB5 /* barImg.bundle */; };
+		794F0F0E17446A2000035EB5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 794F0F0D17446A2000035EB5 /* libz.dylib */; };
+		794F0F1017446A2600035EB5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794F0F0F17446A2600035EB5 /* SystemConfiguration.framework */; };
+		794F0F2117446A6F00035EB5 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 794F0F1417446A6F00035EB5 /* JSONKit.m */; };
+		794F0F2217446A6F00035EB5 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 794F0F1617446A6F00035EB5 /* NSObject+SBJSON.m */; };
+		794F0F2317446A6F00035EB5 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 794F0F1817446A6F00035EB5 /* NSString+SBJSON.m */; };
+		794F0F2417446A6F00035EB5 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 794F0F1A17446A6F00035EB5 /* SBJSON.m */; };
+		794F0F2517446A6F00035EB5 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 794F0F1C17446A6F00035EB5 /* SBJsonBase.m */; };
+		794F0F2617446A6F00035EB5 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 794F0F1E17446A6F00035EB5 /* SBJsonParser.m */; };
+		794F0F2717446A6F00035EB5 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 794F0F2017446A6F00035EB5 /* SBJsonWriter.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		794F0EBF1744692700035EB5 /* ToyFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToyFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		794F0EC21744692700035EB5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		794F0EC41744692700035EB5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		794F0EC61744692700035EB5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		794F0ECA1744692700035EB5 /* ToyFinder-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ToyFinder-Info.plist"; sourceTree = "<group>"; };
+		794F0ECC1744692700035EB5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		794F0ECE1744692700035EB5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		794F0ED01744692700035EB5 /* ToyFinder-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ToyFinder-Prefix.pch"; sourceTree = "<group>"; };
+		794F0ED11744692700035EB5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		794F0ED21744692700035EB5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		794F0ED41744692700035EB5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		794F0ED61744692700035EB5 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		794F0ED81744692700035EB5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		794F0EE11744699100035EB5 /* DebuggingTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebuggingTools.h; sourceTree = "<group>"; };
+		794F0EE21744699100035EB5 /* JDY_ItemManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDY_ItemManagement.h; sourceTree = "<group>"; };
+		794F0EE31744699100035EB5 /* JDY_MsgCenterManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDY_MsgCenterManagement.h; sourceTree = "<group>"; };
+		794F0EE41744699100035EB5 /* JDY_PlugInEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDY_PlugInEntry.h; sourceTree = "<group>"; };
+		794F0EE51744699100035EB5 /* JDY_Protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDY_Protocol.h; sourceTree = "<group>"; };
+		794F0EE61744699100035EB5 /* JDY_ProtocolConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDY_ProtocolConstants.h; sourceTree = "<group>"; };
+		794F0EE71744699100035EB5 /* JDY_TradeManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDY_TradeManagement.h; sourceTree = "<group>"; };
+		794F0EE81744699100035EB5 /* JDY_WangWangCommunication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDY_WangWangCommunication.h; sourceTree = "<group>"; };
+		794F0EE91744699100035EB5 /* JDYSharedService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDYSharedService.h; sourceTree = "<group>"; };
+		794F0EEA1744699100035EB5 /* MacrosDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacrosDefine.h; sourceTree = "<group>"; };
+		794F0EEB1744699100035EB5 /* TopApiResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopApiResponse.h; sourceTree = "<group>"; };
+		794F0EEC1744699100035EB5 /* TopAppConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopAppConnector.h; sourceTree = "<group>"; };
+		794F0EED1744699100035EB5 /* TopAppEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopAppEntity.h; sourceTree = "<group>"; };
+		794F0EEE1744699100035EB5 /* TopAppEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopAppEvent.h; sourceTree = "<group>"; };
+		794F0EEF1744699100035EB5 /* TopAppService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopAppService.h; sourceTree = "<group>"; };
+		794F0EF01744699100035EB5 /* TopAppSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopAppSession.h; sourceTree = "<group>"; };
+		794F0EF11744699100035EB5 /* TopAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopAttachment.h; sourceTree = "<group>"; };
+		794F0EF21744699100035EB5 /* TopAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopAuth.h; sourceTree = "<group>"; };
+		794F0EF31744699100035EB5 /* TopAuthCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopAuthCallback.h; sourceTree = "<group>"; };
+		794F0EF41744699100035EB5 /* TopAuthWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopAuthWebView.h; sourceTree = "<group>"; };
+		794F0EF51744699100035EB5 /* TopBridgeWebview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopBridgeWebview.h; sourceTree = "<group>"; };
+		794F0EF61744699100035EB5 /* TopConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopConstants.h; sourceTree = "<group>"; };
+		794F0EF71744699100035EB5 /* TopCrashHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopCrashHandler.h; sourceTree = "<group>"; };
+		794F0EF81744699100035EB5 /* TopEventCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopEventCallback.h; sourceTree = "<group>"; };
+		794F0EF91744699100035EB5 /* TopIOSClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopIOSClient.h; sourceTree = "<group>"; };
+		794F0EFA1744699100035EB5 /* TopIOSSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopIOSSdk.h; sourceTree = "<group>"; };
+		794F0EFB1744699100035EB5 /* TopIOSSdkExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopIOSSdkExt.h; sourceTree = "<group>"; };
+		794F0EFC1744699100035EB5 /* TopIOSUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopIOSUtil.h; sourceTree = "<group>"; };
+		794F0EFD1744699100035EB5 /* TopOpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopOpenUDID.h; sourceTree = "<group>"; };
+		794F0EFE1744699100035EB5 /* TopPluginServiceType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPluginServiceType.h; sourceTree = "<group>"; };
+		794F0EFF1744699100035EB5 /* TopReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopReachability.h; sourceTree = "<group>"; };
+		794F0F001744699100035EB5 /* TopSDKBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopSDKBundle.h; sourceTree = "<group>"; };
+		794F0F011744699100035EB5 /* TopServiceError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopServiceError.h; sourceTree = "<group>"; };
+		794F0F021744699100035EB5 /* TopSimpleCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopSimpleCache.h; sourceTree = "<group>"; };
+		794F0F031744699100035EB5 /* TopToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopToolBar.h; sourceTree = "<group>"; };
+		794F0F041744699100035EB5 /* TopTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopTracker.h; sourceTree = "<group>"; };
+		794F0F051744699100035EB5 /* libTOPIOSSdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTOPIOSSdk.a; sourceTree = "<group>"; };
+		794F0F061744699100035EB5 /* libTOPIOSSdk.s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTOPIOSSdk.s.a; sourceTree = "<group>"; };
+		794F0F081744699100035EB5 /* barImg.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = barImg.bundle; sourceTree = "<group>"; };
+		794F0F0C174469C700035EB5 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
+		794F0F0D17446A2000035EB5 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		794F0F0F17446A2600035EB5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		794F0F1217446A6F00035EB5 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
+		794F0F1317446A6F00035EB5 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		794F0F1417446A6F00035EB5 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		794F0F1517446A6F00035EB5 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
+		794F0F1617446A6F00035EB5 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
+		794F0F1717446A6F00035EB5 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
+		794F0F1817446A6F00035EB5 /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
+		794F0F1917446A6F00035EB5 /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
+		794F0F1A17446A6F00035EB5 /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
+		794F0F1B17446A6F00035EB5 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
+		794F0F1C17446A6F00035EB5 /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
+		794F0F1D17446A6F00035EB5 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		794F0F1E17446A6F00035EB5 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		794F0F1F17446A6F00035EB5 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		794F0F2017446A6F00035EB5 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		794F0EBC1744692700035EB5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				794F0F1017446A2600035EB5 /* SystemConfiguration.framework in Frameworks */,
+				794F0F0E17446A2000035EB5 /* libz.dylib in Frameworks */,
+				794F0EC31744692700035EB5 /* UIKit.framework in Frameworks */,
+				794F0EC51744692700035EB5 /* Foundation.framework in Frameworks */,
+				794F0EC71744692700035EB5 /* CoreGraphics.framework in Frameworks */,
+				794F0F091744699100035EB5 /* libTOPIOSSdk.a in Frameworks */,
+				794F0F0A1744699100035EB5 /* libTOPIOSSdk.s.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		794F0EB61744692700035EB5 = {
+			isa = PBXGroup;
+			children = (
+				794F0EC81744692700035EB5 /* ToyFinder */,
+				794F0EC11744692700035EB5 /* Frameworks */,
+				794F0EC01744692700035EB5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		794F0EC01744692700035EB5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				794F0EBF1744692700035EB5 /* ToyFinder.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		794F0EC11744692700035EB5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				794F0F0D17446A2000035EB5 /* libz.dylib */,
+				794F0F0F17446A2600035EB5 /* SystemConfiguration.framework */,
+				794F0EC21744692700035EB5 /* UIKit.framework */,
+				794F0EC41744692700035EB5 /* Foundation.framework */,
+				794F0EC61744692700035EB5 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		794F0EC81744692700035EB5 /* ToyFinder */ = {
+			isa = PBXGroup;
+			children = (
+				794F0F1117446A6F00035EB5 /* JSON */,
+				794F0EDF1744699100035EB5 /* AliSDK */,
+				794F0ED11744692700035EB5 /* AppDelegate.h */,
+				794F0ED21744692700035EB5 /* AppDelegate.m */,
+				794F0F0C174469C700035EB5 /* Config.h */,
+				794F0EC91744692700035EB5 /* Supporting Files */,
+			);
+			path = ToyFinder;
+			sourceTree = "<group>";
+		};
+		794F0EC91744692700035EB5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				794F0ECA1744692700035EB5 /* ToyFinder-Info.plist */,
+				794F0ECB1744692700035EB5 /* InfoPlist.strings */,
+				794F0ECE1744692700035EB5 /* main.m */,
+				794F0ED01744692700035EB5 /* ToyFinder-Prefix.pch */,
+				794F0ED41744692700035EB5 /* Default.png */,
+				794F0ED61744692700035EB5 /* Default@2x.png */,
+				794F0ED81744692700035EB5 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		794F0EDF1744699100035EB5 /* AliSDK */ = {
+			isa = PBXGroup;
+			children = (
+				794F0EE01744699100035EB5 /* Header */,
+				794F0F051744699100035EB5 /* libTOPIOSSdk.a */,
+				794F0F061744699100035EB5 /* libTOPIOSSdk.s.a */,
+				794F0F071744699100035EB5 /* Resource */,
+			);
+			path = AliSDK;
+			sourceTree = "<group>";
+		};
+		794F0EE01744699100035EB5 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				794F0EE11744699100035EB5 /* DebuggingTools.h */,
+				794F0EE21744699100035EB5 /* JDY_ItemManagement.h */,
+				794F0EE31744699100035EB5 /* JDY_MsgCenterManagement.h */,
+				794F0EE41744699100035EB5 /* JDY_PlugInEntry.h */,
+				794F0EE51744699100035EB5 /* JDY_Protocol.h */,
+				794F0EE61744699100035EB5 /* JDY_ProtocolConstants.h */,
+				794F0EE71744699100035EB5 /* JDY_TradeManagement.h */,
+				794F0EE81744699100035EB5 /* JDY_WangWangCommunication.h */,
+				794F0EE91744699100035EB5 /* JDYSharedService.h */,
+				794F0EEA1744699100035EB5 /* MacrosDefine.h */,
+				794F0EEB1744699100035EB5 /* TopApiResponse.h */,
+				794F0EEC1744699100035EB5 /* TopAppConnector.h */,
+				794F0EED1744699100035EB5 /* TopAppEntity.h */,
+				794F0EEE1744699100035EB5 /* TopAppEvent.h */,
+				794F0EEF1744699100035EB5 /* TopAppService.h */,
+				794F0EF01744699100035EB5 /* TopAppSession.h */,
+				794F0EF11744699100035EB5 /* TopAttachment.h */,
+				794F0EF21744699100035EB5 /* TopAuth.h */,
+				794F0EF31744699100035EB5 /* TopAuthCallback.h */,
+				794F0EF41744699100035EB5 /* TopAuthWebView.h */,
+				794F0EF51744699100035EB5 /* TopBridgeWebview.h */,
+				794F0EF61744699100035EB5 /* TopConstants.h */,
+				794F0EF71744699100035EB5 /* TopCrashHandler.h */,
+				794F0EF81744699100035EB5 /* TopEventCallback.h */,
+				794F0EF91744699100035EB5 /* TopIOSClient.h */,
+				794F0EFA1744699100035EB5 /* TopIOSSdk.h */,
+				794F0EFB1744699100035EB5 /* TopIOSSdkExt.h */,
+				794F0EFC1744699100035EB5 /* TopIOSUtil.h */,
+				794F0EFD1744699100035EB5 /* TopOpenUDID.h */,
+				794F0EFE1744699100035EB5 /* TopPluginServiceType.h */,
+				794F0EFF1744699100035EB5 /* TopReachability.h */,
+				794F0F001744699100035EB5 /* TopSDKBundle.h */,
+				794F0F011744699100035EB5 /* TopServiceError.h */,
+				794F0F021744699100035EB5 /* TopSimpleCache.h */,
+				794F0F031744699100035EB5 /* TopToolBar.h */,
+				794F0F041744699100035EB5 /* TopTracker.h */,
+			);
+			path = Header;
+			sourceTree = "<group>";
+		};
+		794F0F071744699100035EB5 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				794F0F081744699100035EB5 /* barImg.bundle */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		794F0F1117446A6F00035EB5 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				794F0F1217446A6F00035EB5 /* JSON.h */,
+				794F0F1317446A6F00035EB5 /* JSONKit.h */,
+				794F0F1417446A6F00035EB5 /* JSONKit.m */,
+				794F0F1517446A6F00035EB5 /* NSObject+SBJSON.h */,
+				794F0F1617446A6F00035EB5 /* NSObject+SBJSON.m */,
+				794F0F1717446A6F00035EB5 /* NSString+SBJSON.h */,
+				794F0F1817446A6F00035EB5 /* NSString+SBJSON.m */,
+				794F0F1917446A6F00035EB5 /* SBJSON.h */,
+				794F0F1A17446A6F00035EB5 /* SBJSON.m */,
+				794F0F1B17446A6F00035EB5 /* SBJsonBase.h */,
+				794F0F1C17446A6F00035EB5 /* SBJsonBase.m */,
+				794F0F1D17446A6F00035EB5 /* SBJsonParser.h */,
+				794F0F1E17446A6F00035EB5 /* SBJsonParser.m */,
+				794F0F1F17446A6F00035EB5 /* SBJsonWriter.h */,
+				794F0F2017446A6F00035EB5 /* SBJsonWriter.m */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		794F0EBE1744692700035EB5 /* ToyFinder */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 794F0EDC1744692700035EB5 /* Build configuration list for PBXNativeTarget "ToyFinder" */;
+			buildPhases = (
+				794F0EBB1744692700035EB5 /* Sources */,
+				794F0EBC1744692700035EB5 /* Frameworks */,
+				794F0EBD1744692700035EB5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ToyFinder;
+			productName = ToyFinder;
+			productReference = 794F0EBF1744692700035EB5 /* ToyFinder.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		794F0EB71744692700035EB5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = Dawn;
+			};
+			buildConfigurationList = 794F0EBA1744692700035EB5 /* Build configuration list for PBXProject "ToyFinder" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 794F0EB61744692700035EB5;
+			productRefGroup = 794F0EC01744692700035EB5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				794F0EBE1744692700035EB5 /* ToyFinder */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		794F0EBD1744692700035EB5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				794F0ECD1744692700035EB5 /* InfoPlist.strings in Resources */,
+				794F0ED51744692700035EB5 /* Default.png in Resources */,
+				794F0ED71744692700035EB5 /* Default@2x.png in Resources */,
+				794F0ED91744692700035EB5 /* Default-568h@2x.png in Resources */,
+				794F0F0B1744699100035EB5 /* barImg.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		794F0EBB1744692700035EB5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				794F0ECF1744692700035EB5 /* main.m in Sources */,
+				794F0ED31744692700035EB5 /* AppDelegate.m in Sources */,
+				794F0F2117446A6F00035EB5 /* JSONKit.m in Sources */,
+				794F0F2217446A6F00035EB5 /* NSObject+SBJSON.m in Sources */,
+				794F0F2317446A6F00035EB5 /* NSString+SBJSON.m in Sources */,
+				794F0F2417446A6F00035EB5 /* SBJSON.m in Sources */,
+				794F0F2517446A6F00035EB5 /* SBJsonBase.m in Sources */,
+				794F0F2617446A6F00035EB5 /* SBJsonParser.m in Sources */,
+				794F0F2717446A6F00035EB5 /* SBJsonWriter.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		794F0ECB1744692700035EB5 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				794F0ECC1744692700035EB5 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		794F0EDA1744692700035EB5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				VALID_ARCHS = armv7;
+			};
+			name = Debug;
+		};
+		794F0EDB1744692700035EB5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = armv7;
+			};
+			name = Release;
+		};
+		794F0EDD1744692700035EB5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ToyFinder/ToyFinder-Prefix.pch";
+				INFOPLIST_FILE = "ToyFinder/ToyFinder-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ToyFinder/AliSDK\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		794F0EDE1744692700035EB5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ToyFinder/ToyFinder-Prefix.pch";
+				INFOPLIST_FILE = "ToyFinder/ToyFinder-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ToyFinder/AliSDK\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		794F0EBA1744692700035EB5 /* Build configuration list for PBXProject "ToyFinder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				794F0EDA1744692700035EB5 /* Debug */,
+				794F0EDB1744692700035EB5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		794F0EDC1744692700035EB5 /* Build configuration list for PBXNativeTarget "ToyFinder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				794F0EDD1744692700035EB5 /* Debug */,
+				794F0EDE1744692700035EB5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 794F0EB71744692700035EB5 /* Project object */;
+}
