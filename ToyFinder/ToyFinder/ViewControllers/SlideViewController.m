@@ -8,8 +8,11 @@
 
 #import "SlideViewController.h"
 
-#define SLIDER_BOUND 80
+#define SLIDER_BOUND 120
+#define SLIDER_BOUND_SPACE 10
 #define ALPHAVIEW_TAG 2111
+#define SHADOWVIEW_TAG 2112
+#define SLIDER_TIME 0.3
 
 @interface SlideViewController ()
 
@@ -29,7 +32,6 @@
     [super viewDidLoad];
     
     // 添加滑动手势
-    // 添加滑动手势
     if (!pan) {
         pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
         pan.delegate = (id<UIGestureRecognizerDelegate>)self;
@@ -37,7 +39,89 @@
         [pan release];
     }
 
+    // 添加单击手势
+    if (!tap) {
+        tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+        tap.delegate = (id<UIGestureRecognizerDelegate>)self;
+        [self.view addGestureRecognizer:tap];
+        [tap setEnabled:NO];
+        [tap release];
+    }
 }
+
+#pragma mark -
+#pragma mark Private Methods
+- (void) showBackViewController:(float)time{
+//    [UIView animateWithDuration:time delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+//        
+//    } completion:^(BOOL finished) {
+//        
+//    }];
+    
+    [UIView beginAnimations:@"BackView" context:nil];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [UIView setAnimationDuration:time];
+    if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
+        self.topViewController.view.frame = CGRectMake(0, SLIDER_BOUND, SCREEN_WIDTH, SCREEN_HEIGHT);
+    }else{
+        self.topViewController.view.frame = CGRectMake(0, SLIDER_BOUND, SCREEN_HEIGHT, SCREEN_WIDTH);
+    }
+    
+    UIView *alphaView = (UIView *)[self.topViewController.view viewWithTag:ALPHAVIEW_TAG];
+    alphaView.backgroundColor = RGBACOLOR(0, 0, 0, 0);
+    
+    tap.enabled = YES;
+    [self.backViewController viewWillAppear:YES];
+    isBackShow = YES;
+    self.backViewController.view.userInteractionEnabled = YES;
+    self.topViewController.view.userInteractionEnabled = NO;
+    
+    [UIView commitAnimations];
+}
+
+- (void) hideBackViewController:(float)time{
+//    [UIView animateWithDuration:time delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+//        self.topViewController.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+//        UIView *alphaView = (UIView *)[self.topViewController.view viewWithTag:ALPHAVIEW_TAG];
+//        alphaView.backgroundColor = RGBACOLOR(0, 0, 0, 0.8);
+//    } completion:^(BOOL finished) {
+//        
+//    }];
+    
+    [UIView beginAnimations:@"HideView" context:nil];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [UIView setAnimationDuration:time];
+    if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
+        self.topViewController.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    }else{
+        self.topViewController.view.frame = CGRectMake(0, 0, SCREEN_HEIGHT, SCREEN_WIDTH);
+    }
+    
+    UIView *alphaView = (UIView *)[self.topViewController.view viewWithTag:ALPHAVIEW_TAG];
+    alphaView.backgroundColor = RGBACOLOR(0, 0, 0, 0.8);
+    
+    tap.enabled = NO;
+    isBackShow = NO;
+    self.topViewController.view.userInteractionEnabled = YES;
+    self.backViewController.view.userInteractionEnabled = NO;
+    
+    [UIView commitAnimations];
+}
+
+#pragma mark -
+#pragma mark PublicMethods
+- (void) slideDown{
+    [self showBackViewController:SLIDER_TIME];
+}
+
+- (void) slideUp{
+    [self hideBackViewController:SLIDER_TIME];
+}
+
+#pragma mark -
+#pragma mark Properties
 
 - (void) setBackViewController:(UIViewController *)backViewController{
     // 如果存在移除之前的View
@@ -52,7 +136,13 @@
     
     // 把新的back View贴上
     [self.view insertSubview:_backViewController.view atIndex:0];
-    _backViewController.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    
+    if (LAYOUT_UPSIDEDOWN || LAYOUT_PORTRAIT) {
+       _backViewController.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT); 
+    }else{
+        _backViewController.view.frame = CGRectMake(0, 0, SCREEN_HEIGHT, SCREEN_WIDTH);
+    }
+    
 }
 
 - (void) setTopViewController:(UIViewController *)topViewController{
@@ -68,17 +158,34 @@
     
     // 把新的back View 贴上
     [self.view addSubview:_topViewController.view];
-    _topViewController.view.frame= CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    
+    if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
+        _topViewController.view.frame= CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    }else{
+        _topViewController.view.frame= CGRectMake(0, 0, SCREEN_HEIGHT, SCREEN_WIDTH);
+    }
+    
     
     // 阴影
     UIView *alphaView =  [[UIView alloc] initWithFrame:CGRectMake(0,-SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
     alphaView.backgroundColor = RGBACOLOR(0, 0, 0, 0);
     alphaView.tag = ALPHAVIEW_TAG;
+    if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
+        alphaView.frame = CGRectMake(0, -SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT);
+    }else{
+        alphaView.frame = CGRectMake(0, -SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH);
+    }
     
     UIImageView *shadowView = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 5, SCREEN_WIDTH, 5)];
     shadowView.image = [UIImage noCacheImageNamed:@"slide_top_shadow.png"];
+    shadowView.tag = SHADOWVIEW_TAG;
     [alphaView addSubview:shadowView];
     [shadowView release];
+    if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
+        shadowView.frame = CGRectMake(0, SCREEN_HEIGHT - 5, SCREEN_WIDTH, 5);
+    }else{
+        shadowView.frame = CGRectMake(0, SCREEN_WIDTH - 5, SCREEN_HEIGHT, 5);
+    }
     
     [_topViewController.view addSubview:alphaView];
     [alphaView release];
@@ -87,6 +194,14 @@
 #pragma mark - UIGestureRecognizerDelegate
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer == tap) {
+        
+        if (self.topViewController && isBackShow) {
+            return CGRectContainsPoint(self.topViewController.view.frame, [gestureRecognizer locationInView:self.view]);
+        }
+        
+        return NO;
+    }
     
     // Check for horizontal pan gesture
     if (gestureRecognizer == pan) {
@@ -94,25 +209,33 @@
         UIPanGestureRecognizer *panGesture = (UIPanGestureRecognizer*)gestureRecognizer;
         CGPoint translation = [panGesture translationInView:self.view];
         
-        if ([panGesture velocityInView:self.view].y < 600 && sqrt(translation.y * translation.y) / sqrt(translation.x * translation.x) > 1) {
+        if (sqrt(translation.y * translation.y) / sqrt(translation.x * translation.x) > 1) {
             if (self.topViewController) {
                 return CGRectContainsPoint(self.topViewController.view.frame, [gestureRecognizer locationInView:self.view]);
             }
             return NO;
         }
-        
         return NO;
     }
-    
     return YES;
-    
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    if (gestureRecognizer == tap) {
+        return YES;
+    }
+    return NO;
+}
+
+- (void)tap:(UITapGestureRecognizer*)gesture {
+    [tap setEnabled:NO];
+    [self hideBackViewController:SLIDER_TIME];
 }
 
 - (void)pan:(UIPanGestureRecognizer*)gesture {
-    /*
     if (gesture.state == UIGestureRecognizerStateBegan) {
-        backViewController.view.userInteractionEnabled = NO;
-        topViewController.view.userInteractionEnabled = NO;
+        self.backViewController.view.userInteractionEnabled = NO;
+        self.topViewController.view.userInteractionEnabled = NO;
     }else if (gesture.state == UIGestureRecognizerStateChanged) {
         CGPoint translation = [gesture translationInView:self.view];
         panOriginY = translation.y;
@@ -123,68 +246,72 @@
         }else{
             y = panOriginY;
         }
-        if (y > 0) {
-            UIView *alphaView = (UIView *)[_rootVC.view viewWithTag:ALPHAVIEW_TAG];
-            alphaView.backgroundColor = RGBACOLOR(0, 0, 0, 0.8 - 0.8 * x/LEFTSIDEBAR_WIDTH);
-            _rootVC.view.frame = CGRectMake(x,  _rootVC.view.frame.origin.y, SCREEN_WIDTH, SCREEN_HEIGHT);
+        if (y >= 0 && y <= SLIDER_BOUND) {
+            UIView *alphaView = (UIView *)[self.topViewController.view viewWithTag:ALPHAVIEW_TAG];
+            alphaView.backgroundColor = RGBACOLOR(0, 0, 0, 0.8 - 0.8 * y/SLIDER_BOUND);
+            if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
+                self.topViewController.view.frame = CGRectMake(0, y, SCREEN_WIDTH, SCREEN_HEIGHT);
+            }else{
+                self.topViewController.view.frame = CGRectMake(0, y, SCREEN_HEIGHT, SCREEN_WIDTH);
+            }
         }
     } else if (gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateCancelled) {
-        if (vcArray.count) {
-            if (panOriginX > SLIDER_BOUND) { // (..|->)
-                [self slideOutViewController];
-            }else if(panOriginX > 0){ // (..|->) (<-|)
-                UIViewController *lastViewController = (UIViewController *)[vcArray lastObject];
-                
-                [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-                    lastViewController.view.frame = CGRectMake(0, lastViewController.view.frame.origin.y, SCREEN_WIDTH, SCREEN_HEIGHT);
-                    UIView *alphaView = (UIView *)[lastViewController.view viewWithTag:ALPHAVIEW_TAG];
-                    alphaView.backgroundColor = RGBACOLOR(0, 0, 0, 0);
-                    
-                } completion:^(BOOL finished) {
-                    BOOL clipsToBounds = [[clipsToBoundsArray lastObject] boolValue];
-                    lastViewController.view.clipsToBounds = clipsToBounds;
-                }];
+        if (panOriginY > SLIDER_BOUND_SPACE && !isBackShow) { // (.|->)
+            [self showBackViewController:SLIDER_TIME * (SLIDER_BOUND - panOriginY + 0.0)/SLIDER_BOUND];
+        }else if(panOriginY > 0 && !isBackShow){ // (.|->) (<-|)
+            if (isBackShow) {
+                [self showBackViewController:(panOriginY + 0.0) * SLIDER_TIME/SLIDER_BOUND];
+            }else{
+                [self hideBackViewController:(panOriginY + 0.0) * SLIDER_TIME/SLIDER_BOUND];
             }
-        }else{
-            if (panOriginX > SLIDER_BOUND) { // (.|->)
-                [self showLeftViewController];
-                
-            }else if(panOriginX > 0){ // (.|->) (<-|)
-                if (showingLeftView) {
-                    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-                        _rootVC.view.frame = CGRectMake(LEFTSIDEBAR_WIDTH,  _rootVC.view.frame.origin.y, SCREEN_WIDTH, SCREEN_HEIGHT);
-                        UIView *alphaView = (UIView *)[_rootVC.view viewWithTag:ALPHAVIEW_TAG];
-                        alphaView.backgroundColor = RGBACOLOR(0, 0, 0, 0);
-                    } completion:^(BOOL finished) {
-                        _leftVC.view.userInteractionEnabled = YES;
-                        tap.enabled = YES;
-                    }];
-                }else{
-                    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-                        _rootVC.view.frame = CGRectMake(0,  _rootVC.view.frame.origin.y, SCREEN_WIDTH, SCREEN_HEIGHT);
-                        UIView *alphaView = (UIView *)[_rootVC.view viewWithTag:ALPHAVIEW_TAG];
-                        alphaView.backgroundColor = RGBACOLOR(0, 0, 0, 0.8);
-                    } completion:^(BOOL finished) {
-                        _rootVC.view.userInteractionEnabled = YES;
-                        tap.enabled = NO;
-                    }];
-                }
-                
-            }else if(panOriginX > - SLIDER_BOUND + (SCREEN_WIDTH - LEFTSIDEBAR_WIDTH)){ // (<-|) (|->)
-                [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-                    _rootVC.view.frame = CGRectMake(LEFTSIDEBAR_WIDTH,  _rootVC.view.frame.origin.y, SCREEN_WIDTH, SCREEN_HEIGHT);
-                    UIView *alphaView = (UIView *)[_rootVC.view viewWithTag:ALPHAVIEW_TAG];
-                    alphaView.backgroundColor = RGBACOLOR(0, 0, 0, 0);
-                } completion:^(BOOL finished) {
-                    _leftVC.view.userInteractionEnabled = YES;
-                    tap.enabled = YES;
-                }];
-            }else if(panOriginX < - SLIDER_BOUND + (SCREEN_WIDTH - LEFTSIDEBAR_WIDTH)){ // (<-|)
-                [self showRootViewController];
-            }
+            
+        }else if(panOriginY > - SLIDER_BOUND_SPACE && isBackShow){ // (<-|) (|->)
+            [self showBackViewController:SLIDER_TIME * (panOriginY + SLIDER_BOUND_SPACE + 0.0)/SLIDER_BOUND];
+        }else if(panOriginY < - SLIDER_BOUND_SPACE && isBackShow){ // (<-|)
+            [self hideBackViewController:SLIDER_TIME * (0.0 + SLIDER_BOUND + panOriginY)/SLIDER_BOUND];
         }
     }
-    */
+}
+
+- (BOOL)shouldAutorotate{
+    [super shouldAutorotate];
+    return self.topViewController.shouldAutorotate;
+}
+
+- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
+    [super shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
+    return [self.topViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
+}
+
+- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [self.topViewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    switch (toInterfaceOrientation) {
+        case UIInterfaceOrientationLandscapeLeft:{
+        }
+        case UIInterfaceOrientationLandscapeRight:{
+            UIView *alphaView = (UIView *)[self.topViewController.view viewWithTag:ALPHAVIEW_TAG];
+            UIView *shadowView = (UIView *)[self.topViewController.view viewWithTag:SHADOWVIEW_TAG];
+            alphaView.frame = CGRectMake(0, -SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH);
+            shadowView.frame = CGRectMake(0, SCREEN_WIDTH - 5, SCREEN_HEIGHT, 5);
+            break;
+        }
+        case UIInterfaceOrientationPortrait:{
+            UIView *alphaView = (UIView *)[self.topViewController.view viewWithTag:ALPHAVIEW_TAG];
+            UIView *shadowView = (UIView *)[self.topViewController.view viewWithTag:SHADOWVIEW_TAG];
+            alphaView.frame = CGRectMake(0,-SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT);
+            shadowView.frame = CGRectMake(0, SCREEN_HEIGHT - 5, SCREEN_WIDTH, 5);
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (NSUInteger)supportedInterfaceOrientations{
+    [super supportedInterfaceOrientations];
+    return self.topViewController.supportedInterfaceOrientations;
 }
 
 @end

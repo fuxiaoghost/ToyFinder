@@ -14,4 +14,11 @@
     #import "AliSDK/Header/TopSDKBundle.h"
     #import "Config.h"
     #import "UIImage+Utils.h"
+
+    //调试模式下为0，发布模式下为1
+    #define RELEASE 0
+    #if RELEASE
+    #define NSLog(...) {}
+    #define CFShow(...) {}
+    #endif
 #endif

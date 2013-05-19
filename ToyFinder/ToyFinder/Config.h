@@ -20,6 +20,12 @@
 #define NAVBAR_HEIGHT           44
 #define MAINCONTENTHEIGHT       (SCREEN_HEIGHT - NAVBAR_HEIGHT - 20)            // Content height
 #define COEFFICIENT_Y   (SCREEN_4_INCH ? 1.183 : 1)                             // 视图控件y轴偏移量系数
+#define LAYOUT_PORTRAIT         self.interfaceOrientation == UIDeviceOrientationPortrait
+#define LAYOUT_UPSIDEDOWN       self.interfaceOrientation == UIDeviceOrientationPortraitUpsideDown
+#define LAYOUT_LANDSCAPELEFT    self.interfaceOrientation == UIDeviceOrientationLandscapeLeft
+#define LAYOUT_LANDSCAPERIGHT   self.interfaceOrientation == UIDeviceOrientationLandscapeRight
+#define LAYOUT_FACEUP           self.interfaceOrientation == UIDeviceOrientationFaceUp
+#define LAYOUT_FACEDOWN         self.interfaceOrientation == UIDeviceOrientationFaceDown
 
 // 判断系统版本是否大于x.x
 #define IOSVersion_3_2			([[[UIDevice currentDevice] systemVersion] floatValue] >= 3.2)

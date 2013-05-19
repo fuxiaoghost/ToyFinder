@@ -11,9 +11,13 @@
 @interface SlideViewController : UIViewController{
 @private
     UIPanGestureRecognizer *pan;
+    UITapGestureRecognizer *tap;
     float panOriginY;
     BOOL isBackShow;
+    
 }
 @property (nonatomic,retain) UIViewController *backViewController;
 @property (nonatomic,retain) UIViewController *topViewController;
+- (void) slideDown;
+- (void) slideUp;
 @end

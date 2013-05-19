@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "SlideViewController.h"
+#import "ToyViewController.h"
+#import "CategoryViewController.h"
 
 @implementation AppDelegate
 
@@ -19,9 +22,28 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    SlideViewController *slideVC = [[SlideViewController alloc] init];
+    
+    ToyViewController *toyVC = [[ToyViewController alloc] init];
+    toyVC.view.backgroundColor = [UIColor grayColor];
+    
+    CategoryViewController *categoryVC = [[CategoryViewController alloc] init];
+    categoryVC.view.backgroundColor = [UIColor redColor];
+    
+    slideVC.backViewController = categoryVC;
+    slideVC.topViewController = toyVC;
+    [categoryVC release];
+    [toyVC release];
+    
+    self.window.rootViewController = slideVC;
+    [slideVC release];
+    
+    
     return YES;
 }
 
