@@ -10,6 +10,7 @@
 #import "ItemContentView.h"
 
 @protocol ItemViewDelegate;
+@class ItemCell;
 @interface ItemView : UIView<UITableViewDataSource,UITableViewDelegate>{
 @private
     ItemContentView *itemContentView;       // 滑动控件的容器，用于做碰撞测试
@@ -21,10 +22,14 @@
     float scrollX;
     BOOL isDrag;
     NSInteger spage;
+    ItemCell *itemCell0;
+    ItemCell *itemCell1;
+    ItemCell *itemCell2;
 }
 @property (nonatomic,assign) id<ItemViewDelegate> delegate;
 @property (nonatomic,retain) NSArray *dataSource;
-- (id)initWithFrame:(CGRect)frame dataSource:(NSArray *)ds;
+@property (nonatomic,assign) float itemWidth;
+- (id)initWithFrame:(CGRect)frame dataSource:(NSArray *)ds itemWidth:(float)width;
 - (void) pageToIndex:(NSInteger)index;
 @end
 

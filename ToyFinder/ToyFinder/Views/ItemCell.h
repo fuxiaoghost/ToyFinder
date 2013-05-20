@@ -13,4 +13,5 @@
     UIView *bgView;
 }
 @property (nonatomic,assign) CGAffineTransform contentTransform;
+@property (nonatomic,readonly) UIView *bgView;
 @end

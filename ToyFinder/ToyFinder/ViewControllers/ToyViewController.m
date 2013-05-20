@@ -28,9 +28,9 @@
     NSArray *dataSource = [NSArray arrayWithObjects:@"",@"",@"",@"",@"", nil];
     
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
-       itemView = [[ItemView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) dataSource:dataSource]; 
+        itemView = [[ItemView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) dataSource:dataSource itemWidth:260];
     }else{
-        itemView = [[ItemView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_HEIGHT, SCREEN_WIDTH) dataSource:dataSource];
+        itemView = [[ItemView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_HEIGHT, SCREEN_WIDTH) dataSource:dataSource itemWidth:260];
     }
     
     [self.view addSubview:itemView];
@@ -61,10 +61,12 @@
         case UIInterfaceOrientationLandscapeLeft:{
         }
         case UIInterfaceOrientationLandscapeRight:{
+            itemView.itemWidth = 340;
             itemView.frame = CGRectMake(0, 0, SCREEN_HEIGHT, SCREEN_WIDTH);
             break;
         }
         case UIInterfaceOrientationPortrait:{
+            itemView.itemWidth = 260;
             itemView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
             break;
         }

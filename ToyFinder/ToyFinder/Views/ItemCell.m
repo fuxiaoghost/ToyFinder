@@ -7,10 +7,10 @@
 //
 
 #import "ItemCell.h"
-#define ITEM_WITH 240
 
 @implementation ItemCell
 @synthesize contentTransform = _contentTransform;
+@synthesize bgView;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -18,7 +18,7 @@
     if (self) {
         // Initialization code
         
-        bgView = [[UIView alloc] initWithFrame:CGRectMake(10, 0, ITEM_WITH - 20, frame.size.height)];
+        bgView = [[UIView alloc] initWithFrame:CGRectMake(10, 0, frame.size.width - 20, frame.size.height)];
         bgView.backgroundColor = [UIColor redColor];
         [self addSubview:bgView];
         [bgView release];
@@ -38,7 +38,7 @@
 - (void) setFrame:(CGRect)frame{
     [super setFrame:frame];
     bgView.transform = CGAffineTransformIdentity;
-    bgView.frame = CGRectMake(10, 0, ITEM_WITH - 20, self.frame.size.height);
+    bgView.frame = CGRectMake(10, 0, frame.size.width - 20, self.frame.size.height);
     bgView.transform = _contentTransform;
 }
 

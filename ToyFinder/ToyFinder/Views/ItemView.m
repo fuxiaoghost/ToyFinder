@@ -9,7 +9,6 @@
 #import "ItemView.h"
 #import "ItemCell.h"
 #import "ItemContentView.h"
-#define ITEM_WITH 240           // 单个Item的宽度
 #define ITEM_CACHECOUNT 3       // 缓存容量
 #define ITEM_TAG 2013
 #define ITEM_SCALE  0.8         // 缩放大小
@@ -17,6 +16,7 @@
 @implementation ItemView
 @synthesize delegate;
 @synthesize dataSource = _dataSource;
+@synthesize itemWidth;
 
 - (void) dealloc{
     self.dataSource = nil;
@@ -26,7 +26,7 @@
 
 
 // 初始化图片
-- (id)initWithFrame:(CGRect)frame dataSource:(NSArray *)ds{
+- (id)initWithFrame:(CGRect)frame dataSource:(NSArray *)ds itemWidth:(float)width{
     self = [super initWithFrame:frame];
     if (self) {
         // 设置数据源
@@ -45,6 +45,7 @@
         page = 0;
         
         spage = 0;
+        self.itemWidth = width;
         
         // item容器
         itemContentView = [[ItemContentView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
@@ -52,12 +53,12 @@
         [itemContentView release];
         
         // item滚动翻页容器
-        itemScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake((frame.size.width - ITEM_WITH)/2, 0, ITEM_WITH, itemContentView.frame.size.height)];
+        itemScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake((frame.size.width - self.itemWidth)/2, 0, self.itemWidth, itemContentView.frame.size.height)];
         itemScrollView.showsHorizontalScrollIndicator = NO;
         itemScrollView.showsVerticalScrollIndicator = NO;
         itemScrollView.tag = ITEM_TAG;
         itemScrollView.pagingEnabled = YES;
-        itemScrollView.contentSize = CGSizeMake(itemCount * ITEM_WITH, itemScrollView.frame.size.height);
+        itemScrollView.contentSize = CGSizeMake(itemCount * self.itemWidth, itemScrollView.frame.size.height);
         itemScrollView.delegate = self;
         itemScrollView.clipsToBounds = NO;
         itemScrollView.backgroundColor = [UIColor blueColor];
@@ -67,10 +68,18 @@
         // 页面中图片在内存中的容器
         itemArray = [[NSMutableArray alloc] initWithCapacity:3];
         for (int i = 0; i < ITEM_CACHECOUNT && i < self.dataSource.count; i++) {
-            NSInteger x = ITEM_WITH * i;
+            NSInteger x = self.itemWidth * i;
             NSInteger y = 0;
             
             ItemCell *itemCell = [[ItemCell alloc] initWithFrame:CGRectMake(x, y, itemScrollView.frame.size.width, itemScrollView.frame.size.height)];
+            
+            if (i == 0) {
+                itemCell.bgView.backgroundColor = [UIColor redColor];
+            }else if(i == 1){
+                itemCell.bgView.backgroundColor = [UIColor greenColor];
+            }else{
+                itemCell.bgView.backgroundColor = [UIColor orangeColor];
+            }
             
             [self renderItemCell:itemCell atIndex:i];
             
@@ -121,7 +130,7 @@
         }
         
         for (int i = 0; i < ITEM_CACHECOUNT && i < self.dataSource.count; i++) {
-            NSInteger x = ITEM_WITH * i;
+            NSInteger x = self.itemWidth * i;
             NSInteger y = 0;
             
             ItemCell *itemCell = [[ItemCell alloc] initWithFrame:CGRectMake(x, y, itemScrollView.frame.size.width, itemScrollView.frame.size.height)];
@@ -144,7 +153,7 @@
     }else{
         for (int i = 0; i < ITEM_CACHECOUNT; i++) {
             ItemCell *itemCell =  (ItemCell *)[itemArray objectAtIndex:i];
-            NSInteger x = ITEM_WITH * i;
+            NSInteger x = self.itemWidth * i;
             NSInteger y = 0;
             itemCell.frame = CGRectMake(x, y, itemScrollView.frame.size.width, itemScrollView.frame.size.height);
             
@@ -172,6 +181,7 @@
     }
 }
 
+
 // 上翻页
 - (void) photoPageUp{
     NSInteger index = page - 1;
@@ -187,9 +197,7 @@
     ItemCell *itemCell = [itemArray objectAtIndex:0];
     [self renderItemCell:itemCell atIndex:index];
     
-    itemCell.frame = CGRectMake(index * ITEM_WITH, 0, itemCell.frame.size.width, itemCell.frame.size.height);
-    
-    [self layoutItemCells];
+    itemCell.frame = CGRectMake(index * self.itemWidth, 0, itemCell.frame.size.width, itemCell.frame.size.height);
 }
 
 // 下翻页
@@ -207,7 +215,7 @@
     ItemCell *itemCell = [itemArray objectAtIndex:ITEM_CACHECOUNT - 1];
     [self renderItemCell:itemCell atIndex:index];
     
-    itemCell.frame = CGRectMake(index * ITEM_WITH, 0, itemCell.frame.size.width, itemCell.frame.size.height);
+    itemCell.frame = CGRectMake(index * self.itemWidth, 0, itemCell.frame.size.width, itemCell.frame.size.height);
 }
 
 // 无刷新下翻页
@@ -226,7 +234,7 @@
     
     //[self renderItemCell:itemCell atIndex:index];
     
-    itemCell.frame = CGRectMake(index * ITEM_WITH, 0, itemCell.frame.size.width, itemCell.frame.size.height);
+    itemCell.frame = CGRectMake(index * self.itemWidth, 0, itemCell.frame.size.width, itemCell.frame.size.height);
 }
 
 #pragma mark -
@@ -237,13 +245,13 @@
     if (_index == 0) {
         return;
     }else if(_index == 1){
-        itemScrollView.contentOffset = CGPointMake(ITEM_WITH, 0);
+        itemScrollView.contentOffset = CGPointMake(self.itemWidth, 0);
     }else{
         for (int i = 0; i < _index + 1; i++) {
             page = i;
             [self photoPageDown];
         }
-        itemScrollView.contentOffset = CGPointMake(ITEM_WITH * _index, 0);
+        itemScrollView.contentOffset = CGPointMake(self.itemWidth * _index, 0);
     }
 }
 
@@ -269,46 +277,68 @@
 	NSInteger tpage = floor(tpagef);
     NSInteger rpage = floor((scrollView.contentOffset.x - scrollView.frame.size.width) / scrollView.frame.size.width + 1);
     float transformPercent = tpagef - rpage - 0.5;
-    NSLog(@"%d",spage);
     
+    NSLog(@"%d",spage);
     if (spage == 0) {
         if (itemArray.count) {
-            ItemCell *itemCell0 = [itemArray objectAtIndex:0];
-            if(scrollView.contentOffset.x - scrollX > 0){
+            if (!itemCell0) {
+                itemCell0 = [itemArray objectAtIndex:0];
+            }
+            
+            if(scrollView.contentOffset.x - scrollX > 0 && transformPercent){
                 itemCell0.contentTransform = CGAffineTransformMakeScale(1- (1-ITEM_SCALE) * transformPercent, 1- (1-ITEM_SCALE) * transformPercent);
             }
         }
       
         if (itemArray.count>=2) {
-            ItemCell *itemCell1 = [itemArray objectAtIndex:1];
-            if(scrollView.contentOffset.x - scrollX > 0){
+            if (!itemCell1) {
+                itemCell1 = [itemArray objectAtIndex:1];
+            }
+            if(scrollView.contentOffset.x - scrollX > 0 && transformPercent){
                 itemCell1.contentTransform = CGAffineTransformMakeScale(ITEM_SCALE + (1 - ITEM_SCALE) * transformPercent, ITEM_SCALE + (1 - ITEM_SCALE) * transformPercent);
             }
         }
     }else if (spage == itemCount - 1) {
         if (itemArray.count) {
-            ItemCell *itemCell0 = [itemArray objectAtIndex:itemArray.count - 1];
-            if(scrollView.contentOffset.x - scrollX < 0){
-                itemCell0.contentTransform = CGAffineTransformMakeScale(1- (1-ITEM_SCALE) * transformPercent, 1- (1-ITEM_SCALE) * transformPercent);
+            if (!itemCell0) {
+                itemCell0 = [itemArray objectAtIndex:itemArray.count - 1];
+            }
+            if(scrollView.contentOffset.x - scrollX < 0 && transformPercent != 1){
+                
+                itemCell0.contentTransform = CGAffineTransformMakeScale(1- (1-ITEM_SCALE) * (1 - transformPercent), 1- (1-ITEM_SCALE) * (1 - transformPercent));
             }
         }
         if (itemArray.count >=2) {
-            ItemCell *itemCell1 = [itemArray objectAtIndex:itemArray.count - 2];
-            if(scrollView.contentOffset.x - scrollX < 0){
-                itemCell1.contentTransform = CGAffineTransformMakeScale(ITEM_SCALE + (1 - ITEM_SCALE) * transformPercent, ITEM_SCALE + (1 - ITEM_SCALE) * transformPercent);
+            if (!itemCell1) {
+                itemCell1 = [itemArray objectAtIndex:itemArray.count - 2];
+            }
+            if(scrollView.contentOffset.x - scrollX < 0 && transformPercent != 1){
+                itemCell1.contentTransform = CGAffineTransformMakeScale(ITEM_SCALE + (1 - ITEM_SCALE) * (1 - transformPercent), ITEM_SCALE + (1 - ITEM_SCALE) * (1 - transformPercent));
             }
         }
     }else{
-        ItemCell *itemCell0 = [itemArray objectAtIndex:0];
-        if(scrollView.contentOffset.x - scrollX < 0){
-            itemCell0.contentTransform = CGAffineTransformMakeScale(ITEM_SCALE + (1 - ITEM_SCALE) * transformPercent, ITEM_SCALE + (1 - ITEM_SCALE) * transformPercent);
+        if (!itemCell0) {
+            itemCell0 = [itemArray objectAtIndex:0];
+        }
+        if(scrollView.contentOffset.x - scrollX < 0 && transformPercent != 1){
+            itemCell0.contentTransform = CGAffineTransformMakeScale(ITEM_SCALE + (1 - ITEM_SCALE) * (1 - transformPercent), ITEM_SCALE + (1 - ITEM_SCALE) * (1 - transformPercent));
         }
         
-        ItemCell *itemCell1 = [itemArray objectAtIndex:1];
-        itemCell1.contentTransform = CGAffineTransformMakeScale(1- (1-ITEM_SCALE) * transformPercent, 1- (1-ITEM_SCALE) * transformPercent);
+        if (!itemCell1) {
+            itemCell1 = [itemArray objectAtIndex:1];
+        }
+
+        if(scrollView.contentOffset.x - scrollX < 0 && transformPercent != 1){
+           itemCell1.contentTransform = CGAffineTransformMakeScale(1- (1-ITEM_SCALE) * (1 - transformPercent), 1- (1-ITEM_SCALE) * (1 - transformPercent)); 
+        }else if(scrollView.contentOffset.x - scrollX > 0 && transformPercent){
+            itemCell1.contentTransform = CGAffineTransformMakeScale(1- (1-ITEM_SCALE) * transformPercent, 1- (1-ITEM_SCALE) * transformPercent);
+        }
         
-        ItemCell *itemCell2 = [itemArray objectAtIndex:2];
-        if(scrollView.contentOffset.x - scrollX > 0){
+        if (!itemCell2) {
+            itemCell2 = [itemArray objectAtIndex:2];
+        }
+
+        if(scrollView.contentOffset.x - scrollX > 0 && transformPercent){
             itemCell2.contentTransform = CGAffineTransformMakeScale(ITEM_SCALE + (1 - ITEM_SCALE) * transformPercent, ITEM_SCALE + (1 - ITEM_SCALE) * transformPercent);
         }
     }
@@ -341,6 +371,9 @@
 
 - (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     spage = page;
+    itemCell0 = nil;
+    itemCell1 = nil;
+    itemCell2 = nil;
 }
 
 
@@ -360,16 +393,16 @@
     itemContentView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     
     itemScrollView.delegate = nil;
-    itemScrollView.frame = CGRectMake((self.frame.size.width - ITEM_WITH)/2, 0, ITEM_WITH, self.frame.size.height);
-    itemScrollView.contentSize = CGSizeMake(itemCount * ITEM_WITH, itemScrollView.frame.size.height);
-    itemScrollView.contentOffset = CGPointMake(page * ITEM_WITH, 0);
+    itemScrollView.frame = CGRectMake((self.frame.size.width - self.itemWidth)/2, 0, self.itemWidth, self.frame.size.height);
+    itemScrollView.contentSize = CGSizeMake(itemCount * self.itemWidth, itemScrollView.frame.size.height);
+    itemScrollView.contentOffset = CGPointMake(page * self.itemWidth, 0);
     
     for (int i = 0; i < ITEM_CACHECOUNT; i++) {
         ItemCell *itemCell = (ItemCell *)[itemArray objectAtIndex:i];
-		NSInteger x = ITEM_WITH * (itemCell.frame.origin.x / itemCell.frame.size.width);
+		NSInteger x = self.itemWidth * (itemCell.frame.origin.x / itemCell.frame.size.width);
 		NSInteger y = 0;
 		
-        itemCell.frame = CGRectMake(x, y, ITEM_WITH, itemScrollView.frame.size.height);
+        itemCell.frame = CGRectMake(x, y, self.itemWidth, itemScrollView.frame.size.height);
 	}
     itemScrollView.delegate = self;
 }
