@@ -9,9 +9,10 @@
 #import "ItemView.h"
 #import "ItemCell.h"
 #import "ItemContentView.h"
-#define ITEM_WITH 240
-#define ITEM_CACHECOUNT 3
+#define ITEM_WITH 240           // 单个Item的宽度
+#define ITEM_CACHECOUNT 3       // 缓存容量
 #define ITEM_TAG 2013
+#define ITEM_SCALE  0.8         // 缩放大小
 
 @implementation ItemView
 @synthesize delegate;
@@ -83,6 +84,8 @@
             [itemCell release];
         }
         
+        [self layoutItemCells];
+        
     }
     return self;
 }
@@ -90,6 +93,8 @@
 
 #pragma mark -
 #pragma mark Properties
+
+// 设置数据源，同时会刷新
 - (void) setDataSource:(NSArray *)dataSource{
     [_dataSource release];
     _dataSource = dataSource;
@@ -132,6 +137,8 @@
             [itemScrollView addSubview:itemCell];
             [itemCell release];
         }
+        
+        [self layoutItemCells];
     }else{
         for (int i = 0; i < ITEM_CACHECOUNT; i++) {
             ItemCell *itemCell =  (ItemCell *)[itemArray objectAtIndex:i];
@@ -150,6 +157,20 @@
     
 }
 
+- (void) layoutItemCells{
+    for (int i = 0; i < itemArray.count; i++) {
+        ItemCell *itemCell =  (ItemCell *)[itemArray objectAtIndex:i];
+        if (i == 0) {
+            itemCell.contentTransform = CGAffineTransformIdentity;
+        }else if(i == 1){
+            itemCell.contentTransform = CGAffineTransformScale(CGAffineTransformIdentity, ITEM_SCALE, ITEM_SCALE);
+        }else{
+            itemCell.contentTransform = CGAffineTransformScale(CGAffineTransformIdentity, ITEM_SCALE, ITEM_SCALE);
+        }
+    }
+}
+
+// 上翻页
 - (void) photoPageUp{
     NSInteger index = page - 1;
     if (index >= itemCount) {
@@ -165,8 +186,31 @@
     [self renderItemCell:itemCell atIndex:index];
     
     itemCell.frame = CGRectMake(index * ITEM_WITH, 0, itemCell.frame.size.width, itemCell.frame.size.height);
+    
+    [self layoutItemCells];
 }
 
+// 下翻页
+- (void) photoPageDown{
+    NSInteger index = page + 1;
+    if (index >= itemCount) {
+        return;
+    }
+    
+    // 交换数据源
+    for (int i = 0; i < ITEM_CACHECOUNT - 1; i++) {
+		[itemArray exchangeObjectAtIndex:i withObjectAtIndex:i+1];
+	}
+    
+    ItemCell *itemCell = [itemArray objectAtIndex:ITEM_CACHECOUNT - 1];
+    [self renderItemCell:itemCell atIndex:index];
+    
+    itemCell.frame = CGRectMake(index * ITEM_WITH, 0, itemCell.frame.size.width, itemCell.frame.size.height);
+    
+    [self layoutItemCells];
+}
+
+// 无刷新下翻页
 - (void) photoPageDownSilently{
     NSInteger index = page + 1;
     if (index >= itemCount) {
@@ -183,38 +227,15 @@
     //[self renderItemCell:itemCell atIndex:index];
     
     itemCell.frame = CGRectMake(index * ITEM_WITH, 0, itemCell.frame.size.width, itemCell.frame.size.height);
-}
-
-- (void) photoPageDown{
-    NSInteger index = page + 1;
-    if (index >= itemCount) {
-        return;
-    }
     
-    // 交换数据源
-    for (int i = 0; i < ITEM_CACHECOUNT - 1; i++) {
-		[itemArray exchangeObjectAtIndex:i withObjectAtIndex:i+1];
-	}
     
-    ItemCell *itemCell = [itemArray objectAtIndex:ITEM_CACHECOUNT - 1];
-    [self renderItemCell:itemCell atIndex:index];
-    
-    itemCell.frame = CGRectMake(index * ITEM_WITH, 0, itemCell.frame.size.width, itemCell.frame.size.height);
+    [self layoutItemCells];
 }
 
 #pragma mark -
 #pragma mark Public Methods
 
-
-#pragma mark -
-#pragma mark GestureRecognizer
-
--(void)singleTap:(UIGestureRecognizer *)gestureRecognizer{
-	if ([delegate respondsToSelector:@selector(itemView:didSelectedAtIndex:)]) {
-        [delegate itemView:self didSelectedAtIndex:page];
-    }
-}
-
+// 翻到指定的页码
 - (void) pageToIndex:(NSInteger)_index{
     if (_index == 0) {
         return;
@@ -230,6 +251,15 @@
 }
 
 #pragma mark -
+#pragma mark GestureRecognizer
+
+-(void)singleTap:(UIGestureRecognizer *)gestureRecognizer{
+	if ([delegate respondsToSelector:@selector(itemView:didSelectedAtIndex:)]) {
+        [delegate itemView:self didSelectedAtIndex:page];
+    }
+}
+
+#pragma mark -
 #pragma mark UIScrollViewDelegate
 
 -(void) scrollViewDidScroll:(UIScrollView *)scrollView{
@@ -237,7 +267,30 @@
 		return;
 	}
     
-	NSInteger tpage = floor((scrollView.contentOffset.x - scrollView.frame.size.width / 2) / scrollView.frame.size.width) + 1;
+    float tpagef = (scrollView.contentOffset.x - scrollView.frame.size.width / 2) / scrollView.frame.size.width + 1;
+    
+	NSInteger tpage = floor(tpagef);
+    NSInteger rpage = floor((scrollView.contentOffset.x - scrollView.frame.size.width) / scrollView.frame.size.width + 1);
+    float transformPercent = tpagef - rpage - 0.5;
+    
+    NSLog(@"%f",transformPercent);
+    if (tpage == 0) {
+        if (itemArray.count) {
+            ItemCell *itemCell0 = [itemArray objectAtIndex:0];
+            if(scrollView.contentOffset.x - scrollX > 0){
+                itemCell0.contentTransform = CGAffineTransformMakeScale(1- (1-ITEM_SCALE) * transformPercent, 1- (1-ITEM_SCALE) * transformPercent);
+            }
+        }
+      
+        if (itemArray.count>=2) {
+            ItemCell *itemCell1 = [itemArray objectAtIndex:1];
+            if(scrollView.contentOffset.x - scrollX > 0){
+                itemCell1.contentTransform = CGAffineTransformMakeScale(ITEM_SCALE + (1 - ITEM_SCALE) * transformPercent, ITEM_SCALE + (1 - ITEM_SCALE) * transformPercent);
+            }
+        }
+        
+    }
+    
 	
     if (tpage > page && tpage > 1 && tpage < itemCount - 1) {
         page = tpage;
@@ -254,6 +307,9 @@
     }
 }
 
+- (void) scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    scrollX = scrollView.contentOffset.x;
+}
 
 
 #pragma mark -

@@ -10,6 +10,7 @@
 #define ITEM_WITH 240
 
 @implementation ItemCell
+@synthesize contentTransform = _contentTransform;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -25,19 +26,22 @@
     return self;
 }
 
-- (void) layoutSubviews{
-    [super layoutSubviews];
-    
-    bgView.frame = CGRectMake(10, 0, ITEM_WITH - 20, self.frame.size.height);
+- (CGAffineTransform) contentTransform{
+    return _contentTransform;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
+- (void) setContentTransform:(CGAffineTransform)contentTransform{
+    _contentTransform = contentTransform;
+    bgView.transform = _contentTransform;
 }
-*/
+
+- (void) setFrame:(CGRect)frame{
+    [super setFrame:frame];
+    bgView.transform = CGAffineTransformIdentity;
+    bgView.frame = CGRectMake(10, 0, ITEM_WITH - 20, self.frame.size.height);
+    bgView.transform = _contentTransform;
+}
+
+
 
 @end

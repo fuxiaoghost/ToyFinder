@@ -12,5 +12,5 @@
 @private
     UIView *bgView;
 }
-
+@property (nonatomic,assign) CGAffineTransform contentTransform;
 @end
