@@ -19,6 +19,8 @@
     NSMutableArray *itemArray;              // 缓存容器
     id delegate;
     float scrollX;
+    BOOL isDrag;
+    NSInteger spage;
 }
 @property (nonatomic,assign) id<ItemViewDelegate> delegate;
 @property (nonatomic,retain) NSArray *dataSource;
