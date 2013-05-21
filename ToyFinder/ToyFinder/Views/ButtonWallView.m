@@ -10,7 +10,7 @@
 #import "WallButton.h"
 
 #define BUTTON_TAG 1000
-#define BUTTON_WIDTH 10
+#define BUTTON_WIDTH 14
 
 @interface ButtonWallView()
 @property (nonatomic,retain) NSArray *dataSource;
@@ -43,17 +43,20 @@
             NSDictionary *dict = [self.dataSource objectAtIndex:i];
             NSString *name = [dict objectForKey:@"name"];
             WallButton *button = [WallButton buttonWithType:UIButtonTypeCustom];
-            if (x + BUTTON_WIDTH * name.length > frame.size.width) {
+            button.titleLabel.font = [UIFont systemFontOfSize:12.0f];
+            if (x + BUTTON_WIDTH * name.length + 10> frame.size.width) {
                 y += 40 + 10;
+                x = 0;
             }
             button.frame = CGRectMake(x, y, name.length * BUTTON_WIDTH, 40);
             [button setTitle:name forState:UIControlStateNormal];
             [contentView addSubview:button];
-            x += 10 + name.length * BUTTON_WIDTH;
+            x += (10 + name.length * BUTTON_WIDTH);
             button.tag = BUTTON_TAG + i;
             
             [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
         }
+        contentView.contentSize = CGSizeMake(frame.size.width, y + 40 + 10);
     }
     return self;
 }

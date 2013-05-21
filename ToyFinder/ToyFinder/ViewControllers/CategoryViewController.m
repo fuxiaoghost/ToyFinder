@@ -23,8 +23,10 @@
 	// Do any additional setup after loading the view.
     
     NSArray *buttonArray = [NSArray arrayWithContentsOfFile:RESOURCEFILE(@"Category", @"plist")];
-    ButtonWallView *buttonWall = [[ButtonWallView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 60)
+    ButtonWallView *buttonWall = [[ButtonWallView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 160)
                                                                buttons:buttonArray];
+    
+    [self.view addSubview:buttonWall];
 }
 
 - (void)didReceiveMemoryWarning
