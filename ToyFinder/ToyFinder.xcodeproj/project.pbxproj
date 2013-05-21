@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		79140A11174B773B006B4C60 /* ButtonWallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79140A10174B773B006B4C60 /* ButtonWallView.m */; };
+		79140A14174B7A91006B4C60 /* WallButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 79140A13174B7A91006B4C60 /* WallButton.m */; };
+		79140A17174B7DBC006B4C60 /* Category.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79140A16174B7DBC006B4C60 /* Category.plist */; };
 		794F0EC31744692700035EB5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794F0EC21744692700035EB5 /* UIKit.framework */; };
 		794F0EC51744692700035EB5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794F0EC41744692700035EB5 /* Foundation.framework */; };
 		794F0EC71744692700035EB5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794F0EC61744692700035EB5 /* CoreGraphics.framework */; };
@@ -50,6 +53,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		79140A0F174B773B006B4C60 /* ButtonWallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonWallView.h; sourceTree = "<group>"; };
+		79140A10174B773B006B4C60 /* ButtonWallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonWallView.m; sourceTree = "<group>"; };
+		79140A12174B7A91006B4C60 /* WallButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WallButton.h; sourceTree = "<group>"; };
+		79140A13174B7A91006B4C60 /* WallButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WallButton.m; sourceTree = "<group>"; };
+		79140A16174B7DBC006B4C60 /* Category.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Category.plist; sourceTree = "<group>"; };
 		794F0EBF1744692700035EB5 /* ToyFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToyFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		794F0EC21744692700035EB5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		794F0EC41744692700035EB5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -181,6 +189,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		79140A15174B7DA3006B4C60 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				79140A16174B7DBC006B4C60 /* Category.plist */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		794F0EB61744692700035EB5 = {
 			isa = PBXGroup;
 			children = (
@@ -232,6 +248,7 @@
 		794F0EC91744692700035EB5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				79140A15174B7DA3006B4C60 /* Data */,
 				DDA83B941745335E00562EF1 /* Images */,
 				794F0ECA1744692700035EB5 /* ToyFinder-Info.plist */,
 				794F0ECB1744692700035EB5 /* InfoPlist.strings */,
@@ -371,6 +388,8 @@
 		DDA83B901745275900562EF1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				79140A12174B7A91006B4C60 /* WallButton.h */,
+				79140A13174B7A91006B4C60 /* WallButton.m */,
 				DD3440D217489C35003076C9 /* PhotoProgressView.h */,
 				DD3440D317489C35003076C9 /* PhotoProgressView.m */,
 				DD589D6F174857F800A4ADFC /* ItemView.h */,
@@ -379,6 +398,8 @@
 				DD589D791748707800A4ADFC /* ItemCell.m */,
 				DD589D7517485DA500A4ADFC /* ItemContentView.h */,
 				DD589D7617485DA500A4ADFC /* ItemContentView.m */,
+				79140A0F174B773B006B4C60 /* ButtonWallView.h */,
+				79140A10174B773B006B4C60 /* ButtonWallView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -457,6 +478,7 @@
 				794F0ED91744692700035EB5 /* Default-568h@2x.png in Resources */,
 				794F0F0B1744699100035EB5 /* barImg.bundle in Resources */,
 				DDA83B961745337500562EF1 /* slide_top_shadow.png in Resources */,
+				79140A17174B7DBC006B4C60 /* Category.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,6 +514,8 @@
 				DD3440D017489C02003076C9 /* UIButton+WebCache.m in Sources */,
 				DD3440D117489C02003076C9 /* UIImageView+WebCache.m in Sources */,
 				DD3440D417489C35003076C9 /* PhotoProgressView.m in Sources */,
+				79140A11174B773B006B4C60 /* ButtonWallView.m in Sources */,
+				79140A14174B7A91006B4C60 /* WallButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

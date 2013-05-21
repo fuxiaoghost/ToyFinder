@@ -11,7 +11,7 @@
 #import "ItemContentView.h"
 #define ITEM_CACHECOUNT 3       // 缓存容量
 #define ITEM_TAG 2013
-#define ITEM_SCALE  0.8         // 缩放大小
+#define ITEM_SCALE  0.9         // 缩放大小
 
 @implementation ItemView
 @synthesize delegate;
@@ -44,7 +44,6 @@
         // 当前页码
         page = 0;
         
-        spage = 0;
         self.itemWidth = width;
         
         // item容器
@@ -61,7 +60,6 @@
         itemScrollView.contentSize = CGSizeMake(itemCount * self.itemWidth, itemScrollView.frame.size.height);
         itemScrollView.delegate = self;
         itemScrollView.clipsToBounds = NO;
-        itemScrollView.backgroundColor = [UIColor blueColor];
         [itemContentView addSubview:itemScrollView];
         [itemScrollView release];
         
@@ -95,7 +93,7 @@
             [itemCell release];
         }
         
-        [self layoutItemCells];
+        [self layoutItemCellAtIndex:0];
         
     }
     return self;
@@ -149,7 +147,7 @@
             [itemCell release];
         }
         
-        [self layoutItemCells];
+        [self layoutItemCellAtIndex:0];
     }else{
         for (int i = 0; i < ITEM_CACHECOUNT; i++) {
             ItemCell *itemCell =  (ItemCell *)[itemArray objectAtIndex:i];
@@ -168,15 +166,13 @@
     
 }
 
-- (void) layoutItemCells{
+- (void) layoutItemCellAtIndex:(NSInteger)index{
     for (int i = 0; i < itemArray.count; i++) {
         ItemCell *itemCell =  (ItemCell *)[itemArray objectAtIndex:i];
-        if (i == 0) {
+        if (index == i) {
             itemCell.contentTransform =  CGAffineTransformIdentity;
-        }else if(i == 1){
-            itemCell.contentTransform = CGAffineTransformScale(CGAffineTransformIdentity, ITEM_SCALE, ITEM_SCALE);
         }else{
-            itemCell.contentTransform = CGAffineTransformScale(CGAffineTransformIdentity, ITEM_SCALE, ITEM_SCALE);
+            itemCell.contentTransform =  CGAffineTransformScale(CGAffineTransformIdentity, ITEM_SCALE, ITEM_SCALE);
         }
     }
 }
@@ -235,6 +231,8 @@
     //[self renderItemCell:itemCell atIndex:index];
     
     itemCell.frame = CGRectMake(index * self.itemWidth, 0, itemCell.frame.size.width, itemCell.frame.size.height);
+    
+    
 }
 
 #pragma mark -
@@ -275,74 +273,6 @@
     float tpagef = (scrollView.contentOffset.x - scrollView.frame.size.width / 2) / scrollView.frame.size.width + 1;
     
 	NSInteger tpage = floor(tpagef);
-    NSInteger rpage = floor((scrollView.contentOffset.x - scrollView.frame.size.width) / scrollView.frame.size.width + 1);
-    float transformPercent = tpagef - rpage - 0.5;
-    
-    NSLog(@"%d",spage);
-    if (spage == 0) {
-        if (itemArray.count) {
-            if (!itemCell0) {
-                itemCell0 = [itemArray objectAtIndex:0];
-            }
-            
-            if(scrollView.contentOffset.x - scrollX > 0 && transformPercent){
-                itemCell0.contentTransform = CGAffineTransformMakeScale(1- (1-ITEM_SCALE) * transformPercent, 1- (1-ITEM_SCALE) * transformPercent);
-            }
-        }
-      
-        if (itemArray.count>=2) {
-            if (!itemCell1) {
-                itemCell1 = [itemArray objectAtIndex:1];
-            }
-            if(scrollView.contentOffset.x - scrollX > 0 && transformPercent){
-                itemCell1.contentTransform = CGAffineTransformMakeScale(ITEM_SCALE + (1 - ITEM_SCALE) * transformPercent, ITEM_SCALE + (1 - ITEM_SCALE) * transformPercent);
-            }
-        }
-    }else if (spage == itemCount - 1) {
-        if (itemArray.count) {
-            if (!itemCell0) {
-                itemCell0 = [itemArray objectAtIndex:itemArray.count - 1];
-            }
-            if(scrollView.contentOffset.x - scrollX < 0 && transformPercent != 1){
-                
-                itemCell0.contentTransform = CGAffineTransformMakeScale(1- (1-ITEM_SCALE) * (1 - transformPercent), 1- (1-ITEM_SCALE) * (1 - transformPercent));
-            }
-        }
-        if (itemArray.count >=2) {
-            if (!itemCell1) {
-                itemCell1 = [itemArray objectAtIndex:itemArray.count - 2];
-            }
-            if(scrollView.contentOffset.x - scrollX < 0 && transformPercent != 1){
-                itemCell1.contentTransform = CGAffineTransformMakeScale(ITEM_SCALE + (1 - ITEM_SCALE) * (1 - transformPercent), ITEM_SCALE + (1 - ITEM_SCALE) * (1 - transformPercent));
-            }
-        }
-    }else{
-        if (!itemCell0) {
-            itemCell0 = [itemArray objectAtIndex:0];
-        }
-        if(scrollView.contentOffset.x - scrollX < 0 && transformPercent != 1){
-            itemCell0.contentTransform = CGAffineTransformMakeScale(ITEM_SCALE + (1 - ITEM_SCALE) * (1 - transformPercent), ITEM_SCALE + (1 - ITEM_SCALE) * (1 - transformPercent));
-        }
-        
-        if (!itemCell1) {
-            itemCell1 = [itemArray objectAtIndex:1];
-        }
-
-        if(scrollView.contentOffset.x - scrollX < 0 && transformPercent != 1){
-           itemCell1.contentTransform = CGAffineTransformMakeScale(1- (1-ITEM_SCALE) * (1 - transformPercent), 1- (1-ITEM_SCALE) * (1 - transformPercent)); 
-        }else if(scrollView.contentOffset.x - scrollX > 0 && transformPercent){
-            itemCell1.contentTransform = CGAffineTransformMakeScale(1- (1-ITEM_SCALE) * transformPercent, 1- (1-ITEM_SCALE) * transformPercent);
-        }
-        
-        if (!itemCell2) {
-            itemCell2 = [itemArray objectAtIndex:2];
-        }
-
-        if(scrollView.contentOffset.x - scrollX > 0 && transformPercent){
-            itemCell2.contentTransform = CGAffineTransformMakeScale(ITEM_SCALE + (1 - ITEM_SCALE) * transformPercent, ITEM_SCALE + (1 - ITEM_SCALE) * transformPercent);
-        }
-    }
-    
     
 	
     if (tpage > page && tpage > 1 && tpage < itemCount - 1) {
@@ -355,25 +285,23 @@
         page = tpage;
     }
     
+    if (tpage == 0) {
+        [UIView animateWithDuration:0.3 animations:^{
+            [self layoutItemCellAtIndex:0];
+        }];
+    }else if(tpage == itemCount - 1){
+        [UIView animateWithDuration:0.3 animations:^{
+            [self layoutItemCellAtIndex:2];
+        }];
+    }else{
+        [UIView animateWithDuration:0.3 animations:^{
+            [self layoutItemCellAtIndex:1];
+        }];
+    }
+    
     if ([delegate respondsToSelector:@selector(itemView:didPageToIndex:)]) {
         [delegate itemView:self didPageToIndex:page];
     }
-}
-
-- (void) scrollViewWillBeginDragging:(UIScrollView *)scrollView{
-    scrollX = scrollView.contentOffset.x;
-    isDrag = YES;
-}
-
-- (void) scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    isDrag = NO;
-}
-
-- (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-    spage = page;
-    itemCell0 = nil;
-    itemCell1 = nil;
-    itemCell2 = nil;
 }
 
 

@@ -12,6 +12,7 @@
 @interface ToyViewController : UIViewController{
 @private
     ItemView *itemView;
+    UIView *navView;
 }
 
 @end

@@ -19,15 +19,9 @@
     UIScrollView *itemScrollView;           // 图片滑动控件
     NSMutableArray *itemArray;              // 缓存容器
     id delegate;
-    float scrollX;
-    BOOL isDrag;
-    NSInteger spage;
-    ItemCell *itemCell0;
-    ItemCell *itemCell1;
-    ItemCell *itemCell2;
 }
-@property (nonatomic,assign) id<ItemViewDelegate> delegate;
-@property (nonatomic,retain) NSArray *dataSource;
+@property (nonatomic,assign) id<ItemViewDelegate> delegate;     // 委托
+@property (nonatomic,retain) NSArray *dataSource;               // 数据源
 @property (nonatomic,assign) float itemWidth;
 - (id)initWithFrame:(CGRect)frame dataSource:(NSArray *)ds itemWidth:(float)width;
 - (void) pageToIndex:(NSInteger)index;

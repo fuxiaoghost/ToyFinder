@@ -7,6 +7,7 @@
 //
 
 #import "CategoryViewController.h"
+#import "ButtonWallView.h"
 
 @interface CategoryViewController ()
 
@@ -14,19 +15,16 @@
 
 @implementation CategoryViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    NSArray *buttonArray = [NSArray arrayWithContentsOfFile:RESOURCEFILE(@"Category", @"plist")];
+    ButtonWallView *buttonWall = [[ButtonWallView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 60)
+                                                               buttons:buttonArray];
 }
 
 - (void)didReceiveMemoryWarning

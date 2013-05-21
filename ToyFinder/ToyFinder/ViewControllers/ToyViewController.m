@@ -24,13 +24,18 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+    
+    navView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
+    navView.backgroundColor = [UIColor lightGrayColor];
+    [self.view addSubview:navView];
+    [navView release];
 
-    NSArray *dataSource = [NSArray arrayWithObjects:@"",@"",@"",@"",@"", nil];
+    NSArray *dataSource = [NSArray arrayWithObjects:@"",@"",@"",@"",@"",@"",@"",@"",@"", nil];
     
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
-        itemView = [[ItemView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) dataSource:dataSource itemWidth:260];
+        itemView = [[ItemView alloc] initWithFrame:CGRectMake(0, 10 + 44, SCREEN_WIDTH, SCREEN_HEIGHT - 20 - 44) dataSource:dataSource itemWidth:200];
     }else{
-        itemView = [[ItemView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_HEIGHT, SCREEN_WIDTH) dataSource:dataSource itemWidth:260];
+        itemView = [[ItemView alloc] initWithFrame:CGRectMake(0, 10 + 44, SCREEN_HEIGHT, SCREEN_WIDTH - 20 - 44) dataSource:dataSource itemWidth:200];
     }
     
     [self.view addSubview:itemView];
@@ -61,13 +66,15 @@
         case UIInterfaceOrientationLandscapeLeft:{
         }
         case UIInterfaceOrientationLandscapeRight:{
-            itemView.itemWidth = 340;
-            itemView.frame = CGRectMake(0, 0, SCREEN_HEIGHT, SCREEN_WIDTH);
+            itemView.itemWidth = 300;
+            itemView.frame = CGRectMake(0, 10 + 44, SCREEN_HEIGHT,SCREEN_WIDTH - 20 - 44);
+            navView.frame = CGRectMake(0, 0, SCREEN_HEIGHT, 44);
             break;
         }
         case UIInterfaceOrientationPortrait:{
-            itemView.itemWidth = 260;
-            itemView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+            itemView.itemWidth = 200;
+            itemView.frame = CGRectMake(0, 10 + 44, SCREEN_WIDTH, SCREEN_HEIGHT - 20 - 44);
+            navView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 44);
             break;
         }
         default:

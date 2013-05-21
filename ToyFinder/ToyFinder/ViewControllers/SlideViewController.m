@@ -275,12 +275,12 @@
 
 - (BOOL)shouldAutorotate{
     [super shouldAutorotate];
-    return self.topViewController.shouldAutorotate;
+    return [self.topViewController shouldAutorotate];
 }
 
 - (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
-    [super shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
-    return [self.topViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
+
+    return YES;
 }
 
 - (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
