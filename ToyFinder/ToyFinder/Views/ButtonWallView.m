@@ -11,6 +11,7 @@
 
 #define BUTTON_TAG 1000
 #define BUTTON_WIDTH 14
+#define BUTTON_HEIGHT 30
 
 @interface ButtonWallView()
 @property (nonatomic,retain) NSArray *dataSource;
@@ -37,32 +38,41 @@
         [self addSubview:contentView];
         [contentView release];
         
-        float x = 0;
-        float y = 0;
+        float x = 10;
+        float y = 10;
         for(int i = 0;i < self.dataSource.count;i++) {
             NSDictionary *dict = [self.dataSource objectAtIndex:i];
             NSString *name = [dict objectForKey:@"name"];
+            
+            CGSize size = [name sizeWithFont:[UIFont systemFontOfSize:12.0f]];
+            NSInteger buttonWidth = size.width + 10;
             WallButton *button = [WallButton buttonWithType:UIButtonTypeCustom];
             button.titleLabel.font = [UIFont systemFontOfSize:12.0f];
-            if (x + BUTTON_WIDTH * name.length + 10> frame.size.width) {
-                y += 40 + 10;
-                x = 0;
+            
+            if (x + buttonWidth + 10> frame.size.width) {
+                y += BUTTON_HEIGHT + 4;
+                x = 10;
             }
-            button.frame = CGRectMake(x, y, name.length * BUTTON_WIDTH, 40);
+            button.frame = CGRectMake(x, y, buttonWidth, BUTTON_HEIGHT);
             [button setTitle:name forState:UIControlStateNormal];
+            [button setTitleColor:RGBACOLOR(221, 70, 0, 1) forState:UIControlStateNormal];
+            [button setTitleColor:RGBACOLOR(255, 255, 255, 1) forState:UIControlStateHighlighted];
             [contentView addSubview:button];
-            x += (10 + name.length * BUTTON_WIDTH);
+            x += (10 + buttonWidth);
             button.tag = BUTTON_TAG + i;
             
             [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
         }
-        contentView.contentSize = CGSizeMake(frame.size.width, y + 40 + 10);
+        contentView.contentSize = CGSizeMake(frame.size.width, y + BUTTON_HEIGHT + 10);
     }
     return self;
 }
 
 - (void) buttonClick:(id)sender{
-    
+    UIButton *button = (UIButton *)sender;
+    if ([self.delegate respondsToSelector:@selector(didClickButtonAtIndex:)]) {
+        [self.delegate didClickButtonAtIndex:button.tag - BUTTON_TAG];
+    }
 }
 /*
 // Only override drawRect: if you perform custom drawing.

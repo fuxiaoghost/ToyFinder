@@ -21,6 +21,7 @@
 
 @protocol ButtonWallViewDelegate <NSObject>
 
+@optional
 - (void) didClickButtonAtIndex:(NSInteger) index;
 
 @end

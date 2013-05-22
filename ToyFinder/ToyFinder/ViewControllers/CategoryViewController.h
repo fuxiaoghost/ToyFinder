@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ButtonWallView.h"
 
-@interface CategoryViewController : UIViewController
+@interface CategoryViewController : UIViewController<ButtonWallViewDelegate>{
+@private
+    NSArray *buttonArray;
+}
 
 @end

@@ -8,7 +8,7 @@
 
 #import "SlideViewController.h"
 
-#define SLIDER_BOUND 160
+#define SLIDER_BOUND 118
 #define SLIDER_BOUND_SPACE 10
 #define ALPHAVIEW_TAG 2111
 #define SHADOWVIEW_TAG 2112

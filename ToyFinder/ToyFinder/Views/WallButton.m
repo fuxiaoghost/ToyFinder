@@ -7,16 +7,22 @@
 //
 
 #import "WallButton.h"
-#define GREENCOLOR                  RGBACOLOR(3, 145, 217, 1)
-#define DEEPGREENCOLOR              RGBACOLOR(2,101,151,1)
+#define BGCOLOR                  RGBACOLOR(254, 246, 236, 1)
+#define DEEPBGCOLOR              RGBACOLOR(245,124,0,1)
+#define BORDERCOLOR              RGBACOLOR(255,154,0,1)
+#define DEEPBORDERCOLOR          RGBACOLOR(217,70,0,1)
 
 @implementation WallButton
 @synthesize btnBgColor = _btnBgColor;
 @synthesize btnHBgColor = _btnHBgColor;
+@synthesize btnBorderColor = _btnBorderColor;
+@synthesize btnHBorderColor = _btnHBorderColor;
 
 - (void) dealloc{
     self.btnBgColor = nil;
     self.btnHBgColor = nil;
+    self.btnBorderColor = nil;
+    self.btnHBorderColor = nil;
     [super dealloc];
 }
 
@@ -50,6 +56,22 @@
     [self setNeedsDisplay];
 }
 
+- (void) setBtnBorderColor:(UIColor *)btnBorderColor{
+    [_btnBorderColor release];
+    _btnBorderColor = btnBorderColor;
+    [_btnBorderColor retain];
+    
+    [self setNeedsDisplay];
+}
+
+- (void) setBtnHBorderColor:(UIColor *)btnHBorderColor{
+    [_btnHBorderColor release];
+    _btnHBorderColor = btnHBorderColor;
+    [_btnHBorderColor retain];
+    
+    [self setNeedsDisplay];
+}
+
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect{ 
@@ -67,26 +89,34 @@
 	CGContextSaveGState(context);
 	
     if (self.highlighted) {
-        UIColor *pathColor = DEEPGREENCOLOR;
+        UIColor *pathColor = DEEPBGCOLOR;
         if (self.btnHBgColor) {
             pathColor = self.btnHBgColor;
         }
-        
-        [[UIColor clearColor] setStroke];
         [pathColor setFill];
+        
+        UIColor *strokeColor = DEEPBORDERCOLOR;
+        if (self.btnHBorderColor) {
+            strokeColor = self.btnHBorderColor;
+        }
+        [strokeColor setStroke];
     }else{
-        UIColor *pathColor = GREENCOLOR;
+        UIColor *pathColor = BGCOLOR;
         if (self.btnBgColor) {
             pathColor = self.btnBgColor;
         }
-        
-        [[UIColor clearColor] setStroke];
         [pathColor setFill];
+        
+        UIColor *strokeColor = BORDERCOLOR;
+        if (self.btnBorderColor) {
+            strokeColor = self.btnBorderColor;
+        }
+        [strokeColor setStroke];
     }
 	
 	
 	CGRect rrect = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-	CGFloat radius = 2.0f;
+	CGFloat radius = 0.0f;
 	CGFloat minx = CGRectGetMinX(rrect), midx = CGRectGetMidX(rrect), maxx = CGRectGetMaxX(rrect);
 	CGFloat miny = CGRectGetMinY(rrect), midy = CGRectGetMidY(rrect), maxy = CGRectGetMaxY(rrect);
 	
@@ -103,6 +133,8 @@
 	// Close the path
 	CGContextClosePath(context);
 	CGContextDrawPath(context, kCGPathFillStroke);
+    
+    CGContextDrawPath(context, kCGPathStroke);
 }
 
 

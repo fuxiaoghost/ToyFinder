@@ -8,6 +8,8 @@
 
 #import "CategoryViewController.h"
 #import "ButtonWallView.h"
+#import "AppDelegate.h"
+#import "SlideViewController.h"
 
 @interface CategoryViewController ()
 
@@ -15,24 +17,32 @@
 
 @implementation CategoryViewController
 
-
+- (void) dealloc{
+    [buttonArray release];
+    [super dealloc];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    NSArray *buttonArray = [NSArray arrayWithContentsOfFile:RESOURCEFILE(@"Category", @"plist")];
-    ButtonWallView *buttonWall = [[ButtonWallView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 160)
+    buttonArray = [[NSArray alloc] initWithContentsOfFile:RESOURCEFILE(@"Category", @"plist")];
+    ButtonWallView *buttonWall = [[ButtonWallView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 118)
                                                                buttons:buttonArray];
+    buttonWall.delegate = self;
     
     [self.view addSubview:buttonWall];
+    [buttonWall release];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark -
+#pragma mark ButtonWallViewDelegate
+- (void) didClickButtonAtIndex:(NSInteger)index{
+   // NSDictionary *dict = [buttonArray objectAtIndex:index];
+    
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    SlideViewController *slideVC = (SlideViewController *)delegate.window.rootViewController;
+    [slideVC slideUp];
 }
-
 @end

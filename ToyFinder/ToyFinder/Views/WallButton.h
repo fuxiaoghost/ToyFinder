@@ -13,4 +13,6 @@
 }
 @property (nonatomic,retain) UIColor *btnBgColor;
 @property (nonatomic,retain) UIColor *btnHBgColor;
+@property (nonatomic,retain) UIColor *btnBorderColor;
+@property (nonatomic,retain) UIColor *btnHBorderColor;
 @end
