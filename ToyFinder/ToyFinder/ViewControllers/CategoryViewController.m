@@ -28,7 +28,7 @@
 	// Do any additional setup after loading the view.
     
     buttonArray = [[NSArray alloc] initWithContentsOfFile:RESOURCEFILE(@"Category", @"plist")];
-    ButtonWallView *buttonWall = [[ButtonWallView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 118)
+    buttonWall = [[ButtonWallView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 118)
                                                                buttons:buttonArray];
     buttonWall.delegate = self;
     
@@ -45,4 +45,23 @@
     SlideViewController *slideVC = (SlideViewController *)delegate.window.rootViewController;
     [slideVC slideUp];
 }
+
+
+- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+    switch (toInterfaceOrientation) {
+        case UIInterfaceOrientationLandscapeLeft:{
+        }
+        case UIInterfaceOrientationLandscapeRight:{
+            buttonWall.frame = CGRectMake(0, 0, SCREEN_HEIGHT, 84);
+            break;
+        }
+        case UIInterfaceOrientationPortrait:{
+            buttonWall.frame = CGRectMake(0, 0, SCREEN_WIDTH, 118);
+            break;
+        }
+        default:
+            break;
+    }
+}
+
 @end

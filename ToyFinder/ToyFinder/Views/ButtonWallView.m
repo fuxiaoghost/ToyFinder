@@ -38,34 +38,38 @@
         [self addSubview:contentView];
         [contentView release];
         
-        float x = 10;
-        float y = 10;
-        for(int i = 0;i < self.dataSource.count;i++) {
-            NSDictionary *dict = [self.dataSource objectAtIndex:i];
-            NSString *name = [dict objectForKey:@"name"];
-            
-            CGSize size = [name sizeWithFont:[UIFont systemFontOfSize:12.0f]];
-            NSInteger buttonWidth = size.width + 10;
-            WallButton *button = [WallButton buttonWithType:UIButtonTypeCustom];
-            button.titleLabel.font = [UIFont systemFontOfSize:12.0f];
-            
-            if (x + buttonWidth + 10> frame.size.width) {
-                y += BUTTON_HEIGHT + 4;
-                x = 10;
-            }
-            button.frame = CGRectMake(x, y, buttonWidth, BUTTON_HEIGHT);
-            [button setTitle:name forState:UIControlStateNormal];
-            [button setTitleColor:RGBACOLOR(221, 70, 0, 1) forState:UIControlStateNormal];
-            [button setTitleColor:RGBACOLOR(255, 255, 255, 1) forState:UIControlStateHighlighted];
-            [contentView addSubview:button];
-            x += (10 + buttonWidth);
-            button.tag = BUTTON_TAG + i;
-            
-            [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
-        }
-        contentView.contentSize = CGSizeMake(frame.size.width, y + BUTTON_HEIGHT + 10);
+        [self reloadData];
     }
     return self;
+}
+
+- (void) reloadData{
+    float x = 10;
+    float y = 10;
+    for(int i = 0;i < self.dataSource.count;i++) {
+        NSDictionary *dict = [self.dataSource objectAtIndex:i];
+        NSString *name = [dict objectForKey:@"name"];
+        
+        CGSize size = [name sizeWithFont:[UIFont systemFontOfSize:12.0f]];
+        NSInteger buttonWidth = size.width + 10;
+        WallButton *button = [WallButton buttonWithType:UIButtonTypeCustom];
+        button.titleLabel.font = [UIFont systemFontOfSize:12.0f];
+        
+        if (x + buttonWidth + 10> self.frame.size.width) {
+            y += BUTTON_HEIGHT + 4;
+            x = 10;
+        }
+        button.frame = CGRectMake(x, y, buttonWidth, BUTTON_HEIGHT);
+        [button setTitle:name forState:UIControlStateNormal];
+        [button setTitleColor:RGBACOLOR(221, 70, 0, 1) forState:UIControlStateNormal];
+        [button setTitleColor:RGBACOLOR(255, 255, 255, 1) forState:UIControlStateHighlighted];
+        [contentView addSubview:button];
+        x += (10 + buttonWidth);
+        button.tag = BUTTON_TAG + i;
+        
+        [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    contentView.contentSize = CGSizeMake(self.frame.size.width, y + BUTTON_HEIGHT + 10);
 }
 
 - (void) buttonClick:(id)sender{
@@ -73,6 +77,17 @@
     if ([self.delegate respondsToSelector:@selector(didClickButtonAtIndex:)]) {
         [self.delegate didClickButtonAtIndex:button.tag - BUTTON_TAG];
     }
+}
+
+- (void) layoutSubviews{
+    [super layoutSubviews];
+    
+    contentView.frame = self.bounds;
+    for (UIView *button in contentView.subviews) {
+        [button removeFromSuperview];
+    }
+    
+    [self reloadData];
 }
 /*
 // Only override drawRect: if you perform custom drawing.

@@ -12,6 +12,7 @@
 @interface CategoryViewController : UIViewController<ButtonWallViewDelegate>{
 @private
     NSArray *buttonArray;
+    ButtonWallView *buttonWall;
 }
 
 @end

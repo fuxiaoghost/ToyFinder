@@ -19,7 +19,7 @@
         // Initialization code
         
         bgView = [[UIView alloc] initWithFrame:CGRectMake(10, 0, frame.size.width - 20, frame.size.height)];
-        bgView.backgroundColor = [UIColor whiteColor];
+        bgView.backgroundColor = RGBACOLOR(254, 246, 236, 1);
         [self addSubview:bgView];
         [bgView release];
     }

@@ -25,6 +25,16 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
+    titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
+    titleLbl.backgroundColor = RGBACOLOR(254, 246, 236, 1);
+    [self.view addSubview:titleLbl];
+    [titleLbl release];
+    
+    splitView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, 1)];
+    splitView.backgroundColor = RGBACOLOR(255,154,0,1);
+    [self.view addSubview:splitView];
+    [splitView release];
+    
 
     NSArray *dataSource = [NSArray arrayWithObjects:@"",@"",@"",@"",@"",@"",@"",@"",@"", nil];
     
@@ -64,13 +74,15 @@
         case UIInterfaceOrientationLandscapeRight:{
             itemView.itemWidth = 300;
             itemView.frame = CGRectMake(0, 10 + 44, SCREEN_HEIGHT,SCREEN_WIDTH - 20 - 44);
-            navView.frame = CGRectMake(0, 0, SCREEN_HEIGHT, 44);
+            titleLbl.frame = CGRectMake(0, 0, SCREEN_HEIGHT, 44);
+            splitView.frame = CGRectMake(0, 44, SCREEN_HEIGHT, 1);
             break;
         }
         case UIInterfaceOrientationPortrait:{
             itemView.itemWidth = 200;
             itemView.frame = CGRectMake(0, 10 + 44, SCREEN_WIDTH, SCREEN_HEIGHT - 20 - 44);
-            navView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 44);
+            titleLbl.frame = CGRectMake(0, 0, SCREEN_WIDTH, 44);
+            splitView.frame = CGRectMake(0, 44, SCREEN_WIDTH, 1);
             break;
         }
         default:

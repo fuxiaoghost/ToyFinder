@@ -287,7 +287,7 @@
 - (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     [self.topViewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    
+    [self.backViewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     switch (toInterfaceOrientation) {
         case UIInterfaceOrientationLandscapeLeft:{
         }
