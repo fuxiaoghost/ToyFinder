@@ -166,6 +166,7 @@
     }
     
     
+    
     // 阴影
     UIView *alphaView =  [[UIView alloc] initWithFrame:CGRectMake(0,-SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
     alphaView.backgroundColor = RGBACOLOR(0, 0, 0, 0);

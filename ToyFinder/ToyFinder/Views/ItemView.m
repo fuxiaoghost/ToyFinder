@@ -9,6 +9,7 @@
 #import "ItemView.h"
 #import "ItemCell.h"
 #import "ItemContentView.h"
+#import <QuartzCore/QuartzCore.h>
 #define ITEM_CACHECOUNT 3       // 缓存容量
 #define ITEM_TAG 2013
 #define ITEM_SCALE  0.9         // 缩放大小
@@ -71,14 +72,7 @@
             
             ItemCell *itemCell = [[ItemCell alloc] initWithFrame:CGRectMake(x, y, itemScrollView.frame.size.width, itemScrollView.frame.size.height)];
             
-            if (i == 0) {
-                itemCell.bgView.backgroundColor = [UIColor redColor];
-            }else if(i == 1){
-                itemCell.bgView.backgroundColor = [UIColor greenColor];
-            }else{
-                itemCell.bgView.backgroundColor = [UIColor orangeColor];
-            }
-            
+    
             [self renderItemCell:itemCell atIndex:i];
             
             // 单击手势

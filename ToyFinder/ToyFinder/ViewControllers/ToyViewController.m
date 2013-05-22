@@ -25,12 +25,6 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage stretchableImageWithPath:@"bg_texture.png"]];
-     
-    navView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
-    navView.backgroundColor = [UIColor lightGrayColor];
-    [self.view addSubview:navView];
-    [navView release];
 
     NSArray *dataSource = [NSArray arrayWithObjects:@"",@"",@"",@"",@"",@"",@"",@"",@"", nil];
     
