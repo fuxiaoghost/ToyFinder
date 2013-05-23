@@ -88,13 +88,16 @@
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
     
     
+    
     [params setObject:@"taobao.taobaoke.items.get" forKey:@"method"];
     [params setObject:@"num_iid,title,nick,pic_url,price,click_url,commission,commission_rate,commission_num,commission_volume,shop_click_url,seller_credit_score,item_location,volume" forKey:@"fields"];
     [params setObject:NICK forKey:@"nick"];
     //[params setObject:@"北京" forKey:@"area"];
-    [params setObject:self.cid forKey:@"cid"];
+    //[params setObject:self.cid forKey:@"cid"];
+    [params setObject:self.cid forKey:@"keyword"];
     [params setObject:[NSString stringWithFormat:@"%d",index] forKey:@"page_no"];
     [params setObject:[NSString stringWithFormat:@"%d",PAGE_SIZE] forKey:@"page_size"];
+     
     
     if (self.sessionKey) {
         [iosClient cancel:[NSString stringWithFormat:@"%@",self.sessionKey]];
