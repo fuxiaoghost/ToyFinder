@@ -108,14 +108,25 @@
     }else{
         itemCount = 0;
     }
-    page = 0;
+    
+    itemScrollView.contentSize = CGSizeMake(itemCount * self.itemWidth, itemScrollView.frame.size.height);
+}
+
+#pragma mark -
+#pragma mark Public Methods
+- (void) reloadData{
+    
+    
     
     if (itemCount == 0) {
         return;
-        
     }
     
-    if (itemArray.count != ITEM_CACHECOUNT || dataSource.count != ITEM_CACHECOUNT) {
+    page = 0;
+    
+    [itemScrollView setContentOffset:CGPointMake(0, 0)];
+    
+    if (itemArray.count != ITEM_CACHECOUNT || self.dataSource.count != ITEM_CACHECOUNT) {
         [itemArray removeAllObjects];
         for (ItemCell *itemCell in itemScrollView.subviews) {
             [itemCell removeFromSuperview];
@@ -157,7 +168,30 @@
 #pragma mark -
 #pragma Private Methods
 - (void) renderItemCell:(ItemCell *)itemCell  atIndex:(NSInteger)index{
-    
+    /*
+     "click_url" = "http://s.click.taobao.com/t?e=m%3D2%26s%3DblWNKDADM%2BMcQipKwQzePOeEDrYVVa64XoO8tOebS%2BdRAdhuF14FMZ%2FI7axaQpVvxq3IhSJN6GSyndi%2FaJEzWnX6rDb933ejwycIyPacKtd4HycU5cC7vEmVIpJgDZfPxMV0Hx0PZzPAa%2B47wpXhVWUJbyRThgQl&spm=2014.21501339.1.0";
+     commission = "3.96";
+     "commission_num" = 3302;
+     "commission_rate" = "2000.00";
+     "commission_volume" = "6296.76";
+     "item_location" = "\U6d59\U6c5f \U91d1\U534e";
+     nick = cnalbum;
+     "num_iid" = 10459306152;
+     "pic_url" = "http://img04.taobaocdn.com/bao/uploaded/i4/12350023354250893/T18.WrXsNfXXXXXXXX_!!0-item_pic.jpg";
+     price = "19.80";
+     "seller_credit_score" = 15;
+     "shop_click_url" = "http://s.click.taobao.com/t?e=m%3D2%26s%3DGqQn8neHlSAcQipKwQzePDAVflQIoZepXoO8tOebS%2BdRAdhuF14FMZ%2FI7axaQpVvxq3IhSJN6GSyndi%2FaJEzWnX6rDb933ejwycIyPacKtd4HycU5cC7vEmVIpJgDZfPMT66bODnAEY%3D&spm=2014.21501339.1.0";
+     title = "10\U5bf8diy\U76f8\U518c\U5927\U672c40\U5f20\U624b\U5de5\U97e9\U56fd\U5f71\U96c6\U5b9d\U5b9d\U60c5\U4fa3\U7c98\U8d34\U5f0f\U5305\U90ae\U90018\U8272\U7b14\U89d2\U8d34";
+     volume = 18735;
+     */
+
+    if ([[self.dataSource objectAtIndex:index] isKindOfClass:[NSDictionary class]]) {
+        [itemCell setPhoto:[[self.dataSource objectAtIndex:index] objectForKey:@"pic_url"]];
+        [itemCell setTitle:[[self.dataSource objectAtIndex:index] objectForKey:@"title"]];
+        [itemCell setPrice:[NSString stringWithFormat:@"¥%@",[[self.dataSource objectAtIndex:index] objectForKey:@"price"]]];
+    }else{
+        [itemCell setTitle:@""];
+    }
 }
 
 - (void) layoutItemCellAtIndex:(NSInteger)index{

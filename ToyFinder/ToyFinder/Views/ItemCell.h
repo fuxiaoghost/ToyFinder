@@ -10,8 +10,15 @@
 
 @interface ItemCell : UIView{
 @private
-    UIView *bgView;
+    UIImageView *bgView;
+    UIImageView *photoView;
+    UILabel *titleLbl;
+    UILabel *priceLbl;
 }
 @property (nonatomic,assign) CGAffineTransform contentTransform;
 @property (nonatomic,readonly) UIView *bgView;
+
+- (void) setPhoto:(NSString *)photo;
+- (void) setTitle:(NSString *)title;
+- (void) setPrice:(NSString *)price;
 @end

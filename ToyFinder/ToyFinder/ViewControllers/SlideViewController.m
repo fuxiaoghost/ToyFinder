@@ -8,7 +8,7 @@
 
 #import "SlideViewController.h"
 
-#define SLIDER_BOUND 118
+
 #define SLIDER_BOUND_SPACE 10
 #define ALPHAVIEW_TAG 2111
 #define SHADOWVIEW_TAG 2112
@@ -31,6 +31,13 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
+    if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
+        SLIDER_BOUND = 118;
+    }else{
+        SLIDER_BOUND = 84;
+    }
+    
+    
     // 添加滑动手势
     if (!pan) {
         pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
@@ -52,12 +59,6 @@
 #pragma mark -
 #pragma mark Private Methods
 - (void) showBackViewController:(float)time{
-//    [UIView animateWithDuration:time delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-//        
-//    } completion:^(BOOL finished) {
-//        
-//    }];
-    
     [UIView beginAnimations:@"BackView" context:nil];
     [UIView setAnimationBeginsFromCurrentState:YES];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
@@ -80,15 +81,7 @@
     [UIView commitAnimations];
 }
 
-- (void) hideBackViewController:(float)time{
-//    [UIView animateWithDuration:time delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-//        self.topViewController.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-//        UIView *alphaView = (UIView *)[self.topViewController.view viewWithTag:ALPHAVIEW_TAG];
-//        alphaView.backgroundColor = RGBACOLOR(0, 0, 0, 0.8);
-//    } completion:^(BOOL finished) {
-//        
-//    }];
-    
+- (void) hideBackViewController:(float)time{    
     [UIView beginAnimations:@"HideView" context:nil];
     [UIView setAnimationBeginsFromCurrentState:YES];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
@@ -296,6 +289,8 @@
             UIView *shadowView = (UIView *)[self.topViewController.view viewWithTag:SHADOWVIEW_TAG];
             alphaView.frame = CGRectMake(0, -SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH);
             shadowView.frame = CGRectMake(0, SCREEN_WIDTH - 5, SCREEN_HEIGHT, 5);
+            SLIDER_BOUND = 84;
+           
             break;
         }
         case UIInterfaceOrientationPortrait:{
@@ -303,6 +298,8 @@
             UIView *shadowView = (UIView *)[self.topViewController.view viewWithTag:SHADOWVIEW_TAG];
             alphaView.frame = CGRectMake(0,-SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT);
             shadowView.frame = CGRectMake(0, SCREEN_HEIGHT - 5, SCREEN_WIDTH, 5);
+            SLIDER_BOUND = 118;
+           
             break;
         }
         default:

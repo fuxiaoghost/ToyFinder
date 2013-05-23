@@ -10,6 +10,7 @@
 #import "ButtonWallView.h"
 #import "AppDelegate.h"
 #import "SlideViewController.h"
+#import "ToyViewController.h"
 
 @interface CategoryViewController ()
 
@@ -39,11 +40,15 @@
 #pragma mark -
 #pragma mark ButtonWallViewDelegate
 - (void) didClickButtonAtIndex:(NSInteger)index{
-   // NSDictionary *dict = [buttonArray objectAtIndex:index];
+    NSDictionary *dict = [buttonArray objectAtIndex:index];
     
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     SlideViewController *slideVC = (SlideViewController *)delegate.window.rootViewController;
     [slideVC slideUp];
+    
+    ToyViewController *toyVC =  (ToyViewController *)slideVC.topViewController;
+    toyVC.titleLbl.text = [dict objectForKey:@"name"];
+    [toyVC selectCategoryDict:dict];
 }
 
 

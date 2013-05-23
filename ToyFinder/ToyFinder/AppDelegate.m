@@ -30,7 +30,7 @@
     SlideViewController *slideVC = [[SlideViewController alloc] init];
     
     ToyViewController *toyVC = [[ToyViewController alloc] init];
-    toyVC.view.backgroundColor = [UIColor whiteColor];//RGBACOLOR(254, 246, 236, 1);
+    toyVC.view.backgroundColor = [UIColor colorWithWhite:217.0f/255.0f alpha:1];
     
     CategoryViewController *categoryVC = [[CategoryViewController alloc] init];
     categoryVC.view.backgroundColor = [UIColor whiteColor];

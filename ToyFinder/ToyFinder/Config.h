@@ -12,6 +12,10 @@
 #define APP_KEY         @"21501339"
 #define APP_SECRET      @"df925fc22f81305f7fe458b0c4d17486"
 #define APP_CALLBACKURL @"appcallback://"
+#define NICK            @"c半缘君c"
+
+#define PAGE_SIZE       20
+
 
 
 #define SCREEN_4_INCH           (SCREEN_HEIGHT == 568)                          // 4寸Retina

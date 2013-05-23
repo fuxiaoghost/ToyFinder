@@ -14,7 +14,7 @@
     UITapGestureRecognizer *tap;
     float panOriginY;
     BOOL isBackShow;
-    
+    int SLIDER_BOUND;
 }
 @property (nonatomic,retain) UIViewController *backViewController;
 @property (nonatomic,retain) UIViewController *topViewController;

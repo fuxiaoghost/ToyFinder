@@ -32,7 +32,7 @@
 
     NSString *strUrl = [url absoluteString];
     NSObject *obj = [url absoluteString];
-    if (url && strUrl && obj != [NSNull null] && ![strUrl isEmptyOrNull:strUrl])
+    if (url && strUrl && obj != [NSNull null])
     {
         [manager downloadWithURL:url delegate:self options:options];
     }
@@ -87,7 +87,7 @@
     
     NSString *strUrl = [url absoluteString];
     NSObject *obj = [url absoluteString];
-    if (url && strUrl && obj != [NSNull null] && ![strUrl isEmptyOrNull:strUrl])
+    if (url && strUrl && obj != [NSNull null])
     {
        [manager downloadWithURL:url delegate:self options:options success:success failure:failure];
         

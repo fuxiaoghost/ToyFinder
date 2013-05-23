@@ -25,6 +25,7 @@
 @property (nonatomic,assign) float itemWidth;
 - (id)initWithFrame:(CGRect)frame dataSource:(NSArray *)ds itemWidth:(float)width;
 - (void) pageToIndex:(NSInteger)index;
+- (void) reloadData;
 @end
 
 @protocol ItemViewDelegate <NSObject>
