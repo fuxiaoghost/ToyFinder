@@ -10,7 +10,6 @@
 #import "ItemCell.h"
 #import "ItemContentView.h"
 #import <QuartzCore/QuartzCore.h>
-#import "RegexKitLite.h"
 
 #define ITEM_CACHECOUNT 3       // 缓存容量
 #define ITEM_TAG 2013
@@ -194,10 +193,10 @@
             
         NSString *regEx = @"<([^>]*)>";
         
-        NSString * titleWithoutHTML = [titleHtml stringByReplacingOccurrencesOfRegex:regEx withString:@""];
+       // NSString * titleWithoutHTML = [titleHtml stringByReplacingOccurrencesOfRegex:regEx withString:@""];
         
 
-        [itemCell setTitle:titleWithoutHTML];
+        [itemCell setTitle:titleHtml];
         [itemCell setPrice:[NSString stringWithFormat:@"¥%@",[[self.dataSource objectAtIndex:index] objectForKey:@"price"]]];
     }else{
         [itemCell setTitle:@""];

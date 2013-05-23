@@ -11,7 +11,6 @@
 		79109912174DA7910093254B /* nav_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79109910174DA7910093254B /* nav_bg@2x.png */; };
 		79109919174DE9B50093254B /* item_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 79109917174DE9B50093254B /* item_bg.png */; };
 		7910991A174DE9B50093254B /* item_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79109918174DE9B50093254B /* item_bg@2x.png */; };
-		7910991D174E1E5C0093254B /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 7910991C174E1E5C0093254B /* RegexKitLite.m */; };
 		79140A11174B773B006B4C60 /* ButtonWallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79140A10174B773B006B4C60 /* ButtonWallView.m */; };
 		79140A14174B7A91006B4C60 /* WallButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 79140A13174B7A91006B4C60 /* WallButton.m */; };
 		79140A17174B7DBC006B4C60 /* Category.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79140A16174B7DBC006B4C60 /* Category.plist */; };
@@ -62,8 +61,6 @@
 		79109910174DA7910093254B /* nav_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_bg@2x.png"; sourceTree = "<group>"; };
 		79109917174DE9B50093254B /* item_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = item_bg.png; sourceTree = "<group>"; };
 		79109918174DE9B50093254B /* item_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "item_bg@2x.png"; sourceTree = "<group>"; };
-		7910991B174E1E5C0093254B /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
-		7910991C174E1E5C0093254B /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		79140A0F174B773B006B4C60 /* ButtonWallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonWallView.h; sourceTree = "<group>"; };
 		79140A10174B773B006B4C60 /* ButtonWallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonWallView.m; sourceTree = "<group>"; };
 		79140A12174B7A91006B4C60 /* WallButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WallButton.h; sourceTree = "<group>"; };
@@ -430,8 +427,6 @@
 		DDA83B97174535C500562EF1 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				7910991B174E1E5C0093254B /* RegexKitLite.h */,
-				7910991C174E1E5C0093254B /* RegexKitLite.m */,
 				DDA83B98174535C500562EF1 /* UIImage+Utils.h */,
 				DDA83B99174535C500562EF1 /* UIImage+Utils.m */,
 			);
@@ -537,7 +532,6 @@
 				DD3440D417489C35003076C9 /* PhotoProgressView.m in Sources */,
 				79140A11174B773B006B4C60 /* ButtonWallView.m in Sources */,
 				79140A14174B7A91006B4C60 /* WallButton.m in Sources */,
-				7910991D174E1E5C0093254B /* RegexKitLite.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
