@@ -6,7 +6,26 @@
 		<key>name</key>
 		<string>手串</string>
 		<key>tag</key>
-		<string>手串 小叶紫檀</string>
+		<string>手串</string>
+		<key>cat</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>小叶紫檀</string>
+				<key>tag</key>
+				<string>小叶紫檀</string>
+				<key>image</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>黄花梨</string>
+				<key>tag</key>
+				<string>黄花梨</string>
+				<key>image</key>
+				<string></string>
+			</dict>
+		</array>
 	</dict>
 	<dict>
 		<key>name</key>

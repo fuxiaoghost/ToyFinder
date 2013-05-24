@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "ButtonWallView.h"
+#import "CategoryView.h"
 
 @interface CategoryViewController : UIViewController<ButtonWallViewDelegate>{
 @private
     NSArray *buttonArray;
     ButtonWallView *buttonWall;
+    CategoryView *categoryView;
+    UIView *shadowView;
+    CGRect buttonRect;
 }
 
 @end

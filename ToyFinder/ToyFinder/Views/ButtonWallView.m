@@ -74,8 +74,8 @@
 
 - (void) buttonClick:(id)sender{
     UIButton *button = (UIButton *)sender;
-    if ([self.delegate respondsToSelector:@selector(didClickButtonAtIndex:)]) {
-        [self.delegate didClickButtonAtIndex:button.tag - BUTTON_TAG];
+    if ([self.delegate respondsToSelector:@selector(didClickButton:atIndex:)]) {
+        [self.delegate didClickButton:button atIndex:button.tag - BUTTON_TAG];
     }
 }
 

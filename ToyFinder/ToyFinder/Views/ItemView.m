@@ -191,7 +191,7 @@
 
         NSString *titleHtml = [[self.dataSource objectAtIndex:index] objectForKey:@"title"];
             
-        NSString *regEx = @"<([^>]*)>";
+        //NSString *regEx = @"<([^>]*)>";
         
        // NSString * titleWithoutHTML = [titleHtml stringByReplacingOccurrencesOfRegex:regEx withString:@""];
         
