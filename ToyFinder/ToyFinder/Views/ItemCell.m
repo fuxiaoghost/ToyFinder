@@ -68,8 +68,10 @@
     priceLbl.text = price;
 }
 
+
 - (void) setPhoto:(NSString *)photo{
-    [photoView setImageWithURL:[NSURL URLWithString:photo] placeholderImage:nil];
+    //[photoView setImageWithURL:[NSURL URLWithString:photo] placeholderImage:nil];
+    [photoView setImageWithURL:[NSURL URLWithString:photo] options:SDWebImageRetryFailed progress:YES];
 }
 
 - (CGAffineTransform) contentTransform{

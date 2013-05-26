@@ -14,6 +14,7 @@
     UIImageView *photoView;
     UILabel *titleLbl;
     UILabel *priceLbl;
+    UILabel *volumeLbl;
 }
 @property (nonatomic,assign) CGAffineTransform contentTransform;
 @property (nonatomic,readonly) UIView *bgView;

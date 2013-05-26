@@ -13,6 +13,7 @@
 #define ALPHAVIEW_TAG 2111
 #define SHADOWVIEW_TAG 2112
 #define SLIDER_TIME 0.3
+#define BACKVIEW_SCALE 0.9
 
 @interface SlideViewController ()
 
@@ -21,6 +22,7 @@
 @implementation SlideViewController
 @synthesize backViewController = _backViewController;
 @synthesize topViewController = _topViewController;
+@synthesize isBackShow;
 
 - (void) dealloc{
     self.backViewController = nil;
@@ -68,6 +70,7 @@
     }else{
         self.topViewController.view.frame = CGRectMake(0, SLIDER_BOUND, SCREEN_HEIGHT, SCREEN_WIDTH);
     }
+    self.backViewController.view.transform = CGAffineTransformIdentity;
     
     UIView *alphaView = (UIView *)[self.topViewController.view viewWithTag:ALPHAVIEW_TAG];
     alphaView.backgroundColor = RGBACOLOR(0, 0, 0, 0);
@@ -92,6 +95,8 @@
         self.topViewController.view.frame = CGRectMake(0, 0, SCREEN_HEIGHT, SCREEN_WIDTH);
     }
     
+    self.backViewController.view.transform = CGAffineTransformMakeScale(BACKVIEW_SCALE, BACKVIEW_SCALE);
+    
     UIView *alphaView = (UIView *)[self.topViewController.view viewWithTag:ALPHAVIEW_TAG];
     alphaView.backgroundColor = RGBACOLOR(0, 0, 0, 0.8);
     
@@ -101,6 +106,12 @@
     self.backViewController.view.userInteractionEnabled = NO;
     
     [UIView commitAnimations];
+    
+    [self performSelector:@selector(resetBackTrans) withObject:nil afterDelay:0.3];
+}
+
+- (void) resetBackTrans{
+    self.backViewController.view.transform = CGAffineTransformIdentity;
 }
 
 #pragma mark -
@@ -245,12 +256,16 @@
             alphaView.backgroundColor = RGBACOLOR(0, 0, 0, 0.8 - 0.8 * y/SLIDER_BOUND);
             if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
                 self.topViewController.view.frame = CGRectMake(0, y, SCREEN_WIDTH, SCREEN_HEIGHT);
+                
             }else{
                 self.topViewController.view.frame = CGRectMake(0, y, SCREEN_HEIGHT, SCREEN_WIDTH);
             }
+            
+            self.backViewController.view.transform = CGAffineTransformMakeScale(BACKVIEW_SCALE + (1-BACKVIEW_SCALE)*y/SLIDER_BOUND, BACKVIEW_SCALE + (1-BACKVIEW_SCALE)*y/SLIDER_BOUND);
         }
     } else if (gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateCancelled) {
-        if (panOriginY > SLIDER_BOUND_SPACE && !isBackShow) { // (.|->)
+
+        if (panOriginY > SLIDER_BOUND_SPACE) { // (.|->)
             [self showBackViewController:SLIDER_TIME * (SLIDER_BOUND - panOriginY + 0.0)/SLIDER_BOUND];
         }else if(panOriginY > 0 && !isBackShow){ // (.|->) (<-|)
             if (isBackShow) {
@@ -259,9 +274,9 @@
                 [self hideBackViewController:(panOriginY + 0.0) * SLIDER_TIME/SLIDER_BOUND];
             }
             
-        }else if(panOriginY > - SLIDER_BOUND_SPACE && isBackShow){ // (<-|) (|->)
+        }else if(panOriginY > - SLIDER_BOUND_SPACE){ // (<-|) (|->)
             [self showBackViewController:SLIDER_TIME * (panOriginY + SLIDER_BOUND_SPACE + 0.0)/SLIDER_BOUND];
-        }else if(panOriginY < - SLIDER_BOUND_SPACE && isBackShow){ // (<-|)
+        }else if(panOriginY < - SLIDER_BOUND_SPACE){ // (<-|)
             [self hideBackViewController:SLIDER_TIME * (0.0 + SLIDER_BOUND + panOriginY)/SLIDER_BOUND];
         }
     }
@@ -273,8 +288,7 @@
 }
 
 - (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
-
-    return YES;
+    return toInterfaceOrientation!=UIInterfaceOrientationPortraitUpsideDown;
 }
 
 - (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
@@ -290,7 +304,6 @@
             alphaView.frame = CGRectMake(0, -SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH);
             shadowView.frame = CGRectMake(0, SCREEN_WIDTH - 5, SCREEN_HEIGHT, 5);
             SLIDER_BOUND = 84;
-           
             break;
         }
         case UIInterfaceOrientationPortrait:{
@@ -299,7 +312,6 @@
             alphaView.frame = CGRectMake(0,-SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT);
             shadowView.frame = CGRectMake(0, SCREEN_HEIGHT - 5, SCREEN_WIDTH, 5);
             SLIDER_BOUND = 118;
-           
             break;
         }
         default:

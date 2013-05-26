@@ -190,14 +190,18 @@
         [itemCell setPhoto:[[self.dataSource objectAtIndex:index] objectForKey:@"pic_url"]];
 
         NSString *titleHtml = [[self.dataSource objectAtIndex:index] objectForKey:@"title"];
-            
-        //NSString *regEx = @"<([^>]*)>";
-        
-       // NSString * titleWithoutHTML = [titleHtml stringByReplacingOccurrencesOfRegex:regEx withString:@""];
-        
+        NSString *regEx = @"<([^>]*)>";
+        NSRange range;
+        while ((range = [titleHtml rangeOfString:regEx options:NSRegularExpressionSearch]).location != NSNotFound){
+            titleHtml = [titleHtml stringByReplacingCharactersInRange:range withString:@""];
+        }
 
+        
+        titleHtml = [NSString stringWithFormat:@"%@ [月销%@]",titleHtml,[[self.dataSource objectAtIndex:index] objectForKey:@"volume"]];
+        
         [itemCell setTitle:titleHtml];
         [itemCell setPrice:[NSString stringWithFormat:@"¥%@",[[self.dataSource objectAtIndex:index] objectForKey:@"price"]]];
+        
     }else{
         [itemCell setTitle:@""];
     }

@@ -7,6 +7,7 @@
 //
 
 #import "CategoryView.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define IMAGE_SPACE 10
 #define IMAGE_NUM 4
@@ -30,6 +31,13 @@
     if (self) {
         // Initialization code
         
+        // 背景图
+        UIImageView *bgView = [[UIImageView alloc] initWithFrame:self.bounds];
+        bgView.image = [UIImage stretchableImageWithPath:@"item_bg.png"];
+        [self addSubview:bgView];
+        [bgView release];
+        
+        // 
         contentView = [[UIScrollView alloc] initWithFrame:self.bounds];
         [self addSubview:contentView];
         [contentView release];
@@ -45,16 +53,30 @@
                 if (index >= self.dataSource.count) {
                     break;
                 }
+                NSDictionary *dict = [self.dataSource objectAtIndex:i];
                 UIButton *imageButton = [UIButton buttonWithType:UIButtonTypeCustom];
                 imageButton.frame = CGRectMake((j + 1) * IMAGE_SPACE + j * imageWidth, (i + 1) * IMAGE_SPACE + i * imageWidth, imageWidth, imageWidth);
-                imageButton.backgroundColor = [UIColor redColor];
+                [imageButton setImage:[UIImage noCacheImageNamed:[dict objectForKey:@"image"]] forState:UIControlStateNormal];
                 [contentView addSubview:imageButton];
                 imageButton.tag = index + IMAGE_TAG;
                 [imageButton addTarget:self action:@selector(imageButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+                imageButton.layer.borderWidth = 1.0f;
+                imageButton.layer.borderColor = RGBACOLOR(0, 0, 0, 0.6).CGColor;
+                
+                UILabel *tipsLbl = [[UILabel alloc] initWithFrame:CGRectMake(1, imageWidth - 14, imageWidth-2, 13)];
+                tipsLbl.font = [UIFont systemFontOfSize:12.0f];
+                tipsLbl.textColor = [UIColor whiteColor];
+                tipsLbl.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+                tipsLbl.textAlignment = UITextAlignmentCenter;
+                [imageButton addSubview:tipsLbl];
+                [tipsLbl release];
+                tipsLbl.text = [dict objectForKey:@"name"];
                 
                 index++;
             }
         }
+        
+        contentView.contentSize = CGSizeMake(self.bounds.size.width, (yNum + 1) * IMAGE_SPACE + yNum * imageWidth);
     }
     return self;
 }

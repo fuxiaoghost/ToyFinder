@@ -14,7 +14,7 @@
 #define APP_CALLBACKURL @"appcallback://"
 #define NICK            @"c半缘君c"
 
-#define PAGE_SIZE       20
+#define TOY_PAGE_SIZE   100
 
 
 

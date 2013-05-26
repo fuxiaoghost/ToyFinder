@@ -19,7 +19,7 @@
 @end
 
 @protocol CategoryViewDelegate <NSObject>
-
+@optional
 - (void) categoryView:(CategoryView *)categoryView didSelectedAtIndex:(NSInteger)index;
 
 @end

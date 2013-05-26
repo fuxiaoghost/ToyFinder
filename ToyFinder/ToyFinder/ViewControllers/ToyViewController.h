@@ -18,9 +18,12 @@
     BOOL isMoreRequest;
     NSMutableArray *contentArray;
     UILabel *tipsLbl;
+    UIButton *infoButton;
+    TopIOSClient *iosClient;
+    //UIWebView *infoView;
 }
 
 @property (nonatomic,assign) UILabel *titleLbl;
 
-- (void) selectCategoryDict:(NSDictionary *)dict;
+- (void) selectKeyword:(NSString *)keyword infoUrl:(NSString *)url;
 @end

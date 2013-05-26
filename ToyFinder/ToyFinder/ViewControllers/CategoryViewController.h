@@ -10,13 +10,13 @@
 #import "ButtonWallView.h"
 #import "CategoryView.h"
 
-@interface CategoryViewController : UIViewController<ButtonWallViewDelegate>{
+@interface CategoryViewController : UIViewController<ButtonWallViewDelegate,CategoryViewDelegate>{
 @private
     NSArray *buttonArray;
     ButtonWallView *buttonWall;
     CategoryView *categoryView;
     UIView *shadowView;
-    CGRect buttonRect;
+    NSInteger index;
 }
 
 @end

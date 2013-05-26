@@ -18,6 +18,7 @@
 }
 @property (nonatomic,retain) UIViewController *backViewController;
 @property (nonatomic,retain) UIViewController *topViewController;
+@property (nonatomic,assign) BOOL isBackShow;
 - (void) slideDown;
 - (void) slideUp;
 @end

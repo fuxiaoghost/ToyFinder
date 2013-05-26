@@ -34,6 +34,7 @@
         // Initialization code
         self.dataSource = buttons;
         
+        // 容器
         contentView = [[UIScrollView alloc] initWithFrame:self.bounds];
         [self addSubview:contentView];
         [contentView release];
@@ -52,9 +53,13 @@
         
         CGSize size = [name sizeWithFont:[UIFont systemFontOfSize:12.0f]];
         NSInteger buttonWidth = size.width + 10;
-        WallButton *button = [WallButton buttonWithType:UIButtonTypeCustom];
-        button.titleLabel.font = [UIFont systemFontOfSize:12.0f];
         
+        // 如果发现按钮存在，直接修改按钮属性
+        WallButton *button = (WallButton *)[contentView viewWithTag:BUTTON_TAG + i];
+        if (!button) {
+            button = [WallButton buttonWithType:UIButtonTypeCustom];
+        }
+        button.titleLabel.font = [UIFont systemFontOfSize:12.0f];
         if (x + buttonWidth + 10> self.frame.size.width) {
             y += BUTTON_HEIGHT + 4;
             x = 10;
@@ -83,19 +88,8 @@
     [super layoutSubviews];
     
     contentView.frame = self.bounds;
-    for (UIView *button in contentView.subviews) {
-        [button removeFromSuperview];
-    }
     
     [self reloadData];
 }
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end
