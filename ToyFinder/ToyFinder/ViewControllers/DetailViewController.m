@@ -11,6 +11,8 @@
 #import "StrickoutLabel.h"
 #import "DetailPhotoCell.h"
 #import "JSON.h"
+#import "FullImageView.h"
+#import "AppDelegate.h"
 
 @interface DetailViewController ()
 @property (nonatomic,copy) NSString *detailTitle;
@@ -117,7 +119,7 @@
     
     
     [params setObject:@"taobao.taobaoke.items.detail.get" forKey:@"method"];
-    [params setObject:@"detail_url,title,nick,type,desc,pic_url,num,location,price,post_fee,express_fee,ems_fee,freight_payer,item_img.url,click_url,shop_click_url,seller_credit_score" forKey:@"fields"];
+    [params setObject:@"detail_url,title,nick,type,desc,pic_url,num,location,price,post_fee,express_fee,ems_fee,freight_payer,item_img.url,click_url,shop_click_url,seller_credit_score,skus" forKey:@"fields"];
     [params setObject:NICK forKey:@"nick"];
     [params setObject:@"true" forKey:@"is_mobile"];
     [params setObject:self.numIID forKey:@"num_iids"];
@@ -143,6 +145,8 @@
             self.photoArray = [[[self.detailDict objectForKey:@"item"] objectForKey:@"item_imgs"] objectForKey:@"item_img"];
 
             [detailList reloadData];
+            
+            NSLog(@"%@",self.detailDict);
         }else {
             NSLog(@"%@",[(NSError *)[response error] userInfo]);
         }
@@ -177,6 +181,8 @@
         UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cell) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
             if(indexPath.row == 0){
                 photosList = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200) style:UITableViewStylePlain];
                 photosList.rowHeight = 200;
@@ -196,10 +202,90 @@
                 [cell.contentView addSubview:photosList];
                 [photosList release];
             }else if(indexPath.row == 1){
+                UIImageView *cellBgView = [[UIImageView alloc] initWithFrame:CGRectMake(4, 0, SCREEN_WIDTH - 8, 50)];
+                cellBgView.image = [UIImage stretchableImageWithPath:@"cell.png"];
+                [cell.contentView addSubview:cellBgView];
+                [cellBgView release];
                 
+                // 快递费用
+                expressFeeLbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, cellBgView.frame.size.width - 20, 20)];
+                expressFeeLbl.font = [UIFont systemFontOfSize:14.0f];
+                expressFeeLbl.textColor = [UIColor colorWithWhite:0.2 alpha:1];
+                expressFeeLbl.backgroundColor = [UIColor clearColor];
+                [cellBgView addSubview:expressFeeLbl];
+                [expressFeeLbl release];
+                
+                // 宝贝所在地
+                locationLbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 25, cellBgView.frame.size.width - 20, 20)];
+                locationLbl.font = [UIFont systemFontOfSize:12.0f];
+                locationLbl.textColor = [UIColor colorWithWhite:0.6 alpha:1];
+                locationLbl.backgroundColor = [UIColor clearColor];
+                [cellBgView addSubview:locationLbl];
+                [locationLbl release];
             }
         }
+        // 刷新图片
         [photosList reloadData];
+        
+        // 刷新快递费用
+        if ([[[self.detailDict objectForKey:@"item"] objectForKey:@"freight_payer"] isEqualToString:@"seller"]) {
+            expressFeeLbl.text = @"卖家承担运费";
+        }else if([[[self.detailDict objectForKey:@"item"] objectForKey:@"freight_payer"] isEqualToString:@"buyer"]){
+            NSMutableString *expressFee = [NSMutableString string];
+            float express = [[[self.detailDict objectForKey:@"item"] objectForKey:@"express_fee"] floatValue];
+            float ems = [[[self.detailDict objectForKey:@"item"] objectForKey:@"ems_fee"] floatValue];
+            float post = [[[self.detailDict objectForKey:@"item"] objectForKey:@"post_fee"] floatValue];
+            if (express > 0) {
+                [expressFee appendFormat:@"快递 ¥%.2f; ",express];
+            }
+            if (ems > 0) {
+                [expressFee appendFormat:@"EMS ¥%.2f; ",ems];
+            }
+            if (post > 0) {
+                [expressFee appendFormat:@"平邮 ¥%.2f; ",post];
+            }
+            expressFeeLbl.text = expressFee;
+        }else{
+            expressFeeLbl.text = @"";
+        }
+        
+        // 宝贝所在地
+        if([[self.detailDict objectForKey:@"item"] objectForKey:@"location"]){
+            NSString *city = [[[self.detailDict objectForKey:@"item"] objectForKey:@"location"] objectForKey:@"city"];
+            NSString *state = [[[self.detailDict objectForKey:@"item"] objectForKey:@"location"] objectForKey:@"state"];
+            if ([city isEqualToString:state]) {
+                locationLbl.text = [NSString stringWithFormat:@"%@",city];
+            }else{
+                locationLbl.text = [NSString stringWithFormat:@"%@ %@",state,city];
+            }
+            
+        }else{
+            locationLbl.text = @"";
+        }
+        
+        /*
+
+         1星               1
+         2星               2
+         3星               3
+         4星               4
+         5星               5
+         1钻               6
+         2钻               7
+         3钻               8
+         4钻               9
+         5钻               10
+         1蓝冠             11
+         2蓝冠             12
+         3蓝冠             13
+         4蓝冠             14
+         5蓝冠             15
+         1皇冠             16
+         2皇冠             17
+         3皇冠             18
+         4皇冠             19
+         5皇冠             20
+         */
         return cell;
     }else if(photosList == tableView){
         static NSString *cellIdentifier = @"DetailPhotoCell";
@@ -225,7 +311,11 @@
 
 - (float) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (detailList == tableView) {
-        return 200;
+        if (indexPath.row == 0) {
+            return 200;
+        }else if(indexPath.row == 1){
+            return 50;
+        }
     }else if(photosList == tableView){
         return 200;
     }
@@ -269,11 +359,32 @@
     if (detailList == tableView) {
 
     }else if(photosList == tableView){
+        NSMutableArray *fullImageArray = [NSMutableArray arrayWithCapacity:0];
+        for (NSDictionary *dict in self.photoArray) {
+            [fullImageArray addObject:[dict objectForKey:@"url"]];
+        }
+        FullImageView *detailImage = [[FullImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) Images:fullImageArray AtIndex:indexPath.row];
         
+        detailImage.delegate = self;
+        detailImage.alpha = 0;
+        
+        
+        AppDelegate  *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        [appDelegate.window addSubview:detailImage];
+        [detailImage release];
+        
+        [UIView animateWithDuration:0.3 animations:^{
+            detailImage.alpha = 1;
+        }];
     }
 }
 
 
+#pragma mark -
+#pragma mark FullImageViewDelegate
+- (void) fullImageView:(FullImageView *)fullImageView didClosedAtIndex:(NSInteger)index{
+    [photosList scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+}
 
 #pragma mark -
 #pragma mark Rotate

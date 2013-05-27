@@ -51,11 +51,12 @@
     [super setSelected:selected animated:animated];
     
     // Configure the view for the selected state
-    if (selected) {
-        markView.hidden = NO;
-    }else{
-        markView.hidden = YES;
-    }
+//    if (selected) {
+//        markView.hidden = NO;
+//    }else{
+//        markView.hidden = YES;
+//    }
+    markView.hidden = YES;
 }
 
 - (void) setHighlighted:(BOOL)highlighted animated:(BOOL)animated{
