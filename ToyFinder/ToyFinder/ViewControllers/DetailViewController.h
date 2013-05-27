@@ -14,8 +14,6 @@
     UITableView *detailList;
     UITableView *photosList;
     TopIOSClient *iosClient;
-    UILabel *expressFeeLbl;
-    UILabel *locationLbl;
 }
 - (id) initWithTitle:(NSString *)title price:(NSString *)price_ promotion:(NSString *)promotion_ numIID:(NSString *)numIID;
 @end

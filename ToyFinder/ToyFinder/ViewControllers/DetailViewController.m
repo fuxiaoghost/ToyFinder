@@ -13,6 +13,7 @@
 #import "JSON.h"
 #import "FullImageView.h"
 #import "AppDelegate.h"
+#import "DetailViewCell.h"
 
 @interface DetailViewController ()
 @property (nonatomic,copy) NSString *detailTitle;
@@ -158,12 +159,18 @@
 #pragma mark -
 #pragma mark UITableViewDataSource
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
+    return 3;
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (tableView == detailList) {
-        return 2;
+        if (section == 0) {
+            return 1;
+        }else if(section == 1){
+            return 2;
+        }else {
+            return 0;
+        }
     }else if(tableView == photosList){
         if (self.photoArray) {
             return self.photoArray.count;
@@ -176,14 +183,13 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (detailList ==  tableView) {
-        // 图片
-        static NSString *cellIdentifier = @"DetailCell";
-        UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (!cell) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            if(indexPath.row == 0){
+        if (indexPath.row == 0 && indexPath.section == 0) {
+            static NSString *cellIdentifier = @"DetailPhoto";
+            UITableViewCell *cell =  (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if (!cell) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
                 photosList = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200) style:UITableViewStylePlain];
                 photosList.rowHeight = 200;
                 photosList.clipsToBounds = NO;
@@ -201,68 +207,88 @@
                 photosList.scrollsToTop = NO;										//禁用点击状态栏滚动到起始位置
                 [cell.contentView addSubview:photosList];
                 [photosList release];
-            }else if(indexPath.row == 1){
-                UIImageView *cellBgView = [[UIImageView alloc] initWithFrame:CGRectMake(4, 0, SCREEN_WIDTH - 8, 50)];
-                cellBgView.image = [UIImage stretchableImageWithPath:@"cell.png"];
-                [cell.contentView addSubview:cellBgView];
-                [cellBgView release];
-                
+            }
+            [photosList reloadData];
+            return cell;
+        }else{
+            // 图片
+            static NSString *cellIdentifier = @"DetailCell";
+            DetailViewCell *cell = (DetailViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if (!cell) {
+                cell = [[[DetailViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            }
+            if (indexPath.section == 1 && indexPath.row == 0) {
                 // 快递费用
-                expressFeeLbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, cellBgView.frame.size.width - 20, 20)];
-                expressFeeLbl.font = [UIFont systemFontOfSize:14.0f];
-                expressFeeLbl.textColor = [UIColor colorWithWhite:0.2 alpha:1];
-                expressFeeLbl.backgroundColor = [UIColor clearColor];
-                [cellBgView addSubview:expressFeeLbl];
-                [expressFeeLbl release];
+                [cell setCellType:-1];
+                cell.arrowView.hidden = YES;
+                cell.titleLbl.frame = CGRectMake(20, 4,SCREEN_WIDTH - 20 - 20, 20);
+                cell.titleLbl.font = [UIFont systemFontOfSize:14.0f];
+                cell.titleLbl.textColor = [UIColor colorWithWhite:0.2 alpha:1];
+                cell.titleLbl.backgroundColor = [UIColor clearColor];
                 
                 // 宝贝所在地
-                locationLbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 25, cellBgView.frame.size.width - 20, 20)];
-                locationLbl.font = [UIFont systemFontOfSize:12.0f];
-                locationLbl.textColor = [UIColor colorWithWhite:0.6 alpha:1];
-                locationLbl.backgroundColor = [UIColor clearColor];
-                [cellBgView addSubview:locationLbl];
-                [locationLbl release];
-            }
-        }
-        // 刷新图片
-        [photosList reloadData];
-        
-        // 刷新快递费用
-        if ([[[self.detailDict objectForKey:@"item"] objectForKey:@"freight_payer"] isEqualToString:@"seller"]) {
-            expressFeeLbl.text = @"卖家承担运费";
-        }else if([[[self.detailDict objectForKey:@"item"] objectForKey:@"freight_payer"] isEqualToString:@"buyer"]){
-            NSMutableString *expressFee = [NSMutableString string];
-            float express = [[[self.detailDict objectForKey:@"item"] objectForKey:@"express_fee"] floatValue];
-            float ems = [[[self.detailDict objectForKey:@"item"] objectForKey:@"ems_fee"] floatValue];
-            float post = [[[self.detailDict objectForKey:@"item"] objectForKey:@"post_fee"] floatValue];
-            if (express > 0) {
-                [expressFee appendFormat:@"快递 ¥%.2f; ",express];
-            }
-            if (ems > 0) {
-                [expressFee appendFormat:@"EMS ¥%.2f; ",ems];
-            }
-            if (post > 0) {
-                [expressFee appendFormat:@"平邮 ¥%.2f; ",post];
-            }
-            expressFeeLbl.text = expressFee;
-        }else{
-            expressFeeLbl.text = @"";
-        }
-        
-        // 宝贝所在地
-        if([[self.detailDict objectForKey:@"item"] objectForKey:@"location"]){
-            NSString *city = [[[self.detailDict objectForKey:@"item"] objectForKey:@"location"] objectForKey:@"city"];
-            NSString *state = [[[self.detailDict objectForKey:@"item"] objectForKey:@"location"] objectForKey:@"state"];
-            if ([city isEqualToString:state]) {
-                locationLbl.text = [NSString stringWithFormat:@"%@",city];
-            }else{
-                locationLbl.text = [NSString stringWithFormat:@"%@ %@",state,city];
+                cell.detailLbl.frame = CGRectMake(20, 24, SCREEN_WIDTH - 20 - 20, 20);
+                cell.detailLbl.font = [UIFont systemFontOfSize:12.0f];
+                cell.detailLbl.textColor = [UIColor colorWithWhite:0.6 alpha:1];
+                cell.detailLbl.backgroundColor = [UIColor clearColor];
+                
+                cell.splitView.hidden = NO;
+                
+                // 刷新快递费用
+                if ([[[self.detailDict objectForKey:@"item"] objectForKey:@"freight_payer"] isEqualToString:@"seller"]) {
+                    cell.titleLbl.text = @"卖家承担运费";
+                }else if([[[self.detailDict objectForKey:@"item"] objectForKey:@"freight_payer"] isEqualToString:@"buyer"]){
+                    NSMutableString *expressFee = [NSMutableString string];
+                    float express = [[[self.detailDict objectForKey:@"item"] objectForKey:@"express_fee"] floatValue];
+                    float ems = [[[self.detailDict objectForKey:@"item"] objectForKey:@"ems_fee"] floatValue];
+                    float post = [[[self.detailDict objectForKey:@"item"] objectForKey:@"post_fee"] floatValue];
+                    if (express > 0) {
+                        [expressFee appendFormat:@"快递 ¥%.2f; ",express];
+                    }
+                    if (ems > 0) {
+                        [expressFee appendFormat:@"EMS ¥%.2f; ",ems];
+                    }
+                    if (post > 0) {
+                        [expressFee appendFormat:@"平邮 ¥%.2f; ",post];
+                    }
+                    cell.titleLbl.text = expressFee;
+                }else{
+                    cell.titleLbl.text = @"";
+                }
+                
+                // 宝贝所在地
+                if([[self.detailDict objectForKey:@"item"] objectForKey:@"location"]){
+                    NSString *city = [[[self.detailDict objectForKey:@"item"] objectForKey:@"location"] objectForKey:@"city"];
+                    NSString *state = [[[self.detailDict objectForKey:@"item"] objectForKey:@"location"] objectForKey:@"state"];
+                    if ([city isEqualToString:state]) {
+                        cell.detailLbl.text = [NSString stringWithFormat:@"%@",city];
+                    }else{
+                        cell.detailLbl.text = [NSString stringWithFormat:@"%@ %@",state,city];
+                    }
+                    
+                }else{
+                    cell.detailLbl.text = @"";
+                }
+            }else if(indexPath.section == 1 && indexPath.row == 1){
+                [cell setCellType:1];
+                cell.arrowView.hidden = NO;
+                cell.splitView.hidden = YES;
+                cell.titleLbl.frame = CGRectMake(20, 0,SCREEN_WIDTH - 20 - 20, 44);
+                cell.titleLbl.font = [UIFont systemFontOfSize:14.0f];
+                cell.titleLbl.textColor = [UIColor colorWithWhite:0.2 alpha:1];
+                cell.titleLbl.backgroundColor = [UIColor clearColor];
+                
+                cell.titleLbl.text = @"宝贝详情";
+                cell.detailLbl.text = @"";
             }
             
-        }else{
-            locationLbl.text = @"";
+            return cell;
         }
         
+        
+                
+               
         /*
 
          1星               1
@@ -286,7 +312,7 @@
          4皇冠             19
          5皇冠             20
          */
-        return cell;
+        
     }else if(photosList == tableView){
         static NSString *cellIdentifier = @"DetailPhotoCell";
         DetailPhotoCell *cell = (DetailPhotoCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -311,10 +337,10 @@
 
 - (float) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (detailList == tableView) {
-        if (indexPath.row == 0) {
+        if (indexPath.section == 0) {
             return 200;
-        }else if(indexPath.row == 1){
-            return 50;
+        }else{
+            return 44;
         }
     }else if(photosList == tableView){
         return 200;

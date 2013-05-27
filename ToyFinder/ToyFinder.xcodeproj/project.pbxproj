@@ -91,6 +91,9 @@
 		79F54A341753625F00875318 /* seller_19@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79F54A0C1753625F00875318 /* seller_19@2x.png */; };
 		79F54A351753625F00875318 /* seller_20.png in Resources */ = {isa = PBXBuildFile; fileRef = 79F54A0D1753625F00875318 /* seller_20.png */; };
 		79F54A361753625F00875318 /* seller_20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79F54A0E1753625F00875318 /* seller_20@2x.png */; };
+		79F54A3917536C5D00875318 /* DetailViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F54A3817536C5D00875318 /* DetailViewCell.m */; };
+		79F54A3C175373E000875318 /* cell_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 79F54A3A175373E000875318 /* cell_indicator.png */; };
+		79F54A3D175373E000875318 /* cell_indicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79F54A3B175373E000875318 /* cell_indicator@2x.png */; };
 		DD0CAEA817505BA7008F635D /* cat0_0.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0CAEA717505BA7008F635D /* cat0_0.png */; };
 		DD0CAEAA17505E21008F635D /* cat1_0.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0CAEA917505E21008F635D /* cat1_0.png */; };
 		DD0CAEAC1750FC88008F635D /* hot_mark.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0CAEAB1750FC87008F635D /* hot_mark.png */; };
@@ -268,6 +271,10 @@
 		79F54A0C1753625F00875318 /* seller_19@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seller_19@2x.png"; sourceTree = "<group>"; };
 		79F54A0D1753625F00875318 /* seller_20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seller_20.png; sourceTree = "<group>"; };
 		79F54A0E1753625F00875318 /* seller_20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seller_20@2x.png"; sourceTree = "<group>"; };
+		79F54A3717536C5D00875318 /* DetailViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewCell.h; sourceTree = "<group>"; };
+		79F54A3817536C5D00875318 /* DetailViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewCell.m; sourceTree = "<group>"; };
+		79F54A3A175373E000875318 /* cell_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cell_indicator.png; sourceTree = "<group>"; };
+		79F54A3B175373E000875318 /* cell_indicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell_indicator@2x.png"; sourceTree = "<group>"; };
 		DD0CAEA717505BA7008F635D /* cat0_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cat0_0.png; sourceTree = "<group>"; };
 		DD0CAEA917505E21008F635D /* cat1_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cat1_0.png; sourceTree = "<group>"; };
 		DD0CAEAB1750FC87008F635D /* hot_mark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hot_mark.png; sourceTree = "<group>"; };
@@ -566,6 +573,8 @@
 				DD7ED7AF1751D0D7003AA9EE /* DetailViewController.m */,
 				DD7ED7B41751F47E003AA9EE /* DetailPhotoCell.h */,
 				DD7ED7B51751F47F003AA9EE /* DetailPhotoCell.m */,
+				79F54A3717536C5D00875318 /* DetailViewCell.h */,
+				79F54A3817536C5D00875318 /* DetailViewCell.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -600,6 +609,8 @@
 		DDA83B941745335E00562EF1 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				79F54A3A175373E000875318 /* cell_indicator.png */,
+				79F54A3B175373E000875318 /* cell_indicator@2x.png */,
 				79F549E71753625F00875318 /* seller_1.png */,
 				79F549E81753625F00875318 /* seller_1@2x.png */,
 				79F549E91753625F00875318 /* seller_2.png */,
@@ -810,6 +821,8 @@
 				79F54A341753625F00875318 /* seller_19@2x.png in Resources */,
 				79F54A351753625F00875318 /* seller_20.png in Resources */,
 				79F54A361753625F00875318 /* seller_20@2x.png in Resources */,
+				79F54A3C175373E000875318 /* cell_indicator.png in Resources */,
+				79F54A3D175373E000875318 /* cell_indicator@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -854,6 +867,7 @@
 				DD7ED7B61751F47F003AA9EE /* DetailPhotoCell.m in Sources */,
 				79F549C91752EE0800875318 /* PhotoView.m in Sources */,
 				79F549CC1752F07B00875318 /* FullImageView.m in Sources */,
+				79F54A3917536C5D00875318 /* DetailViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
