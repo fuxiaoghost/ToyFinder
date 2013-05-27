@@ -17,22 +17,23 @@
     if (self) {
         // Initialization code
         
-        UIImageView *bgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 192, 192)];
+        UIImageView *bgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 146, 146)];
         bgView.image = [UIImage stretchableImageWithPath:@"item_bg.png"];
         [self.contentView addSubview:bgView];
         [bgView release];
         
-        photoView = [[UIImageView alloc] initWithFrame:CGRectMake(6, 6, 180, 180)];
+        photoView = [[UIImageView alloc] initWithFrame:CGRectMake(6, 6, 134, 134)];
         [bgView addSubview:photoView];
+        photoView.clipsToBounds = YES;
         photoView.contentMode = UIViewContentModeScaleAspectFill;
         [photoView release];
         
         
         CGAffineTransform transform =  CGAffineTransformMakeRotation(M_PI_2);
         bgView.transform = transform;
-        bgView.frame = CGRectMake(4, 4, 192 ,192);
+        bgView.frame = CGRectMake(4, 4, 146 ,146);
         
-        markView = [[UIView alloc] initWithFrame:CGRectMake(6, 6, 180, 180)];
+        markView = [[UIView alloc] initWithFrame:CGRectMake(6, 6, 134, 134)];
         markView.backgroundColor = RGBACOLOR(0, 0, 0, 0.4);
         [bgView addSubview:markView];
         [markView release];

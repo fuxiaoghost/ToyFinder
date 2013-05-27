@@ -159,7 +159,10 @@
 #pragma mark -
 #pragma mark UITableViewDataSource
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView{
-    return 3;
+    if (tableView == detailList) {
+        return 3;
+    }
+    return 1;
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -169,7 +172,7 @@
         }else if(section == 1){
             return 2;
         }else {
-            return 0;
+            return 2;
         }
     }else if(tableView == photosList){
         if (self.photoArray) {
@@ -190,13 +193,14 @@
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
-                photosList = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200) style:UITableViewStylePlain];
+                photosList = [[UITableView alloc] initWithFrame:CGRectMake(6, 0, SCREEN_WIDTH-12, 154) style:UITableViewStylePlain];
                 photosList.rowHeight = 200;
                 photosList.clipsToBounds = NO;
+                photosList.pagingEnabled = YES;
                 photosList.backgroundColor = [UIColor clearColor];					//清空背景色
                 CGAffineTransform transform = CGAffineTransformMakeRotation(-M_PI_2);
                 photosList.transform = transform;									//旋转TableView
-                photosList.frame = CGRectMake(0, 0, SCREEN_WIDTH, 200);
+                photosList.frame = CGRectMake(6, 0, SCREEN_WIDTH-12, 154);
                 photosList.delegate = self;
                 photosList.dataSource = self;
                 photosList.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -270,6 +274,8 @@
                 }else{
                     cell.detailLbl.text = @"";
                 }
+                
+                cell.creditView.image = nil;
             }else if(indexPath.section == 1 && indexPath.row == 1){
                 [cell setCellType:1];
                 cell.arrowView.hidden = NO;
@@ -281,6 +287,38 @@
                 
                 cell.titleLbl.text = @"宝贝详情";
                 cell.detailLbl.text = @"";
+                cell.creditView.image = nil;
+            }else if(indexPath.section == 2 && indexPath.row == 0){
+                // 快递费用
+                [cell setCellType:-1];
+                cell.arrowView.hidden = YES;
+                cell.titleLbl.frame = CGRectMake(20, 4,SCREEN_WIDTH - 20 - 20, 20);
+                cell.titleLbl.font = [UIFont systemFontOfSize:14.0f];
+                cell.titleLbl.textColor = [UIColor colorWithWhite:0.2 alpha:1];
+                cell.titleLbl.backgroundColor = [UIColor clearColor];
+                
+                // 宝贝所在地
+                cell.detailLbl.text = @"";
+                cell.splitView.hidden = NO;
+
+                NSString *nick = [[self.detailDict objectForKey:@"item"] objectForKey:@"nick"];
+                cell.titleLbl.text = [NSString stringWithFormat:@"卖家昵称：%@",nick];
+                
+                cell.creditView.frame = CGRectMake(20, 24, SCREEN_WIDTH - 20 - 20, 12);
+                cell.creditView.image = [UIImage noCacheImageNamed:[NSString stringWithFormat:@"seller_%@.png",[self.detailDict objectForKey:@"seller_credit_score"]]];
+                
+            }else if(indexPath.section == 2 && indexPath.row == 1){
+                [cell setCellType:1];
+                cell.arrowView.hidden = NO;
+                cell.splitView.hidden = YES;
+                cell.titleLbl.frame = CGRectMake(20, 0,SCREEN_WIDTH - 20 - 20, 44);
+                cell.titleLbl.font = [UIFont systemFontOfSize:14.0f];
+                cell.titleLbl.textColor = [UIColor colorWithWhite:0.2 alpha:1];
+                cell.titleLbl.backgroundColor = [UIColor clearColor];
+                
+                cell.titleLbl.text = @"卖家店铺";
+                cell.detailLbl.text = @"";
+                cell.creditView.image = nil;
             }
             
             return cell;
@@ -330,7 +368,11 @@
 #pragma mark UITableViewDelegtae
 - (float) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if(detailList == tableView){
-        return 40;
+        if (section == 0) {
+            return 40;
+        }else {
+            return 20;
+        }
     }
     return 0;
 }
@@ -338,45 +380,51 @@
 - (float) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (detailList == tableView) {
         if (indexPath.section == 0) {
-            return 200;
+            return 154;
         }else{
             return 44;
         }
     }else if(photosList == tableView){
-        return 200;
+        return 154;
     }
     return 0;
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (tableView == detailList) {
-        UIView *priceView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
-        priceView.backgroundColor = [UIColor whiteColor];
-        
-        // 价格
-        UILabel *priceLbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 70, 40)];
-        priceLbl.backgroundColor = [UIColor clearColor];
-        [priceLbl setFont:[UIFont boldSystemFontOfSize:18.0f]];
-        priceLbl.textColor = RGBACOLOR(221, 70, 0, 1);
-        priceLbl.textAlignment = UITextAlignmentLeft;
-        [priceView addSubview:priceLbl];
-        [priceLbl release];
-        priceLbl.text = self.price;
-        
-        if (self.promotion) {
-            // 促销
-            StrickoutLabel *promotionLbl = [[StrickoutLabel alloc] initWithFrame:CGRectMake(80, 0, 70, 40)];
-            promotionLbl.backgroundColor = [UIColor clearColor];
-            promotionLbl.font = [UIFont systemFontOfSize:14.0f];
-            promotionLbl.textColor = [UIColor grayColor];
-            promotionLbl.textAlignment = UITextAlignmentLeft;
-            [priceView addSubview:promotionLbl];
-            [promotionLbl release];
-            promotionLbl.text = self.promotion;
+        if (section == 0) {
+            UIView *priceView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+            priceView.backgroundColor = [UIColor whiteColor];
+            
+            // 价格
+            UILabel *priceLbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 70, 40)];
+            priceLbl.backgroundColor = [UIColor clearColor];
+            [priceLbl setFont:[UIFont boldSystemFontOfSize:18.0f]];
+            priceLbl.textColor = RGBACOLOR(221, 70, 0, 1);
+            priceLbl.textAlignment = UITextAlignmentLeft;
+            [priceView addSubview:priceLbl];
+            [priceLbl release];
+            priceLbl.text = self.price;
+            
+            if (self.promotion) {
+                // 促销
+                StrickoutLabel *promotionLbl = [[StrickoutLabel alloc] initWithFrame:CGRectMake(80, 0, 70, 40)];
+                promotionLbl.backgroundColor = [UIColor clearColor];
+                promotionLbl.font = [UIFont systemFontOfSize:14.0f];
+                promotionLbl.textColor = [UIColor grayColor];
+                promotionLbl.textAlignment = UITextAlignmentLeft;
+                [priceView addSubview:promotionLbl];
+                [promotionLbl release];
+                promotionLbl.text = self.promotion;
+            }
+            return [priceView autorelease];
+        }else{
+            UIView *spaceView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 20)];
+            spaceView.backgroundColor = [UIColor clearColor];
+            return [spaceView autorelease];
+            
+            return nil;
         }
-        
-        
-        return [priceView autorelease];
     }
     return nil;
 }
@@ -409,24 +457,8 @@
 #pragma mark -
 #pragma mark FullImageViewDelegate
 - (void) fullImageView:(FullImageView *)fullImageView didClosedAtIndex:(NSInteger)index{
-    [photosList scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+//    [photosList scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
 }
 
-#pragma mark -
-#pragma mark Rotate
-
-- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
-    
-    return NO;
-}
-
-- (BOOL) shouldAutorotate{
-    
-    return NO;
-}
-
-- (NSUInteger) supportedInterfaceOrientations{
-    return UIInterfaceOrientationMaskAllButUpsideDown;
-}
 
 @end

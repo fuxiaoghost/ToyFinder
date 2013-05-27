@@ -14,6 +14,7 @@
 @synthesize detailLbl;
 @synthesize splitView;
 @synthesize arrowView;
+@synthesize creditView;
 
 - (void) dealloc{
     [super dealloc];
@@ -63,6 +64,12 @@
         [self.contentView addSubview:detailLbl];
         [detailLbl release];
         
+        //
+        creditView = [[UIImageView alloc] initWithFrame: CGRectMake(0, 0, SCREEN_WIDTH, 20)];
+        creditView.contentMode = UIViewContentModeLeft;
+        [self.contentView addSubview:creditView];
+        [creditView release];
+        
         [UIView setAnimationsEnabled:YES];
     }
     return self;
@@ -87,9 +94,9 @@
 - (void) setSelected:(BOOL)selected animated:(BOOL)animated{
     //[super setSelected:selected animated:animated];
     
-    if (arrowView.hidden) {
+    //if (arrowView.hidden) {
         selected = NO;
-    }
+    //}
     
     if (selected) {
         if (self.cellType == -1) {

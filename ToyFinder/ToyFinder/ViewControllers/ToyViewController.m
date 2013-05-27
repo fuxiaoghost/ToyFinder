@@ -13,6 +13,7 @@
 #import "AppDelegate.h"
 #import "SlideViewController.h"
 #import "DetailViewController.h"
+#import "DetailNavgationController.h"
 
 @interface ToyViewController (){
     NSInteger index;
@@ -216,9 +217,14 @@
                 promotion = nil;
             }
             NSString *numIID = [dict objectForKey:@"num_iid"];
+            
             DetailViewController *detailVC = [[DetailViewController alloc] initWithTitle:titleHtml price:price promotion:promotion numIID:numIID];
-            [self presentModalViewController:detailVC animated:YES];
+            
+            DetailNavgationController *navController = [[DetailNavgationController alloc] initWithRootViewController:detailVC];
             [detailVC release];
+            
+            [self presentModalViewController:navController animated:YES];
+            [navController release];
         }
     }
 }

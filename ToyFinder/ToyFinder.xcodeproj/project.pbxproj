@@ -130,6 +130,7 @@
 		DDA83B93174527B200562EF1 /* SlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDA83B92174527B200562EF1 /* SlideViewController.m */; };
 		DDA83B961745337500562EF1 /* slide_top_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = DDA83B951745337500562EF1 /* slide_top_shadow.png */; };
 		DDA83B9A174535C500562EF1 /* UIImage+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = DDA83B99174535C500562EF1 /* UIImage+Utils.m */; };
+		DDF784161753ACA20022426D /* DetailNavgationController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDF784151753ACA20022426D /* DetailNavgationController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -335,6 +336,8 @@
 		DDA83B951745337500562EF1 /* slide_top_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slide_top_shadow.png; sourceTree = "<group>"; };
 		DDA83B98174535C500562EF1 /* UIImage+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Utils.h"; sourceTree = "<group>"; };
 		DDA83B99174535C500562EF1 /* UIImage+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Utils.m"; sourceTree = "<group>"; };
+		DDF784141753ACA20022426D /* DetailNavgationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailNavgationController.h; sourceTree = "<group>"; };
+		DDF784151753ACA20022426D /* DetailNavgationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailNavgationController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -575,6 +578,8 @@
 				DD7ED7B51751F47F003AA9EE /* DetailPhotoCell.m */,
 				79F54A3717536C5D00875318 /* DetailViewCell.h */,
 				79F54A3817536C5D00875318 /* DetailViewCell.m */,
+				DDF784141753ACA20022426D /* DetailNavgationController.h */,
+				DDF784151753ACA20022426D /* DetailNavgationController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -868,6 +873,7 @@
 				79F549C91752EE0800875318 /* PhotoView.m in Sources */,
 				79F549CC1752F07B00875318 /* FullImageView.m in Sources */,
 				79F54A3917536C5D00875318 /* DetailViewCell.m in Sources */,
+				DDF784161753ACA20022426D /* DetailNavgationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
