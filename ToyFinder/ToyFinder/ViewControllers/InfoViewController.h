@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface InfoViewController : UIViewController{
+@interface InfoViewController : BaseViewController{
     
 }
 - (id) initWithUrl:(NSString *)url_ title:(NSString *)title_;

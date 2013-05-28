@@ -36,22 +36,8 @@
 
     self.view.backgroundColor = [UIColor whiteColor];
     
-    // 导航栏标题
-    UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
-    titleLbl.backgroundColor = RGBACOLOR(245,124,0,1);
-    titleLbl.font = [UIFont boldSystemFontOfSize:22.0f];
-    titleLbl.textAlignment = UITextAlignmentCenter;
-    titleLbl.textColor = [UIColor whiteColor];
-    [self.view addSubview:titleLbl];
-    [titleLbl release];
-    titleLbl.text = self.cid;
+    self.title = self.cid;
     
-    
-    UIView *splitView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, 1)];
-    splitView.backgroundColor = RGBACOLOR(217,70,0,1);
-    [self.view addSubview:splitView];
-    [splitView release];
-
     
     // 信息展示webview
     UIWebView *infoView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 45, SCREEN_WIDTH, SCREEN_HEIGHT - 45)];

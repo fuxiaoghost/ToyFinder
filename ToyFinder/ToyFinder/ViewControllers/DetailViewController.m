@@ -14,6 +14,7 @@
 #import "FullImageView.h"
 #import "AppDelegate.h"
 #import "DetailViewCell.h"
+#import "FullInfoViewController.h"
 
 @interface DetailViewController ()
 @property (nonatomic,copy) NSString *detailTitle;
@@ -99,14 +100,32 @@
     [closeButton addTarget:self action:@selector(closeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     // 详情tableview
-    detailList = [[UITableView alloc] initWithFrame:CGRectMake(0, 45, SCREEN_WIDTH, SCREEN_HEIGHT - 45) style:UITableViewStylePlain];
-    detailList.separatorStyle = UITableViewCellSeparatorStyleNone;
+    detailList = [[UITableView alloc] initWithFrame:CGRectMake(0, 45, SCREEN_WIDTH, SCREEN_HEIGHT - 45 - 40) style:UITableViewStylePlain];
+    detailList.separatorStyle = UITableViewCellSeparatorStyleNone;  
     [self.view addSubview:detailList];
     [detailList release];
     detailList.dataSource = self;
     detailList.delegate = self;
     
+    // 购买
+    UIButton *buyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    buyButton.frame = CGRectMake(100, SCREEN_HEIGHT - 35, 120, 30);
+    buyButton.backgroundColor = RGBACOLOR(245,124,0,1);
+    buyButton.titleLabel.font = [UIFont boldSystemFontOfSize:18.0f];
+    [buyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [buyButton setTitle:@"去购买" forState:UIControlStateNormal];
+    [self.view addSubview:buyButton];
+    [buyButton addTarget:self action:@selector(buyButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    
     [self getDetail];
+}
+
+- (void) buyButtonClick:(id)sender{
+    FullInfoViewController *fullInfoVC = [[FullInfoViewController alloc] init];
+    fullInfoVC.titleInfo = @"订单填写";
+    fullInfoVC.navUrl = [self.detailDict objectForKey:@"click_url"];
+    [self.navigationController pushViewController:fullInfoVC animated:YES];
+    [fullInfoVC release];
 }
 
 - (void) closeButtonClick:(id)sender{
@@ -371,7 +390,7 @@
         if (section == 0) {
             return 40;
         }else {
-            return 20;
+            return 10;
         }
     }
     return 0;
@@ -397,7 +416,7 @@
             priceView.backgroundColor = [UIColor whiteColor];
             
             // 价格
-            UILabel *priceLbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 70, 40)];
+            UILabel *priceLbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 80, 40)];
             priceLbl.backgroundColor = [UIColor clearColor];
             [priceLbl setFont:[UIFont boldSystemFontOfSize:18.0f]];
             priceLbl.textColor = RGBACOLOR(221, 70, 0, 1);
@@ -408,7 +427,7 @@
             
             if (self.promotion) {
                 // 促销
-                StrickoutLabel *promotionLbl = [[StrickoutLabel alloc] initWithFrame:CGRectMake(80, 0, 70, 40)];
+                StrickoutLabel *promotionLbl = [[StrickoutLabel alloc] initWithFrame:CGRectMake(90, 0, 80, 40)];
                 promotionLbl.backgroundColor = [UIColor clearColor];
                 promotionLbl.font = [UIFont systemFontOfSize:14.0f];
                 promotionLbl.textColor = [UIColor grayColor];
@@ -431,7 +450,19 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (detailList == tableView) {
-
+        if (indexPath.section == 1 && indexPath.row == 1) {
+            FullInfoViewController *fullInfoVC = [[FullInfoViewController alloc] init];
+            fullInfoVC.titleInfo = @"宝贝详情";
+            fullInfoVC.fullInfo = [[self.detailDict objectForKey:@"item"] objectForKey:@"desc"];
+            [self.navigationController pushViewController:fullInfoVC animated:YES];
+            [fullInfoVC release];
+        }else if(indexPath.section == 2 && indexPath.row == 1){
+            FullInfoViewController *shopVC = [[FullInfoViewController alloc] init];
+            shopVC.titleInfo = @"卖家店铺";
+            shopVC.navUrl = [self.detailDict objectForKey:@"shop_click_url"];
+            [self.navigationController pushViewController:shopVC animated:YES];
+            [shopVC release];
+        }
     }else if(photosList == tableView){
         NSMutableArray *fullImageArray = [NSMutableArray arrayWithCapacity:0];
         for (NSDictionary *dict in self.photoArray) {
