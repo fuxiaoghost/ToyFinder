@@ -36,6 +36,7 @@
 		794F0F2517446A6F00035EB5 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 794F0F1C17446A6F00035EB5 /* SBJsonBase.m */; };
 		794F0F2617446A6F00035EB5 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 794F0F1E17446A6F00035EB5 /* SBJsonParser.m */; };
 		794F0F2717446A6F00035EB5 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 794F0F2017446A6F00035EB5 /* SBJsonWriter.m */; };
+		797A38FE1756E9FF00DA785A /* ScalableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 797A38FD1756E9FF00DA785A /* ScalableView.m */; };
 		79F549C91752EE0800875318 /* PhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F549C81752EE0800875318 /* PhotoView.m */; };
 		79F549CC1752F07B00875318 /* FullImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F549CB1752F07B00875318 /* FullImageView.m */; };
 		79F549DA175328FE00875318 /* cell_footer_h.png in Resources */ = {isa = PBXBuildFile; fileRef = 79F549CD175328FD00875318 /* cell_footer_h.png */; };
@@ -218,6 +219,8 @@
 		794F0F1E17446A6F00035EB5 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		794F0F1F17446A6F00035EB5 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		794F0F2017446A6F00035EB5 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		797A38FC1756E9FF00DA785A /* ScalableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScalableView.h; sourceTree = "<group>"; };
+		797A38FD1756E9FF00DA785A /* ScalableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScalableView.m; sourceTree = "<group>"; };
 		79F549C71752EE0800875318 /* PhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoView.h; sourceTree = "<group>"; };
 		79F549C81752EE0800875318 /* PhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoView.m; sourceTree = "<group>"; };
 		79F549CA1752F07B00875318 /* FullImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullImageView.h; sourceTree = "<group>"; };
@@ -601,6 +604,8 @@
 		DDA83B901745275900562EF1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				797A38FC1756E9FF00DA785A /* ScalableView.h */,
+				797A38FD1756E9FF00DA785A /* ScalableView.m */,
 				79F549CA1752F07B00875318 /* FullImageView.h */,
 				79F549CB1752F07B00875318 /* FullImageView.m */,
 				79F549C71752EE0800875318 /* PhotoView.h */,
@@ -890,6 +895,7 @@
 				DDF784161753ACA20022426D /* DetailNavgationController.m in Sources */,
 				DD3B90CD1754E4BD005CF2E2 /* BaseViewController.m in Sources */,
 				DD3B90D01754E790005CF2E2 /* FullInfoViewController.m in Sources */,
+				797A38FE1756E9FF00DA785A /* ScalableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
