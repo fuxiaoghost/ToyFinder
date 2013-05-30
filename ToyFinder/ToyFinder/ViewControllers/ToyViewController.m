@@ -15,6 +15,7 @@
 #import "DetailViewController.h"
 #import "DetailNavgationController.h"
 #import "ScalableView.h"
+#import "CacheManager.h"
 
 @interface ToyViewController (){
     NSInteger index;
@@ -179,6 +180,12 @@
         [keystr appendFormat:@"%@:%@;",mkey,[params objectForKey:mkey]];
     }
     self.requestUrl = keystr;
+    
+    CacheManager *cacheManager = [CacheManager manager];
+    NSData *data = [cacheManager cacheForKey:self.requestUrl];
+    if (data) {
+        
+    }
     
     if (self.sessionKey) {
         [iosClient cancel:[NSString stringWithFormat:@"%@",self.sessionKey]];

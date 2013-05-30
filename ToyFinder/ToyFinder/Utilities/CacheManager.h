@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CacheManager : NSObject
-
+@interface CacheManager : NSObject{
+    
+}
++ (id)manager;
+- (void) cacheData:(NSData *)data forKey:(NSString *)keystr;
+- (NSData *) cacheForKey:(NSString *)keystr;
 @end
