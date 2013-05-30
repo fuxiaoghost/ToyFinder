@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "ItemView.h"
+#import "ScalableView.h"
 
-@class ScalableView;
-@interface ToyViewController : UIViewController<ItemViewDelegate>{
+@interface ToyViewController : UIViewController<ItemViewDelegate,ScalableViewDelegate>{
 @private
     ItemView *itemView;
     UIView *splitView;

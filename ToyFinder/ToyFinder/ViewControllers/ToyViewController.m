@@ -22,6 +22,8 @@
 @property (nonatomic,copy) NSString *sessionKey;
 @property (nonatomic,copy) NSString *cid;
 @property (nonatomic,copy) NSString *url;
+@property (nonatomic,copy) NSString *sort;
+@property (nonatomic,copy) NSString *requestUrl;
 @end
 
 @implementation ToyViewController
@@ -29,6 +31,8 @@
 @synthesize sessionKey;
 @synthesize cid;
 @synthesize url;
+@synthesize sort;
+@synthesize requestUrl;
 
 - (void) dealloc{
     if (self.sessionKey) {
@@ -38,6 +42,7 @@
 
     self.cid = nil;
     self.url = nil;
+    self.sort = nil;
     [contentArray release];
     [super dealloc];
 }
@@ -122,7 +127,8 @@
     [itemView release];
     
     // 排序按钮
-    sortView = [[ScalableView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 40, SCREEN_WIDTH - 20, 40) images:[NSArray arrayWithObjects:@"sort_priceup_btn.png",@"sort_pricedown_btn.png",@"sort_sale_btn.png",@"sort_popular_btn.png",@"sort_credite_btn.png",@"sort_main_btn.png", nil] highlightedImages:[NSArray arrayWithObjects:@"sort_priceup_btn_h.png",@"sort_pricedown_btn_h.png",@"sort_sale_btn_h.png",@"sort_popular_btn_h.png",@"sort_credite_btn_h.png",@"sort_main_btn_h.png", nil] direction:FromLeftToRight firstSpace:50];
+    sortView = [[ScalableView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 40, SCREEN_WIDTH - 20, 40) images:[NSArray arrayWithObjects:@"sort_priceup_btn.png",@"sort_pricedown_btn.png",@"sort_credite_btn.png",@"sort_sale_btn.png",@"sort_popular_btn.png",@"sort_main_btn.png", nil] highlightedImages:[NSArray arrayWithObjects:@"sort_priceup_btn_h.png",@"sort_pricedown_btn_h.png",@"sort_credite_btn_h.png",@"sort_sale_btn_h.png",@"sort_popular_btn_h.png",@"sort_main_btn_h.png", nil] direction:FromLeftToRight firstSpace:50];
+    sortView.delegate = self;
     [self.view addSubview:sortView];
     [sortView release];
 }
@@ -135,6 +141,7 @@
 
 - (void) selectKeyword:(NSString *)keyword infoUrl:(NSString *)url_{
     index = 1;
+    self.sort = @"default";
     self.cid = keyword;
     isMoreRequest = NO;
     [self searchMore];
@@ -161,11 +168,17 @@
     [params setObject:NICK forKey:@"nick"];
     //[params setObject:@"北京" forKey:@"area"];
     //[params setObject:self.cid forKey:@"cid"];
+    [params setObject:self.sort forKey:@"sort"];
     [params setObject:self.cid forKey:@"keyword"];
     [params setObject:@"true" forKey:@"is_mobile"];
     [params setObject:[NSString stringWithFormat:@"%d",index] forKey:@"page_no"];
     [params setObject:[NSString stringWithFormat:@"%d",TOY_PAGE_SIZE] forKey:@"page_size"];
-     
+    
+    NSMutableString *keystr = [NSMutableString string];
+    for (NSString *mkey in [params allKeys]) {
+        [keystr appendFormat:@"%@:%@;",mkey,[params objectForKey:mkey]];
+    }
+    self.requestUrl = keystr;
     
     if (self.sessionKey) {
         [iosClient cancel:[NSString stringWithFormat:@"%@",self.sessionKey]];
@@ -173,13 +186,14 @@
     }
     
     self.sessionKey = [iosClient api:@"GET" params:params target:self cb:@selector(showApiResponse:) userId:NICK needMainThreadCallBack:true];
+    
 }
 
 -(void)showApiResponse:(id)data{
     self.sessionKey = nil;
     if ([data isKindOfClass:[TopApiResponse class]]){
         TopApiResponse *response = (TopApiResponse *)data;
-        
+        NSLog(@"%@",response.reqParams);
         if ([response content]){
             if(isMoreRequest){
                 NSDictionary *contentDict = [[response content] JSONValue];
@@ -198,6 +212,45 @@
             NSLog(@"%@",[(NSError *)[response error] userInfo]);
         }
     }
+    
+}
+
+#pragma mark -
+#pragma mark ScalableViewDelegate
+- (void) scalableView:(ScalableView *)ScalableView didSelectedAtIndex:(NSInteger)index_{
+    NSLog(@"%d",index_);
+    //"sort_priceup_btn.png",@"sort_pricedown_btn.png",@"sort_credite_btn.png",@"sort_sale_btn.png",,@"sort_popular_btn.png",@"sort_main_btn.png"
+    switch (index_) {
+        case 0:{
+            // 价格升序
+            self.sort = @"price_asc";
+            break;
+        }
+        case 1:{
+            self.sort = @"price_desc";
+            // 价格降序
+            break;
+        }
+        case 2:{
+            self.sort = @"credit_desc";
+            // 信用降序
+            break;
+        }
+        case 3:{
+            // 销量降序
+            self.sort = @"commissionNum_desc";
+            break;
+        }
+        case 4:{
+            // 人气
+            self.sort = @"default";
+            break;
+        }
+        default:
+            break;
+    }
+    
+    [self searchMore];
     
 }
 
