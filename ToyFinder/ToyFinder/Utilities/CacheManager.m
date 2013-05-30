@@ -9,7 +9,7 @@
 #import "CacheManager.h"
 #import <CommonCrypto/CommonDigest.h>
 
-#define CACHE_PATH @"Caches"
+#define CACHE_PATH @"ToyCaches"
 #define CACHE_INTERVAL 60*10
 
 static CacheManager *cacheManager = nil;
@@ -36,7 +36,7 @@ static CacheManager *cacheManager = nil;
     return filename;
 }
 
-- (void) cacheData:(NSData *)data forKey:(NSString *)keystr{
+- (void) cacheData:(NSString *)data forKey:(NSString *)keystr{
     NSString *key = [self cachePathForKey:keystr];
     //配置文件夹路径
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -51,8 +51,8 @@ static CacheManager *cacheManager = nil;
     }
     
     cPath = [cPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.cache",key]];
+    [data writeToFile:cPath atomically:YES encoding:NSUTF8StringEncoding error:NULL];
     
-    [data writeToFile:cPath atomically:YES];
 }
 
 - (NSDictionary *)scanFileAtPath:(NSString *)path withFileOutTime:(long long)seconds {
@@ -67,7 +67,7 @@ static CacheManager *cacheManager = nil;
     return fileAttribute;
 }
 
-- (NSData *) cacheForKey:(NSString *)keystr{
+- (NSString *) cacheForKey:(NSString *)keystr{
     NSString *key = [self cachePathForKey:keystr];
     //配置文件夹路径
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -88,7 +88,8 @@ static CacheManager *cacheManager = nil;
         if (fileInfoDict == nil) {
             return nil;
         }else{
-            return [NSData dataWithContentsOfFile:cPath];
+            NSLog(@"命中缓存:%@",keystr);
+            return [NSString stringWithContentsOfFile:cPath encoding:NSUTF8StringEncoding error:NULL];
         }
     }else{
         return nil;

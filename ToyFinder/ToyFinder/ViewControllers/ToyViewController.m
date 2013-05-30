@@ -20,25 +20,21 @@
 @interface ToyViewController (){
     NSInteger index;
 }
-@property (nonatomic,copy) NSString *sessionKey;
 @property (nonatomic,copy) NSString *cid;
 @property (nonatomic,copy) NSString *url;
 @property (nonatomic,copy) NSString *sort;
-@property (nonatomic,copy) NSString *requestUrl;
 @end
 
 @implementation ToyViewController
 @synthesize titleLbl;
-@synthesize sessionKey;
 @synthesize cid;
 @synthesize url;
 @synthesize sort;
-@synthesize requestUrl;
 
 - (void) dealloc{
-    if (self.sessionKey) {
-        [iosClient cancel:[NSString stringWithFormat:@"%@",self.sessionKey]];
-        self.sessionKey = nil;
+    if (request) {
+        [request cancelRequest];
+        request = nil;
     }
 
     self.cid = nil;
@@ -144,7 +140,6 @@
     index = 1;
     self.sort = @"default";
     self.cid = keyword;
-    isMoreRequest = NO;
     [self searchMore];
     self.url = url_;
 }
@@ -161,7 +156,7 @@
 
 
 - (void) searchMore{
-    iosClient  =[TopIOSClient getIOSClientByAppKey:APP_KEY];
+    
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
     
     [params setObject:@"taobao.taobaoke.items.get" forKey:@"method"];
@@ -175,52 +170,31 @@
     [params setObject:[NSString stringWithFormat:@"%d",index] forKey:@"page_no"];
     [params setObject:[NSString stringWithFormat:@"%d",TOY_PAGE_SIZE] forKey:@"page_size"];
     
-    NSMutableString *keystr = [NSMutableString string];
-    for (NSString *mkey in [params allKeys]) {
-        [keystr appendFormat:@"%@:%@;",mkey,[params objectForKey:mkey]];
+    if (request) {
+        [request cancelRequest];
+        request = nil;
     }
-    self.requestUrl = keystr;
-    
-    CacheManager *cacheManager = [CacheManager manager];
-    NSData *data = [cacheManager cacheForKey:self.requestUrl];
-    if (data) {
-        
-    }
-    
-    if (self.sessionKey) {
-        [iosClient cancel:[NSString stringWithFormat:@"%@",self.sessionKey]];
-        self.sessionKey = nil;
-    }
-    
-    self.sessionKey = [iosClient api:@"GET" params:params target:self cb:@selector(showApiResponse:) userId:NICK needMainThreadCallBack:true];
+    request = [TBHttRequest requestWithParams:params];
+    request.delegate = self;
+    [request startGetRequest];
     
 }
 
--(void)showApiResponse:(id)data{
-    self.sessionKey = nil;
-    if ([data isKindOfClass:[TopApiResponse class]]){
-        TopApiResponse *response = (TopApiResponse *)data;
-        NSLog(@"%@",response.reqParams);
-        if ([response content]){
-            if(isMoreRequest){
-                NSDictionary *contentDict = [[response content] JSONValue];
-                [contentArray addObjectsFromArray:[[[contentDict objectForKey:@"taobaoke_items_get_response"] objectForKey:@"taobaoke_items"] objectForKey:@"taobaoke_item"]];
-                itemView.dataSource = contentArray;
-            }else{
-                [contentArray removeAllObjects];
-                NSDictionary *contentDict = [[response content] JSONValue];
-                [contentArray addObjectsFromArray:[[[contentDict objectForKey:@"taobaoke_items_get_response"] objectForKey:@"taobaoke_items"] objectForKey:@"taobaoke_item"]];
-                itemView.dataSource = contentArray;
-                [itemView reloadData];
-                tipsLbl.text = [NSString stringWithFormat:@"%d/%d",1,contentArray.count];
-            }
-        }
-        else {
-            NSLog(@"%@",[(NSError *)[response error] userInfo]);
-        }
-    }
-    
+#pragma mark -
+#pragma mark TBHtteRequestDelegate
+- (void) requestFailed:(TBHttRequest *)request_{
+    request = nil;
 }
+
+- (void) requestFinished:(TBHttRequest *)request_ withDict:(NSDictionary *)dict{
+    [contentArray removeAllObjects];
+    [contentArray addObjectsFromArray:[[[dict objectForKey:@"taobaoke_items_get_response"] objectForKey:@"taobaoke_items"] objectForKey:@"taobaoke_item"]];
+    itemView.dataSource = contentArray;
+    [itemView reloadData];
+    tipsLbl.text = [NSString stringWithFormat:@"%d/%d",1,contentArray.count];
+    request = nil;
+}
+
 
 #pragma mark -
 #pragma mark ScalableViewDelegate

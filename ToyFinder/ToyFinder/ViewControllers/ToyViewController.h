@@ -9,20 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "ItemView.h"
 #import "ScalableView.h"
+#import "TBHttRequest.h"
 
-@interface ToyViewController : UIViewController<ItemViewDelegate,ScalableViewDelegate>{
+@interface ToyViewController : UIViewController<ItemViewDelegate,ScalableViewDelegate,TBHttRequestDelegate>{
 @private
     ItemView *itemView;
     UIView *splitView;
     UILabel *titleLbl;
     UIImageView *navView;
-    BOOL isMoreRequest;
     NSMutableArray *contentArray;
     UILabel *tipsLbl;
     UIButton *infoButton;
-    TopIOSClient *iosClient;
+    TBHttRequest *request;
     ScalableView *sortView;
-    //UIWebView *infoView;
 }
 
 @property (nonatomic,assign) UILabel *titleLbl;

@@ -12,6 +12,6 @@
     
 }
 + (id)manager;
-- (void) cacheData:(NSData *)data forKey:(NSString *)keystr;
-- (NSData *) cacheForKey:(NSString *)keystr;
+- (void) cacheData:(NSString *)data forKey:(NSString *)keystr;
+- (NSString *) cacheForKey:(NSString *)keystr;
 @end

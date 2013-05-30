@@ -160,6 +160,7 @@
 		DDA83B93174527B200562EF1 /* SlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDA83B92174527B200562EF1 /* SlideViewController.m */; };
 		DDA83B961745337500562EF1 /* slide_top_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = DDA83B951745337500562EF1 /* slide_top_shadow.png */; };
 		DDA83B9A174535C500562EF1 /* UIImage+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = DDA83B99174535C500562EF1 /* UIImage+Utils.m */; };
+		DDCB47AD1757954E000B42EB /* TBHttRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DDCB47AC1757954E000B42EB /* TBHttRequest.m */; };
 		DDF784161753ACA20022426D /* DetailNavgationController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDF784151753ACA20022426D /* DetailNavgationController.m */; };
 /* End PBXBuildFile section */
 
@@ -400,6 +401,8 @@
 		DDA83B951745337500562EF1 /* slide_top_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slide_top_shadow.png; sourceTree = "<group>"; };
 		DDA83B98174535C500562EF1 /* UIImage+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Utils.h"; sourceTree = "<group>"; };
 		DDA83B99174535C500562EF1 /* UIImage+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Utils.m"; sourceTree = "<group>"; };
+		DDCB47AB1757954E000B42EB /* TBHttRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBHttRequest.h; sourceTree = "<group>"; };
+		DDCB47AC1757954E000B42EB /* TBHttRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBHttRequest.m; sourceTree = "<group>"; };
 		DDF784141753ACA20022426D /* DetailNavgationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailNavgationController.h; sourceTree = "<group>"; };
 		DDF784151753ACA20022426D /* DetailNavgationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailNavgationController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -793,6 +796,8 @@
 				DDA83B99174535C500562EF1 /* UIImage+Utils.m */,
 				797A39311757502E00DA785A /* CacheManager.h */,
 				797A39321757502E00DA785A /* CacheManager.m */,
+				DDCB47AB1757954E000B42EB /* TBHttRequest.h */,
+				DDCB47AC1757954E000B42EB /* TBHttRequest.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1002,6 +1007,7 @@
 				DD3B90D01754E790005CF2E2 /* FullInfoViewController.m in Sources */,
 				797A38FE1756E9FF00DA785A /* ScalableView.m in Sources */,
 				797A39331757502E00DA785A /* CacheManager.m in Sources */,
+				DDCB47AD1757954E000B42EB /* TBHttRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

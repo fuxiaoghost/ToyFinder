@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "FullImageView.h"
+#import "TBHttRequest.h"
 
-@interface DetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,FullImageViewDelegate>{
+@interface DetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,FullImageViewDelegate,TBHttRequestDelegate>{
 @private
     UITableView *detailList;
     UITableView *photosList;
-    TopIOSClient *iosClient;
+    TBHttRequest *detailRequest;
 }
 - (id) initWithTitle:(NSString *)title price:(NSString *)price_ promotion:(NSString *)promotion_ numIID:(NSString *)numIID;
 @end

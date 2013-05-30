@@ -15,6 +15,7 @@
 #import "AppDelegate.h"
 #import "DetailViewCell.h"
 #import "FullInfoViewController.h"
+#import "CacheManager.h"
 
 @interface DetailViewController ()
 @property (nonatomic,copy) NSString *detailTitle;
@@ -24,6 +25,7 @@
 @property (nonatomic,copy) NSString *sessionKey;
 @property (nonatomic,copy) NSString *numIID;
 @property (nonatomic,retain) NSDictionary *detailDict;
+@property (nonatomic,copy) NSString *requestUrl;
 @end
 
 @implementation DetailViewController
@@ -34,6 +36,7 @@
 @synthesize sessionKey;
 @synthesize numIID;
 @synthesize detailDict;
+@synthesize requestUrl;
 
 - (void) dealloc{
     self.detailTitle = nil;
@@ -42,9 +45,10 @@
     self.photoArray = nil;
     self.numIID = nil;
     self.detailDict = nil;
-    if (self.sessionKey) {
-        [iosClient cancel:[NSString stringWithFormat:@"%@",self.sessionKey]];
-        self.sessionKey = nil;
+    self.requestUrl = nil;
+    if (detailRequest) {
+        [detailRequest cancelRequest];
+        detailRequest = nil;
     }
 
     [super dealloc];
@@ -133,11 +137,7 @@
 }
 
 - (void) getDetail{
-    iosClient =[TopIOSClient getIOSClientByAppKey:APP_KEY];
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
-    
-    
-    
     [params setObject:@"taobao.taobaoke.items.detail.get" forKey:@"method"];
     [params setObject:@"detail_url,title,nick,type,desc,pic_url,num,location,price,post_fee,express_fee,ems_fee,freight_payer,item_img.url,click_url,shop_click_url,seller_credit_score,skus" forKey:@"fields"];
     [params setObject:NICK forKey:@"nick"];
@@ -145,35 +145,32 @@
     [params setObject:self.numIID forKey:@"num_iids"];
     
     
-    if (self.sessionKey) {
-        [iosClient cancel:[NSString stringWithFormat:@"%@",self.sessionKey]];
-        self.sessionKey = nil;
+    if (detailRequest) {
+        [detailRequest cancelRequest];
+        detailRequest = nil;
     }
-    
-    self.sessionKey = [iosClient api:@"GET" params:params target:self cb:@selector(showApiResponse:) userId:NICK needMainThreadCallBack:true];
+    detailRequest = [TBHttRequest requestWithParams:params];
+    detailRequest.delegate = self;
+    [detailRequest startGetRequest];
 }
 
--(void)showApiResponse:(id)data{
-    self.sessionKey = nil;
-    if ([data isKindOfClass:[TopApiResponse class]]){
-        TopApiResponse *response = (TopApiResponse *)data;
-        
-        if ([response content]){
-            NSDictionary *contentDict = [[response content] JSONValue];
-            NSArray *detailArray = [[[contentDict objectForKey:@"taobaoke_items_detail_get_response"] objectForKey:@"taobaoke_item_details"] objectForKey:@"taobaoke_item_detail"];
-            self.detailDict = [detailArray objectAtIndex:0];
-            self.photoArray = [[[self.detailDict objectForKey:@"item"] objectForKey:@"item_imgs"] objectForKey:@"item_img"];
 
-            [detailList reloadData];
-            
-            NSLog(@"%@",self.detailDict);
-        }else {
-            NSLog(@"%@",[(NSError *)[response error] userInfo]);
-        }
-    }
-    
+#pragma mark -
+#pragma mark TBHtteRequestDelegate
+- (void) requestFailed:(TBHttRequest *)request_{
+    detailRequest = nil;
 }
 
+- (void) requestFinished:(TBHttRequest *)request_ withDict:(NSDictionary *)dict{
+    NSDictionary *contentDict = dict;
+     NSArray *detailArray = [[[contentDict objectForKey:@"taobaoke_items_detail_get_response"] objectForKey:@"taobaoke_item_details"] objectForKey:@"taobaoke_item_detail"];
+     self.detailDict = [detailArray objectAtIndex:0];
+     self.photoArray = [[[self.detailDict objectForKey:@"item"] objectForKey:@"item_imgs"] objectForKey:@"item_img"];
+     
+     [detailList reloadData];
+     
+    detailRequest = nil;
+}
 
 #pragma mark -
 #pragma mark UITableViewDataSource
