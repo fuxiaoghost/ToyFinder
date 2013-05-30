@@ -61,6 +61,7 @@
 		797A392C17573A3B00DA785A /* sort_sale_btn_h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 797A391417573A3B00DA785A /* sort_sale_btn_h@2x.png */; };
 		797A392D17573A3B00DA785A /* sort_sale_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 797A391517573A3B00DA785A /* sort_sale_btn.png */; };
 		797A392E17573A3B00DA785A /* sort_sale_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 797A391617573A3B00DA785A /* sort_sale_btn@2x.png */; };
+		797A39301757401F00DA785A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797A392F1757401F00DA785A /* QuartzCore.framework */; };
 		79F549C91752EE0800875318 /* PhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F549C81752EE0800875318 /* PhotoView.m */; };
 		79F549CC1752F07B00875318 /* FullImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F549CB1752F07B00875318 /* FullImageView.m */; };
 		79F549DA175328FE00875318 /* cell_footer_h.png in Resources */ = {isa = PBXBuildFile; fileRef = 79F549CD175328FD00875318 /* cell_footer_h.png */; };
@@ -269,6 +270,7 @@
 		797A391417573A3B00DA785A /* sort_sale_btn_h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sort_sale_btn_h@2x.png"; sourceTree = "<group>"; };
 		797A391517573A3B00DA785A /* sort_sale_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sort_sale_btn.png; sourceTree = "<group>"; };
 		797A391617573A3B00DA785A /* sort_sale_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sort_sale_btn@2x.png"; sourceTree = "<group>"; };
+		797A392F1757401F00DA785A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		79F549C71752EE0800875318 /* PhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoView.h; sourceTree = "<group>"; };
 		79F549C81752EE0800875318 /* PhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoView.m; sourceTree = "<group>"; };
 		79F549CA1752F07B00875318 /* FullImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullImageView.h; sourceTree = "<group>"; };
@@ -404,6 +406,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				797A39301757401F00DA785A /* QuartzCore.framework in Frameworks */,
 				DD3440D817489C85003076C9 /* MapKit.framework in Frameworks */,
 				DD3440D617489C6A003076C9 /* ImageIO.framework in Frameworks */,
 				794F0F1017446A2600035EB5 /* SystemConfiguration.framework in Frameworks */,
@@ -448,6 +451,7 @@
 			isa = PBXGroup;
 			children = (
 				794F0F0D17446A2000035EB5 /* libz.dylib */,
+				797A392F1757401F00DA785A /* QuartzCore.framework */,
 				DD3440D717489C85003076C9 /* MapKit.framework */,
 				DD3440D517489C6A003076C9 /* ImageIO.framework */,
 				794F0F0F17446A2600035EB5 /* SystemConfiguration.framework */,

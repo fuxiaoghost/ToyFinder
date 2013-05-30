@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ItemView.h"
 
+@class ScalableView;
 @interface ToyViewController : UIViewController<ItemViewDelegate>{
 @private
     ItemView *itemView;
@@ -20,6 +21,7 @@
     UILabel *tipsLbl;
     UIButton *infoButton;
     TopIOSClient *iosClient;
+    ScalableView *sortView;
     //UIWebView *infoView;
 }
 

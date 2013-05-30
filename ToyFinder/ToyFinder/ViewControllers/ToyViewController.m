@@ -14,6 +14,7 @@
 #import "SlideViewController.h"
 #import "DetailViewController.h"
 #import "DetailNavgationController.h"
+#import "ScalableView.h"
 
 @interface ToyViewController (){
     NSInteger index;
@@ -119,6 +120,11 @@
     itemView.delegate = self;
     [self.view addSubview:itemView];
     [itemView release];
+    
+    // 排序按钮
+    sortView = [[ScalableView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 40, SCREEN_WIDTH - 20, 40) images:[NSArray arrayWithObjects:@"sort_priceup_btn.png",@"sort_pricedown_btn.png",@"sort_sale_btn.png",@"sort_popular_btn.png",@"sort_credite_btn.png",@"sort_main_btn.png", nil] highlightedImages:[NSArray arrayWithObjects:@"sort_priceup_btn_h.png",@"sort_pricedown_btn_h.png",@"sort_sale_btn_h.png",@"sort_popular_btn_h.png",@"sort_credite_btn_h.png",@"sort_main_btn_h.png", nil] direction:FromLeftToRight firstSpace:50];
+    [self.view addSubview:sortView];
+    [sortView release];
 }
 
 - (void) infoButtonClick:(id)sender{
@@ -276,6 +282,7 @@
             tipsLbl.frame = CGRectMake(0, SCREEN_WIDTH - 40, SCREEN_HEIGHT,40);
             infoButton.frame = CGRectMake(SCREEN_HEIGHT - 60, SCREEN_WIDTH - 40, 60, 40);
             infoButton.hidden = YES;
+            sortView.frame = CGRectMake(0, SCREEN_WIDTH - 40, SCREEN_HEIGHT - 20, 40);
             break;
         }
         case UIInterfaceOrientationPortrait:{
@@ -286,6 +293,7 @@
             tipsLbl.frame = CGRectMake(0, SCREEN_HEIGHT - 40, SCREEN_WIDTH, 40);
             infoButton.frame = CGRectMake(SCREEN_WIDTH - 60, SCREEN_HEIGHT - 40, 60, 40);
             infoButton.hidden = NO;
+            sortView.frame = CGRectMake(0, SCREEN_HEIGHT - 40, SCREEN_WIDTH - 20, 40);
             break;
         }
         default:
