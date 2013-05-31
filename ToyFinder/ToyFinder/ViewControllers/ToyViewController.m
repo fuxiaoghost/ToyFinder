@@ -26,7 +26,6 @@
 @end
 
 @implementation ToyViewController
-@synthesize titleLbl;
 @synthesize cid;
 @synthesize url;
 @synthesize sort;
@@ -55,19 +54,15 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
-    // 导航栏标题
+    // 导航栏背景
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
-        titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
+        navBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
     }else{
-        titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_HEIGHT, 44)];
+        navBgView  = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_HEIGHT, 44)];
     }
-    titleLbl.backgroundColor = RGBACOLOR(245,124,0,1);
-    titleLbl.font = [UIFont boldSystemFontOfSize:22.0f];
-    titleLbl.textAlignment = UITextAlignmentCenter;
-    titleLbl.textColor = [UIColor whiteColor];
-    [self.view addSubview:titleLbl];
-    [titleLbl release];
-    titleLbl.text = @"玩物";
+    navBgView.backgroundColor = RGBACOLOR(245,124,0,1);
+    [self.view addSubview:navBgView];
+   
     
     // left list button
     UIButton *listButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -123,11 +118,17 @@
     [self.view addSubview:itemView];
     [itemView release];
     
-    // 排序按钮
-    sortView = [[ScalableView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 40, SCREEN_WIDTH - 20, 40) images:[NSArray arrayWithObjects:@"sort_priceup_btn.png",@"sort_pricedown_btn.png",@"sort_credite_btn.png",@"sort_sale_btn.png",@"sort_popular_btn.png",@"sort_main_btn.png", nil] highlightedImages:[NSArray arrayWithObjects:@"sort_priceup_btn_h.png",@"sort_pricedown_btn_h.png",@"sort_credite_btn_h.png",@"sort_sale_btn_h.png",@"sort_popular_btn_h.png",@"sort_main_btn_h.png", nil] direction:FromLeftToRight firstSpace:50];
-    sortView.delegate = self;
-    [self.view addSubview:sortView];
-    [sortView release];
+    
+    // 导航栏标题
+    if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
+        slideDownView = [[SlideDownView alloc] initWithFrame:CGRectMake(80, 0, SCREEN_WIDTH - 160, 44)];
+    }else{
+        slideDownView = [[SlideDownView alloc] initWithFrame:CGRectMake(80, 0, SCREEN_HEIGHT - 160, 44)];
+    }
+    slideDownView.backgroundColor = RGBACOLOR(245,124,0,1);
+    [self.view addSubview:slideDownView];
+    [slideDownView release];
+    slideDownView.delegate = self;
 }
 
 - (void) infoButtonClick:(id)sender{
@@ -197,17 +198,17 @@
 
 
 #pragma mark -
-#pragma mark ScalableViewDelegate
-- (void) scalableView:(ScalableView *)ScalableView didSelectedAtIndex:(NSInteger)index_{
+#pragma mark SlideDownViewDelegate
+- (void) slideDownView:(SlideDownView *)slideDownView didSelectedAtIndex:(NSInteger)index_{
     NSLog(@"%d",index_);
     //"sort_priceup_btn.png",@"sort_pricedown_btn.png",@"sort_credite_btn.png",@"sort_sale_btn.png",,@"sort_popular_btn.png",@"sort_main_btn.png"
     switch (index_) {
-        case 0:{
+        case 4:{
             // 价格升序
             self.sort = @"price_asc";
             break;
         }
-        case 1:{
+        case 3:{
             self.sort = @"price_desc";
             // 价格降序
             break;
@@ -217,12 +218,12 @@
             // 信用降序
             break;
         }
-        case 3:{
+        case 1:{
             // 销量降序
             self.sort = @"commissionNum_desc";
             break;
         }
-        case 4:{
+        case 0:{
             // 人气
             self.sort = @"default";
             break;
@@ -311,23 +312,23 @@
         case UIInterfaceOrientationLandscapeRight:{
             itemView.itemWidth = 340;
             itemView.frame = CGRectMake(0, 10 + 44, SCREEN_HEIGHT,SCREEN_WIDTH - 10 - 44 - 40);
-            titleLbl.frame = CGRectMake(0, 0, SCREEN_HEIGHT, 44);
+            slideDownView.frame = CGRectMake(80, 0, SCREEN_HEIGHT - 160, 44);
+            navBgView.frame = CGRectMake(0, 0, SCREEN_HEIGHT, 44);
             splitView.frame = CGRectMake(0, 44, SCREEN_HEIGHT, 1);
             tipsLbl.frame = CGRectMake(0, SCREEN_WIDTH - 40, SCREEN_HEIGHT,40);
             infoButton.frame = CGRectMake(SCREEN_HEIGHT - 60, SCREEN_WIDTH - 40, 60, 40);
             infoButton.hidden = YES;
-            sortView.frame = CGRectMake(0, SCREEN_WIDTH - 40, SCREEN_HEIGHT - 20, 40);
             break;
         }
         case UIInterfaceOrientationPortrait:{
             itemView.itemWidth = 260;
             itemView.frame = CGRectMake(0, 10 + 44, SCREEN_WIDTH, SCREEN_HEIGHT - 10 - 44 - 40);
-            titleLbl.frame = CGRectMake(0, 0, SCREEN_WIDTH, 44);
+            slideDownView.frame = CGRectMake(80, 0, SCREEN_WIDTH - 160, 44);
+            navBgView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 44);
             splitView.frame = CGRectMake(0, 44, SCREEN_WIDTH, 1);
             tipsLbl.frame = CGRectMake(0, SCREEN_HEIGHT - 40, SCREEN_WIDTH, 40);
             infoButton.frame = CGRectMake(SCREEN_WIDTH - 60, SCREEN_HEIGHT - 40, 60, 40);
             infoButton.hidden = NO;
-            sortView.frame = CGRectMake(0, SCREEN_HEIGHT - 40, SCREEN_WIDTH - 20, 40);
             break;
         }
         default:

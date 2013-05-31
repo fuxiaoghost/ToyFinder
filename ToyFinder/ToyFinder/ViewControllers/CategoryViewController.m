@@ -143,7 +143,7 @@
     ToyViewController *toyVC =  (ToyViewController *)slideVC.topViewController;
     NSDictionary *dict = [buttonArray objectAtIndex:index];
     NSDictionary *subDict = [[dict objectForKey:@"cat"] objectAtIndex:subIndex];
-    toyVC.titleLbl.text = [NSString stringWithFormat:@"%@(%@)",[dict objectForKey:@"name"],[subDict objectForKey:@"name"]];
+    //toyVC.titleLbl.text = [NSString stringWithFormat:@"%@(%@)",[dict objectForKey:@"name"],[subDict objectForKey:@"name"]];
     NSString *keyword = [NSString stringWithFormat:@"%@ %@",[subDict objectForKey:@"name"],[dict objectForKey:@"tag"]];
     [toyVC selectKeyword:keyword infoUrl:[subDict objectForKey:@"infourl"]];
 

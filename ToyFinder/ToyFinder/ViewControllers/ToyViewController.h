@@ -8,23 +8,22 @@
 
 #import <UIKit/UIKit.h>
 #import "ItemView.h"
-#import "ScalableView.h"
 #import "TBHttRequest.h"
+#import "SlideDownView.h"
 
-@interface ToyViewController : UIViewController<ItemViewDelegate,ScalableViewDelegate,TBHttRequestDelegate>{
+@interface ToyViewController : UIViewController<ItemViewDelegate,TBHttRequestDelegate,SlideDownViewDelegate>{
 @private
     ItemView *itemView;
     UIView *splitView;
-    UILabel *titleLbl;
     UIImageView *navView;
     NSMutableArray *contentArray;
     UILabel *tipsLbl;
     UIButton *infoButton;
     TBHttRequest *request;
-    ScalableView *sortView;
+    SlideDownView *slideDownView;
+    UIView *navBgView;
 }
 
-@property (nonatomic,assign) UILabel *titleLbl;
 
 - (void) selectKeyword:(NSString *)keyword infoUrl:(NSString *)url;
 @end
