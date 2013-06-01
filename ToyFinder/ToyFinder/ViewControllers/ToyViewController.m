@@ -16,6 +16,8 @@
 #import "DetailNavgationController.h"
 #import "ScalableView.h"
 #import "CacheManager.h"
+#import "HMSegmentedControl.h"
+#import "CityViewController.h"
 
 @interface ToyViewController (){
     NSInteger index;
@@ -56,9 +58,9 @@
     
     // 导航栏背景
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
-        navBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
+        navBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 66)];
     }else{
-        navBgView  = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_HEIGHT, 44)];
+        navBgView  = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_HEIGHT, 66)];
     }
     navBgView.backgroundColor = RGBACOLOR(245,124,0,1);
     [self.view addSubview:navBgView];
@@ -72,15 +74,39 @@
     [self.view addSubview:listButton];
     [listButton addTarget:self action:@selector(listButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
+    filterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [filterBtn setImage:[UIImage noCacheImageNamed:@"filter_btn.png"] forState:UIControlStateNormal];
+    [filterBtn setImage:[UIImage noCacheImageNamed:@"filter_btn_h.png"] forState:UIControlStateHighlighted];
+    filterBtn.frame = CGRectMake(SCREEN_WIDTH - 44 - 10, 0, 44, 44);
+    [self.view addSubview:filterBtn];
+    [filterBtn addTarget:self action:@selector(filterBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
-        splitView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, 1)];  
+        splitView = [[UIView alloc] initWithFrame:CGRectMake(0, 66, SCREEN_WIDTH, 1)];
     }else{
-        splitView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, SCREEN_HEIGHT, 1)];
+        splitView = [[UIView alloc] initWithFrame:CGRectMake(0, 66, SCREEN_HEIGHT, 1)];
     }
     
     splitView.backgroundColor = RGBACOLOR(217,70,0,1);
     [self.view addSubview:splitView];
     [splitView release];
+    
+    // 排序栏
+    HMSegmentedControl *sortControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"人气", @"信用", @"销量", @"价格↑", @"价格↓"]];
+    
+    sortControl.frame = CGRectMake(0, 40, SCREEN_WIDTH, 26);
+    [sortControl setSelectionIndicatorHeight:2.0f];
+    [sortControl setBackgroundColor:RGBACOLOR(245,124,0,1)];//RGBACOLOR(245,124,0,1)];//
+    [sortControl setTextColor:[UIColor whiteColor]];
+    [sortControl setFont:[UIFont boldSystemFontOfSize:18.0f]];
+    [sortControl setSelectionIndicatorColor:RGBACOLOR(217,70,0,1)];
+    [sortControl setSelectionIndicatorMode:HMSelectionIndicatorFillsSegment];
+    [sortControl setSegmentEdgeInset:UIEdgeInsetsMake(0, 6, 0, 6)];
+    [sortControl setTag:2];
+    [sortControl addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
+    [navBgView addSubview:sortControl];
+    [sortControl release];
     
     // 底部状态
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
@@ -110,25 +136,14 @@
     NSArray *dataSource = [NSArray arrayWithObjects:@"",@"",@"",@"",@"",@"",@"",@"",@"", nil];
     
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
-        itemView = [[ItemView alloc] initWithFrame:CGRectMake(0, 10 + 44, SCREEN_WIDTH, SCREEN_HEIGHT - 10 - 44 - 40) dataSource:dataSource itemWidth:260];
+        itemView = [[ItemView alloc] initWithFrame:CGRectMake(0, 10 + 44 + 22, SCREEN_WIDTH, SCREEN_HEIGHT - 10 - 44 - 40 - 22) dataSource:dataSource itemWidth:260];
     }else{
-        itemView = [[ItemView alloc] initWithFrame:CGRectMake(0, 10 + 44, SCREEN_HEIGHT, SCREEN_WIDTH - 10 - 44 - 40) dataSource:dataSource itemWidth:340];
+        itemView = [[ItemView alloc] initWithFrame:CGRectMake(0, 10 + 44 + 22, SCREEN_HEIGHT, SCREEN_WIDTH - 10 - 44 - 40 - 22) dataSource:dataSource itemWidth:340];
     }
     itemView.delegate = self;
     [self.view addSubview:itemView];
     [itemView release];
-    
-    
-    // 导航栏标题
-    if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
-        slideDownView = [[SlideDownView alloc] initWithFrame:CGRectMake(80, 0, SCREEN_WIDTH - 160, 44)];
-    }else{
-        slideDownView = [[SlideDownView alloc] initWithFrame:CGRectMake(80, 0, SCREEN_HEIGHT - 160, 44)];
-    }
-    slideDownView.backgroundColor = RGBACOLOR(245,124,0,1);
-    [self.view addSubview:slideDownView];
-    [slideDownView release];
-    slideDownView.delegate = self;
+
 }
 
 - (void) infoButtonClick:(id)sender{
@@ -153,6 +168,12 @@
     }else{
         [slideVC slideDown];
     }
+}
+
+- (void) filterBtnClick:(id)sender{
+    CityViewController *cityVC = [[CityViewController alloc] init];
+    [self presentModalViewController:cityVC animated:YES];
+    [cityVC release];
 }
 
 
@@ -197,18 +218,16 @@
 }
 
 
-#pragma mark -
-#pragma mark SlideDownViewDelegate
-- (void) slideDownView:(SlideDownView *)slideDownView didSelectedAtIndex:(NSInteger)index_{
-    NSLog(@"%d",index_);
+- (void)segmentedControlChangedValue:(HMSegmentedControl *)segmentedControl {
+    NSInteger index_ = segmentedControl.selectedIndex;
     //"sort_priceup_btn.png",@"sort_pricedown_btn.png",@"sort_credite_btn.png",@"sort_sale_btn.png",,@"sort_popular_btn.png",@"sort_main_btn.png"
     switch (index_) {
-        case 4:{
+        case 3:{
             // 价格升序
             self.sort = @"price_asc";
             break;
         }
-        case 3:{
+        case 4:{
             self.sort = @"price_desc";
             // 价格降序
             break;
@@ -311,24 +330,24 @@
         }
         case UIInterfaceOrientationLandscapeRight:{
             itemView.itemWidth = 340;
-            itemView.frame = CGRectMake(0, 10 + 44, SCREEN_HEIGHT,SCREEN_WIDTH - 10 - 44 - 40);
-            slideDownView.frame = CGRectMake(80, 0, SCREEN_HEIGHT - 160, 44);
-            navBgView.frame = CGRectMake(0, 0, SCREEN_HEIGHT, 44);
-            splitView.frame = CGRectMake(0, 44, SCREEN_HEIGHT, 1);
+            itemView.frame = CGRectMake(0, 10 + 44 + 22 , SCREEN_HEIGHT,SCREEN_WIDTH - 10 - 44 - 40 - 22);
+            navBgView.frame = CGRectMake(0, 0, SCREEN_HEIGHT, 66);
+            splitView.frame = CGRectMake(0, 66, SCREEN_HEIGHT, 1);
             tipsLbl.frame = CGRectMake(0, SCREEN_WIDTH - 40, SCREEN_HEIGHT,40);
             infoButton.frame = CGRectMake(SCREEN_HEIGHT - 60, SCREEN_WIDTH - 40, 60, 40);
             infoButton.hidden = YES;
+            filterBtn.frame = CGRectMake(SCREEN_HEIGHT - 44 - 10, 0, 44, 44);
             break;
         }
         case UIInterfaceOrientationPortrait:{
             itemView.itemWidth = 260;
-            itemView.frame = CGRectMake(0, 10 + 44, SCREEN_WIDTH, SCREEN_HEIGHT - 10 - 44 - 40);
-            slideDownView.frame = CGRectMake(80, 0, SCREEN_WIDTH - 160, 44);
-            navBgView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 44);
-            splitView.frame = CGRectMake(0, 44, SCREEN_WIDTH, 1);
+            itemView.frame = CGRectMake(0, 10 + 44 + 22, SCREEN_WIDTH, SCREEN_HEIGHT - 10 - 44 - 40 - 22);
+            navBgView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 66);
+            splitView.frame = CGRectMake(0, 66, SCREEN_WIDTH, 1);
             tipsLbl.frame = CGRectMake(0, SCREEN_HEIGHT - 40, SCREEN_WIDTH, 40);
             infoButton.frame = CGRectMake(SCREEN_WIDTH - 60, SCREEN_HEIGHT - 40, 60, 40);
             infoButton.hidden = NO;
+            filterBtn.frame = CGRectMake(SCREEN_WIDTH - 44 - 10, 0, 44, 44);
             break;
         }
         default:

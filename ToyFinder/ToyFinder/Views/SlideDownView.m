@@ -27,12 +27,14 @@
         // 头
         titleBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         titleBtn.backgroundColor = [UIColor clearColor];
-        titleBtn.frame = CGRectMake(0, 0, frame.size.width, 44);
+        titleBtn.frame = CGRectMake(0, 7, frame.size.width, 30);
         titleBtn.titleLabel.font = [UIFont boldSystemFontOfSize:22.0f];
         [titleBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self addSubview:titleBtn];
         [titleBtn addTarget:self action:@selector(titleBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [titleBtn setTitle:[dataArray objectAtIndex:0] forState:UIControlStateNormal];
+        [titleBtn setTitle:[NSString stringWithFormat:@"%@ ▾",[dataArray objectAtIndex:0]] forState:UIControlStateNormal];
+        [titleBtn setBackgroundImage:[UIImage stretchableImageWithPath:@"sort_bg_h.png"] forState:UIControlStateHighlighted];
+        [titleBtn setBackgroundImage:[UIImage stretchableImageWithPath:@"sort_bg.png"] forState:UIControlStateNormal];
         
         // 选项列表
         sortList = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, frame.size.width, 150) style:UITableViewStylePlain];
@@ -99,7 +101,7 @@
 #pragma mark UITableViewDelegate
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [titleBtn setTitle:[dataArray objectAtIndex:indexPath.row] forState:UIControlStateNormal];
+    [titleBtn setTitle:[NSString stringWithFormat:@"%@ ▾",[dataArray objectAtIndex:indexPath.row]] forState:UIControlStateNormal];
     if ([delegate respondsToSelector:@selector(slideDownView:didSelectedAtIndex:)]) {
         [delegate slideDownView:self didSelectedAtIndex:indexPath.row];
     }

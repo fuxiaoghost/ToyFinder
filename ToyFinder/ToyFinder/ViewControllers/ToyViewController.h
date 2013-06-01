@@ -20,8 +20,8 @@
     UILabel *tipsLbl;
     UIButton *infoButton;
     TBHttRequest *request;
-    SlideDownView *slideDownView;
     UIView *navBgView;
+    UIButton *filterBtn;
 }
 
 
