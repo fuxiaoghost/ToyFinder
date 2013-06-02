@@ -15,24 +15,37 @@
 @synthesize splitView;
 @synthesize arrowView;
 @synthesize creditView;
+@synthesize landscope;
 
 - (void) dealloc{
     [super dealloc];
 }
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier landscope:(BOOL) landscope_
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         [UIView setAnimationsEnabled:NO];
         
+        self.landscope = landscope_;
+        
         // 背景色
-        bgImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, 44)];
+        if (!landscope) {
+            bgImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 20, 44)];
+        }else{
+            bgImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, SCREEN_HEIGHT - 20, 44)];
+        }
+        
         [self.contentView addSubview:bgImageView];
         [bgImageView release];
         
         // 分割线
-        splitView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 43, SCREEN_WIDTH - 20, 1)];
+        if (!landscope) {
+            splitView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 43, SCREEN_WIDTH - 20, 1)];  
+        }else{
+            splitView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 43, SCREEN_HEIGHT - 20, 1)];
+        }
+       
         splitView.image = [UIImage stretchableImageWithPath:@"cell_split.png"];
         splitView.clipsToBounds = YES;
         splitView.backgroundColor = [UIColor clearColor];
@@ -40,7 +53,11 @@
         [splitView release];
         
         // 右侧指示箭头
-        arrowView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 30, (44 - 12)/2, 7, 12)];
+        if (!landscope) {
+            arrowView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 30, (44 - 12)/2, 7, 12)];
+        }else{
+            arrowView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_HEIGHT - 30, (44 - 12)/2, 7, 12)];
+        }
         arrowView.image = [UIImage noCacheImageNamed:@"cell_indicator.png"];
         [self.contentView addSubview:arrowView];
         [arrowView release];

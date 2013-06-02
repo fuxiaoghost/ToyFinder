@@ -10,8 +10,10 @@
 #import "ItemView.h"
 #import "TBHttRequest.h"
 #import "SlideDownView.h"
+#import "CityViewController.h"
+#import "HMSegmentedControl.h"
 
-@interface ToyViewController : UIViewController<ItemViewDelegate,TBHttRequestDelegate,SlideDownViewDelegate>{
+@interface ToyViewController : UIViewController<ItemViewDelegate,TBHttRequestDelegate,SlideDownViewDelegate,CityViewControllerDelegate,UISearchBarDelegate,UISearchDisplayDelegate,UITableViewDataSource,UITableViewDelegate>{
 @private
     ItemView *itemView;
     UIView *splitView;
@@ -20,8 +22,12 @@
     UILabel *tipsLbl;
     UIButton *infoButton;
     TBHttRequest *request;
+    TBHttRequest *keywordRequest;
     UIView *navBgView;
     UIButton *filterBtn;
+    UISearchBar *keywordBar;
+    NSMutableArray *keywordArray;
+    HMSegmentedControl *sortControl;
 }
 
 

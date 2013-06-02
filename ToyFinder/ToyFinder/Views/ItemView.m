@@ -197,7 +197,7 @@
         }
 
         
-        titleHtml = [NSString stringWithFormat:@"%@ [月销%@]",titleHtml,[[self.dataSource objectAtIndex:index] objectForKey:@"volume"]];
+        titleHtml = [NSString stringWithFormat:@"%@ [月销%@] [%@]",titleHtml,[[self.dataSource objectAtIndex:index] objectForKey:@"volume"],[[self.dataSource objectAtIndex:index] objectForKey:@"item_location"]];
         
         [itemCell setTitle:titleHtml];
         [itemCell setPrice:[NSString stringWithFormat:@"¥%@",[[self.dataSource objectAtIndex:index] objectForKey:@"price"]]];

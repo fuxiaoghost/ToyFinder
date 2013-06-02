@@ -40,7 +40,13 @@
     
     
     // 信息展示webview
-    UIWebView *infoView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 45, SCREEN_WIDTH, SCREEN_HEIGHT - 45)];
+    UIWebView *infoView = nil;
+    if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
+        infoView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 45, SCREEN_WIDTH, SCREEN_HEIGHT - 45)];
+    }else{
+        infoView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 45, SCREEN_HEIGHT, SCREEN_WIDTH - 45)];
+    }
+    
     infoView.scalesPageToFit = NO;
     [self.view addSubview:infoView];
     [infoView release];
@@ -50,7 +56,12 @@
     [infoView loadHTMLString:infoHtml baseURL: [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
 
     WallButton *closeButton = [WallButton buttonWithType:UIButtonTypeCustom];
-    closeButton.frame = CGRectMake(SCREEN_WIDTH - 60, 5, 50, 35);
+    if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
+        closeButton.frame = CGRectMake(SCREEN_WIDTH - 60, 5, 50, 35);
+    }else{
+        closeButton.frame = CGRectMake(SCREEN_HEIGHT - 60, 5, 50, 35);
+    }
+    
     [closeButton setTitle:@"完成" forState:UIControlStateNormal];
     [closeButton setTitleColor:RGBACOLOR(221, 70, 0, 1) forState:UIControlStateNormal];
     [closeButton setTitleColor:RGBACOLOR(255, 255, 255, 1) forState:UIControlStateHighlighted];

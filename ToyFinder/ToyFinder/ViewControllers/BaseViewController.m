@@ -21,7 +21,12 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     // 导航栏标题
-    titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
+    if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
+        titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
+    }else{
+        titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_HEIGHT, 44)];
+    }
+    
     titleLbl.backgroundColor = RGBACOLOR(245,124,0,1);
     titleLbl.font = [UIFont boldSystemFontOfSize:22.0f];
     titleLbl.textAlignment = UITextAlignmentCenter;
@@ -30,7 +35,13 @@
     [titleLbl release];
     
     
-    UIView *splitView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, 1)];
+    UIView *splitView = nil;
+    if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
+        splitView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, 1)];
+    }else{
+        splitView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, SCREEN_HEIGHT, 1)];
+    }
+    
     splitView.backgroundColor = RGBACOLOR(217,70,0,1);
     [self.view addSubview:splitView];
     [splitView release];

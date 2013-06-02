@@ -23,4 +23,7 @@
 @property (nonatomic,readonly) UIImageView *splitView;
 @property (nonatomic,readonly) UIImageView *arrowView;
 @property (nonatomic,readonly) UIImageView *creditView;
+@property (nonatomic,assign) BOOL landscope;
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier landscope:(BOOL) landscope_;
 @end

@@ -9,6 +9,7 @@
 #import "TBHttRequest.h"
 #import "CacheManager.h"
 #import "JSON.h"
+#import "Utils.h"
 
 static NSMutableArray *sharedQueue = nil;
 
@@ -65,6 +66,8 @@ static NSMutableArray *sharedQueue = nil;
 - (void) startGetRequest{
     [sharedQueue addObject:self];
     
+   
+    
     iosClient = [TopIOSClient getIOSClientByAppKey:APP_KEY];
     
     NSMutableString *keystr = [NSMutableString string];
@@ -81,12 +84,15 @@ static NSMutableArray *sharedQueue = nil;
         }
     }else{
         self.sessionKey = [iosClient api:@"GET" params:params target:self cb:@selector(showApiResponse:) userId:NICK needMainThreadCallBack:true];
+        
+        [Utils showLoadingTitle:@"稍等片刻.."];
     }
 }
 
 - (void) cancelRequest{
     if (self.sessionKey) {
         [iosClient cancel:self.sessionKey];
+        [Utils dismissLoading];
     }
     if ([delegate respondsToSelector:@selector(requestFailed:)]) {
         [delegate requestFailed:self];
@@ -95,7 +101,7 @@ static NSMutableArray *sharedQueue = nil;
 }
 
 -(void)showApiResponse:(id)data{
-    
+    [Utils dismissLoading];
     if ([data isKindOfClass:[TopApiResponse class]]){
         TopApiResponse *response = (TopApiResponse *)data;
         if ([response content]){

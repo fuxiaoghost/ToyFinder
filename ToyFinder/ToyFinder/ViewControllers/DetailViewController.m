@@ -71,13 +71,24 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UIView *titleBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
+    UIView *titleBgView = nil;
+    if(LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN){
+        titleBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
+    }else{
+        titleBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_HEIGHT, 44)];
+    }
     titleBgView.backgroundColor = RGBACOLOR(245,124,0,1);
     [self.view addSubview:titleBgView];
     [titleBgView release];
     
     // 导航栏标题
-    UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 80, 44)];
+    UILabel *titleLbl = nil;
+    if(LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN){
+        titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 80, 44)];
+    }else{
+        titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, SCREEN_HEIGHT - 80, 44)];
+    }
+    
     titleLbl.font = [UIFont boldSystemFontOfSize:14.0F];
     titleLbl.textAlignment = UITextAlignmentLeft;
     titleLbl.backgroundColor = [UIColor clearColor];
@@ -89,14 +100,25 @@
     titleLbl.text = self.detailTitle;
     
     
-    UIView *splitView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, 1)];
+    UIView *splitView = nil;
+    if(LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN){
+        splitView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, 1)];
+    }else{
+        splitView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, SCREEN_HEIGHT, 1)];
+    }
+    
     splitView.backgroundColor = RGBACOLOR(217,70,0,1);
     [self.view addSubview:splitView];
     [splitView release];
     
         
     WallButton *closeButton = [WallButton buttonWithType:UIButtonTypeCustom];
-    closeButton.frame = CGRectMake(SCREEN_WIDTH - 60, 5, 50, 35);
+    if(LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN){
+        closeButton.frame = CGRectMake(SCREEN_WIDTH - 60, 5, 50, 35);
+    }else{
+        closeButton.frame = CGRectMake(SCREEN_HEIGHT - 60, 5, 50, 35);
+    }
+    
     [closeButton setTitle:@"完成" forState:UIControlStateNormal];
     [closeButton setTitleColor:RGBACOLOR(221, 70, 0, 1) forState:UIControlStateNormal];
     [closeButton setTitleColor:RGBACOLOR(255, 255, 255, 1) forState:UIControlStateHighlighted];
@@ -104,7 +126,12 @@
     [closeButton addTarget:self action:@selector(closeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     // 详情tableview
-    detailList = [[UITableView alloc] initWithFrame:CGRectMake(0, 45, SCREEN_WIDTH, SCREEN_HEIGHT - 45 - 40) style:UITableViewStylePlain];
+    if(LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN){
+        detailList = [[UITableView alloc] initWithFrame:CGRectMake(0, 45, SCREEN_WIDTH, SCREEN_HEIGHT - 45 - 40) style:UITableViewStylePlain];
+    }else{
+        detailList = [[UITableView alloc] initWithFrame:CGRectMake(0, 45, SCREEN_HEIGHT, SCREEN_WIDTH - 45 - 40) style:UITableViewStylePlain];
+    }
+    
     detailList.separatorStyle = UITableViewCellSeparatorStyleNone;  
     [self.view addSubview:detailList];
     [detailList release];
@@ -113,11 +140,18 @@
     
     // 购买
     UIButton *buyButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    buyButton.frame = CGRectMake(100, SCREEN_HEIGHT - 35, 120, 30);
+    if(LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN){
+        buyButton.frame = CGRectMake((SCREEN_WIDTH - 120)/2, SCREEN_HEIGHT - 35, 120, 30);
+    }else{
+        buyButton.frame = CGRectMake((SCREEN_HEIGHT - 120)/2, SCREEN_WIDTH - 35, 120, 30);
+    }
+   
     buyButton.backgroundColor = RGBACOLOR(245,124,0,1);
     buyButton.titleLabel.font = [UIFont boldSystemFontOfSize:18.0f];
     [buyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [buyButton setTitle:@"去购买" forState:UIControlStateNormal];
+    [buyButton setBackgroundImage:[UIImage stretchableImageWithPath:@"action_bg.png"] forState:UIControlStateNormal];
+    [buyButton setBackgroundImage:[UIImage stretchableImageWithPath:@"action_bg_h.png"] forState:UIControlStateHighlighted];
     [self.view addSubview:buyButton];
     [buyButton addTarget:self action:@selector(buyButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -208,15 +242,23 @@
             if (!cell) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                
-                photosList = [[UITableView alloc] initWithFrame:CGRectMake(6, 0, SCREEN_WIDTH-12, 154) style:UITableViewStylePlain];
+                if(LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN){
+                    photosList = [[UITableView alloc] initWithFrame:CGRectMake(6, 0, SCREEN_WIDTH-12, 154) style:UITableViewStylePlain];
+                }else{
+                    photosList = [[UITableView alloc] initWithFrame:CGRectMake(6, 0, SCREEN_HEIGHT-12, 154) style:UITableViewStylePlain];
+                }
                 photosList.rowHeight = 200;
                 photosList.clipsToBounds = NO;
                 photosList.pagingEnabled = YES;
                 photosList.backgroundColor = [UIColor clearColor];					//清空背景色
                 CGAffineTransform transform = CGAffineTransformMakeRotation(-M_PI_2);
                 photosList.transform = transform;									//旋转TableView
-                photosList.frame = CGRectMake(6, 0, SCREEN_WIDTH-12, 154);
+                if(LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN){
+                    photosList.frame = CGRectMake(6, 0, SCREEN_WIDTH-12, 154);
+                }else{
+                    photosList.frame = CGRectMake(6, 0, SCREEN_HEIGHT-12, 154);
+                }
+                
                 photosList.delegate = self;
                 photosList.dataSource = self;
                 photosList.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -235,20 +277,30 @@
             static NSString *cellIdentifier = @"DetailCell";
             DetailViewCell *cell = (DetailViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (!cell) {
-                cell = [[[DetailViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
+                cell = [[[DetailViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier landscope:(LAYOUT_LANDSCAPELEFT || LAYOUT_LANDSCAPERIGHT)] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             if (indexPath.section == 1 && indexPath.row == 0) {
                 // 快递费用
                 [cell setCellType:-1];
                 cell.arrowView.hidden = YES;
-                cell.titleLbl.frame = CGRectMake(20, 4,SCREEN_WIDTH - 20 - 20, 20);
+                if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
+                    cell.titleLbl.frame = CGRectMake(20, 4,SCREEN_WIDTH - 20 - 20, 20);
+                }else{
+                    cell.titleLbl.frame = CGRectMake(20, 4,SCREEN_HEIGHT - 20 - 20, 20);
+                }
+                
                 cell.titleLbl.font = [UIFont systemFontOfSize:14.0f];
                 cell.titleLbl.textColor = [UIColor colorWithWhite:0.2 alpha:1];
                 cell.titleLbl.backgroundColor = [UIColor clearColor];
                 
                 // 宝贝所在地
-                cell.detailLbl.frame = CGRectMake(20, 24, SCREEN_WIDTH - 20 - 20, 20);
+                if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
+                    cell.detailLbl.frame = CGRectMake(20, 24, SCREEN_WIDTH - 20 - 20, 20);
+                }else{
+                    cell.detailLbl.frame = CGRectMake(20, 24, SCREEN_HEIGHT - 20 - 20, 20);
+                }
+                
                 cell.detailLbl.font = [UIFont systemFontOfSize:12.0f];
                 cell.detailLbl.textColor = [UIColor colorWithWhite:0.6 alpha:1];
                 cell.detailLbl.backgroundColor = [UIColor clearColor];
@@ -296,7 +348,12 @@
                 [cell setCellType:1];
                 cell.arrowView.hidden = NO;
                 cell.splitView.hidden = YES;
-                cell.titleLbl.frame = CGRectMake(20, 0,SCREEN_WIDTH - 20 - 20, 44);
+                if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
+                    cell.titleLbl.frame = CGRectMake(20, 0,SCREEN_WIDTH - 20 - 20, 44);
+                }else{
+                    cell.titleLbl.frame = CGRectMake(20, 0,SCREEN_HEIGHT - 20 - 20, 44);
+                }
+                
                 cell.titleLbl.font = [UIFont systemFontOfSize:14.0f];
                 cell.titleLbl.textColor = [UIColor colorWithWhite:0.2 alpha:1];
                 cell.titleLbl.backgroundColor = [UIColor clearColor];
@@ -308,7 +365,11 @@
                 // 快递费用
                 [cell setCellType:-1];
                 cell.arrowView.hidden = YES;
-                cell.titleLbl.frame = CGRectMake(20, 4,SCREEN_WIDTH - 20 - 20, 20);
+                if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
+                    cell.titleLbl.frame = CGRectMake(20, 4,SCREEN_WIDTH - 20 - 20, 20);
+                }else{
+                    cell.titleLbl.frame = CGRectMake(20, 4,SCREEN_HEIGHT - 20 - 20, 20);
+                }
                 cell.titleLbl.font = [UIFont systemFontOfSize:14.0f];
                 cell.titleLbl.textColor = [UIColor colorWithWhite:0.2 alpha:1];
                 cell.titleLbl.backgroundColor = [UIColor clearColor];
@@ -319,15 +380,23 @@
 
                 NSString *nick = [[self.detailDict objectForKey:@"item"] objectForKey:@"nick"];
                 cell.titleLbl.text = [NSString stringWithFormat:@"卖家昵称：%@",nick];
-                
-                cell.creditView.frame = CGRectMake(20, 24, SCREEN_WIDTH - 20 - 20, 12);
+                if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
+                    cell.creditView.frame = CGRectMake(20, 24, SCREEN_WIDTH - 20 - 20, 12);
+                }else{
+                    cell.creditView.frame = CGRectMake(20, 24, SCREEN_HEIGHT - 20 - 20, 12);
+                }
                 cell.creditView.image = [UIImage noCacheImageNamed:[NSString stringWithFormat:@"seller_%@.png",[self.detailDict objectForKey:@"seller_credit_score"]]];
                 
             }else if(indexPath.section == 2 && indexPath.row == 1){
                 [cell setCellType:1];
                 cell.arrowView.hidden = NO;
                 cell.splitView.hidden = YES;
-                cell.titleLbl.frame = CGRectMake(20, 0,SCREEN_WIDTH - 20 - 20, 44);
+                if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
+                    cell.titleLbl.frame = CGRectMake(20, 0,SCREEN_WIDTH - 20 - 20, 44);
+                }else{
+                    cell.titleLbl.frame = CGRectMake(20, 0,SCREEN_HEIGHT - 20 - 20, 44);
+                }
+                
                 cell.titleLbl.font = [UIFont systemFontOfSize:14.0f];
                 cell.titleLbl.textColor = [UIColor colorWithWhite:0.2 alpha:1];
                 cell.titleLbl.backgroundColor = [UIColor clearColor];
