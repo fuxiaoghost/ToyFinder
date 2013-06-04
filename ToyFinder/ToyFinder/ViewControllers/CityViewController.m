@@ -11,6 +11,8 @@
 #import "AppDelegate.h"
 #import "SlideViewController.h"
 
+#define MOVE_HEIGHT 40
+
 @interface CityViewController ()
 
 @end
@@ -107,7 +109,7 @@
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
         minPriceField = [[UITextField alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 200)/2, 60, 80, 36)];
     }else{
-        minPriceField = [[UITextField alloc] initWithFrame:CGRectMake((SCREEN_HEIGHT - 200)/2, 60, 80, 36)];
+        minPriceField = [[UITextField alloc] initWithFrame:CGRectMake((SCREEN_HEIGHT - 200)/2, 60 - MOVE_HEIGHT, 80, 36)];
     }
     
     minPriceField.keyboardType = UIKeyboardTypeNumberPad;
@@ -120,7 +122,7 @@
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
         maxPriceField = [[UITextField alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 200)/2 + 80 + 40, 60, 80, 36)];
     }else{
-        maxPriceField = [[UITextField alloc] initWithFrame:CGRectMake((SCREEN_HEIGHT - 200)/2 + 80 + 40, 60, 80, 36)];
+        maxPriceField = [[UITextField alloc] initWithFrame:CGRectMake((SCREEN_HEIGHT - 200)/2 + 80 + 40, 60 - MOVE_HEIGHT, 80, 36)];
     }
     
     maxPriceField.keyboardType = UIKeyboardTypeNumberPad;
@@ -134,7 +136,7 @@
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
         splitLbl = [[UILabel alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 200)/2 + 80, 60, 40, 36)];
     }else{
-        splitLbl = [[UILabel alloc] initWithFrame:CGRectMake((SCREEN_HEIGHT - 200)/2 + 80, 60, 40, 36)];
+        splitLbl = [[UILabel alloc] initWithFrame:CGRectMake((SCREEN_HEIGHT - 200)/2 + 80, 60 - MOVE_HEIGHT, 40, 36)];
     }
     
     splitLbl.font = [UIFont systemFontOfSize:14.0f];
@@ -148,7 +150,7 @@
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
         actionBtn.frame = CGRectMake(SCREEN_WIDTH - 80, 140, 60, 30);
     }else{
-        actionBtn.frame = CGRectMake(SCREEN_HEIGHT - 80, 140, 60, 30);
+        actionBtn.frame = CGRectMake(SCREEN_HEIGHT - 80, 140 - MOVE_HEIGHT * 3/2, 60, 30);
     }
     
     actionBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18.0f];
@@ -163,7 +165,7 @@
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
         cancelBtn.frame = CGRectMake(SCREEN_WIDTH - 160, 140, 60, 30);
     }else{
-        cancelBtn.frame = CGRectMake(SCREEN_HEIGHT - 160, 140, 60, 30);
+        cancelBtn.frame = CGRectMake(SCREEN_HEIGHT - 160, 140 - MOVE_HEIGHT * 3/2, 60, 30);
     }
     [cancelBtn setTitle:@"重置" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:RGBACOLOR(221, 70, 0, 1) forState:UIControlStateNormal];
@@ -344,11 +346,11 @@
             closeButton.frame = CGRectMake(SCREEN_HEIGHT - 60, 5, 50, 35);
             cityList.frame = CGRectMake(0, 45, SCREEN_HEIGHT, SCREEN_WIDTH - 45);
             filterView.frame = CGRectMake(0, 45, SCREEN_HEIGHT, SCREEN_WIDTH - 45);
-            minPriceField.frame = CGRectMake((SCREEN_HEIGHT - 200)/2, 60, 80, 36);
-            maxPriceField.frame = CGRectMake((SCREEN_HEIGHT - 200)/2 + 80 + 40, 60, 80, 36);
-            actionBtn.frame = CGRectMake(SCREEN_HEIGHT - 80, 140, 60, 30);
-            splitLbl.frame = CGRectMake((SCREEN_HEIGHT - 200)/2 + 80, 60, 40, 36);
-            cancelBtn.frame = CGRectMake(SCREEN_HEIGHT - 160, 140, 60, 30);
+            minPriceField.frame = CGRectMake((SCREEN_HEIGHT - 200)/2, 60 - MOVE_HEIGHT, 80, 36);
+            maxPriceField.frame = CGRectMake((SCREEN_HEIGHT - 200)/2 + 80 + 40, 60 - MOVE_HEIGHT, 80, 36);
+            actionBtn.frame = CGRectMake(SCREEN_HEIGHT - 80, 140 - MOVE_HEIGHT * 3/2, 60, 30);
+            splitLbl.frame = CGRectMake((SCREEN_HEIGHT - 200)/2 + 80, 60 - MOVE_HEIGHT, 40, 36);
+            cancelBtn.frame = CGRectMake(SCREEN_HEIGHT - 160, 140 - MOVE_HEIGHT * 3/2, 60, 30);
             break;
         }
         case UIInterfaceOrientationPortrait:{

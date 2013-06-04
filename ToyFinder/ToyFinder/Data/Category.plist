@@ -11,9 +11,9 @@
 		<array>
 			<dict>
 				<key>name</key>
-				<string>黄花梨</string>
+				<string>紫檀</string>
 				<key>tag</key>
-				<string>黄花梨</string>
+				<string>紫檀</string>
 				<key>image</key>
 				<string>cat0_0.png</string>
 				<key>infourl</key>
@@ -25,7 +25,7 @@
 				<key>tag</key>
 				<string>黄花梨</string>
 				<key>image</key>
-				<string>cat0_0.png</string>
+				<string>cat0_1.png</string>
 			</dict>
 			<dict>
 				<key>name</key>

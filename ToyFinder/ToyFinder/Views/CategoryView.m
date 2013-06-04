@@ -53,7 +53,7 @@
                 if (index >= self.dataSource.count) {
                     break;
                 }
-                NSDictionary *dict = [self.dataSource objectAtIndex:i];
+                NSDictionary *dict = [self.dataSource objectAtIndex:index];
                 UIButton *imageButton = [UIButton buttonWithType:UIButtonTypeCustom];
                 imageButton.frame = CGRectMake((j + 1) * IMAGE_SPACE + j * imageWidth, (i + 1) * IMAGE_SPACE + i * imageWidth, imageWidth, imageWidth);
                 [imageButton setImage:[UIImage noCacheImageNamed:[dict objectForKey:@"image"]] forState:UIControlStateNormal];

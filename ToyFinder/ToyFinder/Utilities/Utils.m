@@ -27,18 +27,9 @@
     
     UIActivityIndicatorView *activeView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     activeView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    activeView.center = CGPointMake(loadingView.frame.size.width/2, 30);
+    activeView.center = CGPointMake(loadingView.frame.size.width/2, loadingView.frame.size.height/2);
     [loadingView addSubview:activeView];
     [activeView release];
-    
-    UILabel *tipsLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, loadingView.frame.size.height - 40, loadingView.frame.size.width, 40)];
-    tipsLbl.font = [UIFont boldSystemFontOfSize:16.0f];
-    tipsLbl.textColor = [UIColor whiteColor];
-    tipsLbl.textAlignment = UITextAlignmentCenter;
-    [loadingView addSubview:tipsLbl];
-    tipsLbl.backgroundColor = [UIColor clearColor];
-    [tipsLbl release];
-    tipsLbl.text = title;
     
     appDelegate.window.userInteractionEnabled = NO;
     [activeView startAnimating];
