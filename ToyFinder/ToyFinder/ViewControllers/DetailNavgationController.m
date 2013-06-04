@@ -7,6 +7,8 @@
 //
 
 #import "DetailNavgationController.h"
+#import "AppDelegate.h"
+#import "SlideViewController.h"
 
 @interface DetailNavgationController ()
 
@@ -34,17 +36,40 @@
 
 - (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
     
-    return NO;
+    return toInterfaceOrientation != UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
 - (BOOL) shouldAutorotate{
     
-    return NO;
+    return YES;
 }
 
 - (NSUInteger) supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    SlideViewController *slideVC = (SlideViewController *)appDelegate.window.rootViewController;
+    [slideVC willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+   
+    for (UIViewController *vc in self.viewControllers) {
+        [vc willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    }
+    
+}
 
+- (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    SlideViewController *slideVC = (SlideViewController *)appDelegate.window.rootViewController;
+    [slideVC didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    for (UIViewController *vc in self.viewControllers) {
+        [vc didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    }
+}
 @end

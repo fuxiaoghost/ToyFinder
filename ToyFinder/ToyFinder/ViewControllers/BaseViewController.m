@@ -35,7 +35,6 @@
     [titleLbl release];
     
     
-    UIView *splitView = nil;
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
         splitView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, 1)];
     }else{
@@ -51,5 +50,29 @@
     [super setTitle:title];
     [titleLbl setText:[NSString stringWithFormat:@"%@",title]];
 }
+
+
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    switch (toInterfaceOrientation) {
+        case UIInterfaceOrientationLandscapeLeft:{
+        }
+        case UIInterfaceOrientationLandscapeRight:{
+            titleLbl.frame = CGRectMake(0, 0, SCREEN_HEIGHT, 44);
+            splitView.frame = CGRectMake(0, 44, SCREEN_HEIGHT, 1);
+            break;
+        }
+        case UIInterfaceOrientationPortrait:{
+            titleLbl.frame = CGRectMake(0, 0, SCREEN_WIDTH, 44);
+            splitView.frame = CGRectMake(0, 44, SCREEN_WIDTH, 1);
+            break;
+        }
+        default:
+            break;
+    }
+    
+}
+
 
 @end

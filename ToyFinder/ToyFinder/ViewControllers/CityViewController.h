@@ -7,6 +7,7 @@
 //
 
 #import "BaseViewController.h"
+#import "WallButton.h"
 
 @protocol CityViewControllerDelegate;
 @interface CityViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate>{
@@ -18,6 +19,11 @@
     UIView *filterView;
     UITextField *minPriceField;
     UITextField *maxPriceField;
+    WallButton *closeButton;
+    UISegmentedControl *filterSegment;
+    UILabel *splitLbl;
+    UIButton *actionBtn;
+    WallButton *cancelBtn;
 }
 @property (nonatomic,assign) id<CityViewControllerDelegate> delegate;
 @property (nonatomic,copy) NSString *city;

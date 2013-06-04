@@ -15,6 +15,7 @@
 		79140A14174B7A91006B4C60 /* WallButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 79140A13174B7A91006B4C60 /* WallButton.m */; };
 		79140A17174B7DBC006B4C60 /* Category.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79140A16174B7DBC006B4C60 /* Category.plist */; };
 		791BBBBB174EFB13004AAA20 /* CategoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BBBBA174EFB13004AAA20 /* CategoryView.m */; };
+		79308C1E175DA98100938212 /* FullImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79308C1D175DA98100938212 /* FullImageViewController.m */; };
 		794F0EC31744692700035EB5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794F0EC21744692700035EB5 /* UIKit.framework */; };
 		794F0EC51744692700035EB5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794F0EC41744692700035EB5 /* Foundation.framework */; };
 		794F0EC71744692700035EB5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794F0EC61744692700035EB5 /* CoreGraphics.framework */; };
@@ -189,6 +190,8 @@
 		79140A16174B7DBC006B4C60 /* Category.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Category.plist; sourceTree = "<group>"; };
 		791BBBB9174EFB13004AAA20 /* CategoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryView.h; sourceTree = "<group>"; };
 		791BBBBA174EFB13004AAA20 /* CategoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryView.m; sourceTree = "<group>"; };
+		79308C1C175DA98100938212 /* FullImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullImageViewController.h; sourceTree = "<group>"; };
+		79308C1D175DA98100938212 /* FullImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullImageViewController.m; sourceTree = "<group>"; };
 		794F0EBF1744692700035EB5 /* ToyFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToyFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		794F0EC21744692700035EB5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		794F0EC41744692700035EB5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -689,6 +692,8 @@
 				DD3B90CF1754E790005CF2E2 /* FullInfoViewController.m */,
 				DDBBB819175A0E0F007090B3 /* CityViewController.h */,
 				DDBBB81A175A0E10007090B3 /* CityViewController.m */,
+				79308C1C175DA98100938212 /* FullImageViewController.h */,
+				79308C1D175DA98100938212 /* FullImageViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1070,6 +1075,7 @@
 				DDBBB80B1759DF41007090B3 /* HMSegmentedControl.m in Sources */,
 				DDBBB81B175A0E10007090B3 /* CityViewController.m in Sources */,
 				DD7613BC175B6E95006DE028 /* Utils.m in Sources */,
+				79308C1E175DA98100938212 /* FullImageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

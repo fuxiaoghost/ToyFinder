@@ -92,8 +92,37 @@
     return self;
 }
 
+- (void) rotateLandscope:(BOOL)landscope_{
+    self.landscope = landscope_;
+    
+    
+    
+    // 背景色
+    if (!landscope) {
+        bgImageView.frame = CGRectMake(10, 0, SCREEN_WIDTH - 20, 44);
+    }else{
+        bgImageView.frame = CGRectMake(10, 0, SCREEN_HEIGHT - 20, 44);
+    }
+    
+    // 分割线
+    if (!landscope) {
+        splitView.frame = CGRectMake(10, 43, SCREEN_WIDTH - 20, 1);
+    }else{
+        splitView.frame = CGRectMake(10, 43, SCREEN_HEIGHT - 20, 1);
+    }
+    
+
+    // 右侧指示箭头
+    if (!landscope) {
+        arrowView.frame = CGRectMake(SCREEN_WIDTH - 30, (44 - 12)/2, 7, 12);
+    }else{
+        arrowView.frame = CGRectMake(SCREEN_HEIGHT - 30, (44 - 12)/2, 7, 12);
+    }
+}
+
 - (void) setCellType:(NSInteger)cellType{
     if (cellType == -1) {
+        NSLog(@"%@",bgImageView);
         bgImageView.image = [UIImage stretchableImageWithPath:@"cell_header.png"];
         splitView.hidden = NO;
     }else if(cellType == 0){

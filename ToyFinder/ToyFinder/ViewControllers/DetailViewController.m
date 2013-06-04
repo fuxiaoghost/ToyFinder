@@ -71,7 +71,7 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UIView *titleBgView = nil;
+    
     if(LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN){
         titleBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
     }else{
@@ -82,7 +82,7 @@
     [titleBgView release];
     
     // 导航栏标题
-    UILabel *titleLbl = nil;
+    
     if(LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN){
         titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 80, 44)];
     }else{
@@ -100,7 +100,7 @@
     titleLbl.text = self.detailTitle;
     
     
-    UIView *splitView = nil;
+    
     if(LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN){
         splitView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, 1)];
     }else{
@@ -112,7 +112,7 @@
     [splitView release];
     
         
-    WallButton *closeButton = [WallButton buttonWithType:UIButtonTypeCustom];
+    closeButton = [WallButton buttonWithType:UIButtonTypeCustom];
     if(LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN){
         closeButton.frame = CGRectMake(SCREEN_WIDTH - 60, 5, 50, 35);
     }else{
@@ -139,7 +139,7 @@
     detailList.delegate = self;
     
     // 购买
-    UIButton *buyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    buyButton = [UIButton buttonWithType:UIButtonTypeCustom];
     if(LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN){
         buyButton.frame = CGRectMake((SCREEN_WIDTH - 120)/2, SCREEN_HEIGHT - 35, 120, 30);
     }else{
@@ -270,6 +270,12 @@
                 [cell.contentView addSubview:photosList];
                 [photosList release];
             }
+            if(LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN){
+                photosList.frame = CGRectMake(6, 0, SCREEN_WIDTH-12, 154);
+            }else{
+                photosList.frame = CGRectMake(6, 0, SCREEN_HEIGHT-12, 154);
+            }
+
             [photosList reloadData];
             return cell;
         }else{
@@ -280,6 +286,9 @@
                 cell = [[[DetailViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier landscope:(LAYOUT_LANDSCAPELEFT || LAYOUT_LANDSCAPERIGHT)] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
+            
+            [cell rotateLandscope:(LAYOUT_LANDSCAPELEFT || LAYOUT_LANDSCAPERIGHT)];
+            
             if (indexPath.section == 1 && indexPath.row == 0) {
                 // 快递费用
                 [cell setCellType:-1];
@@ -405,6 +414,8 @@
                 cell.detailLbl.text = @"";
                 cell.creditView.image = nil;
             }
+            
+            
             
             return cell;
         }
@@ -534,19 +545,12 @@
         for (NSDictionary *dict in self.photoArray) {
             [fullImageArray addObject:[dict objectForKey:@"url"]];
         }
-        FullImageView *detailImage = [[FullImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) Images:fullImageArray AtIndex:indexPath.row];
         
-        detailImage.delegate = self;
-        detailImage.alpha = 0;
+        detailImageVC = [[FullImageViewController alloc] initWithImages:fullImageArray AtIndex:indexPath.row];
+        [self.navigationController pushViewController:detailImageVC animated:YES];
+        [detailImageVC release];
         
         
-        AppDelegate  *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        [appDelegate.window addSubview:detailImage];
-        [detailImage release];
-        
-        [UIView animateWithDuration:0.3 animations:^{
-            detailImage.alpha = 1;
-        }];
     }
 }
 
@@ -555,6 +559,40 @@
 #pragma mark FullImageViewDelegate
 - (void) fullImageView:(FullImageView *)fullImageView didClosedAtIndex:(NSInteger)index{
 //    [photosList scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+    
+    switch (toInterfaceOrientation) {
+        case UIInterfaceOrientationLandscapeLeft:{
+        }
+        case UIInterfaceOrientationLandscapeRight:{
+            titleBgView.frame = CGRectMake(0, 0, SCREEN_HEIGHT, 44);
+            titleLbl.frame = CGRectMake(10, 0, SCREEN_HEIGHT - 80, 44);
+            splitView.frame = CGRectMake(0, 44, SCREEN_HEIGHT, 1);
+            closeButton.frame = CGRectMake(SCREEN_HEIGHT - 60, 5, 50, 35);
+            detailList.frame = CGRectMake(0, 45, SCREEN_HEIGHT, SCREEN_WIDTH - 45 - 40);
+            buyButton.frame = CGRectMake((SCREEN_HEIGHT - 120)/2, SCREEN_WIDTH - 35, 120, 30);
+
+            break;
+        }
+        case UIInterfaceOrientationPortrait:{
+            titleBgView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 44);
+            titleLbl.frame = CGRectMake(10, 0, SCREEN_WIDTH - 80, 44);
+            splitView.frame = CGRectMake(0, 44, SCREEN_WIDTH, 1);
+            closeButton.frame = CGRectMake(SCREEN_WIDTH - 60, 5, 50, 35);
+            detailList.frame = CGRectMake(0, 45, SCREEN_WIDTH, SCREEN_HEIGHT - 45 - 40);
+            buyButton.frame = CGRectMake((SCREEN_WIDTH - 120)/2, SCREEN_HEIGHT - 35, 120, 30);
+            
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
+    [detailList reloadData];
 }
 
 

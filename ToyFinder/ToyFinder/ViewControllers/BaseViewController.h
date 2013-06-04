@@ -11,6 +11,7 @@
 @interface BaseViewController : UIViewController{
 @private
     UILabel *titleLbl;
+    UIView *splitView;
 }
 
 @end

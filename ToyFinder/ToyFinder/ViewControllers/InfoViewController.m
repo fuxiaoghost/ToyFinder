@@ -7,7 +7,9 @@
 //
 
 #import "InfoViewController.h"
+#import "SlideViewController.h"
 #import "WallButton.h"
+#import "AppDelegate.h"
 
 @interface InfoViewController ()
 @property (nonatomic,copy) NSString *url;
@@ -40,7 +42,6 @@
     
     
     // 信息展示webview
-    UIWebView *infoView = nil;
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
         infoView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 45, SCREEN_WIDTH, SCREEN_HEIGHT - 45)];
     }else{
@@ -55,7 +56,7 @@
     NSString *infoHtml = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
     [infoView loadHTMLString:infoHtml baseURL: [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
 
-    WallButton *closeButton = [WallButton buttonWithType:UIButtonTypeCustom];
+    closeButton = [WallButton buttonWithType:UIButtonTypeCustom];
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
         closeButton.frame = CGRectMake(SCREEN_WIDTH - 60, 5, 50, 35);
     }else{
@@ -79,17 +80,44 @@
 
 - (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
     
-    return NO;
+    return toInterfaceOrientation != UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
 - (BOOL) shouldAutorotate{
     
-    return NO;
+    return YES;
 }
 
 - (NSUInteger) supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskAllButUpsideDown;
 }
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    SlideViewController *slideVC = (SlideViewController *)appDelegate.window.rootViewController;
+    [slideVC willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    switch (toInterfaceOrientation) {
+        case UIInterfaceOrientationLandscapeLeft:{
+        }
+        case UIInterfaceOrientationLandscapeRight:{
+            infoView.frame = CGRectMake(0, 45, SCREEN_HEIGHT, SCREEN_WIDTH - 45);
+            closeButton.frame = CGRectMake(SCREEN_HEIGHT - 60, 5, 50, 35);
+            break;
+        }
+        case UIInterfaceOrientationPortrait:{
+            infoView.frame = CGRectMake(0, 45, SCREEN_WIDTH, SCREEN_HEIGHT - 45);
+            closeButton.frame = CGRectMake(SCREEN_WIDTH - 60, 5, 50, 35);
+            break;
+        }
+        default:
+            break;
+    }
+    
+}
+
 
 
 @end

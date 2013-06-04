@@ -26,4 +26,5 @@
 @property (nonatomic,assign) BOOL landscope;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier landscope:(BOOL) landscope_;
+- (void) rotateLandscope:(BOOL)landscope_;
 @end

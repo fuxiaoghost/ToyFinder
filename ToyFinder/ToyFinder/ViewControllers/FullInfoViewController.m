@@ -31,8 +31,13 @@
     
     self.title = self.titleInfo;
     
-    WallButton *backButton = [WallButton buttonWithType:UIButtonTypeCustom];
-    backButton.frame = CGRectMake(10, 5, 50, 35);
+    backButton = [WallButton buttonWithType:UIButtonTypeCustom];
+    if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN){
+        backButton.frame = CGRectMake(10, 5, 50, 35);
+    }else{
+        backButton.frame = CGRectMake(10, 5, 50, 35);
+    }
+    
     [backButton setTitle:@"返回" forState:UIControlStateNormal];
     [backButton setTitleColor:RGBACOLOR(221, 70, 0, 1) forState:UIControlStateNormal];
     [backButton setTitleColor:RGBACOLOR(255, 255, 255, 1) forState:UIControlStateHighlighted];
@@ -41,7 +46,7 @@
     
     
     // 信息展示webview
-    UIWebView *infoView = nil;
+    
     
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
         infoView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 45, SCREEN_WIDTH, SCREEN_HEIGHT - 45)];
@@ -89,6 +94,32 @@
 
 - (void) webViewDidFinishLoad:(UIWebView *)webView{
     [loadingView stopAnimating];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+    
+    switch (toInterfaceOrientation) {
+        case UIInterfaceOrientationLandscapeLeft:{
+        }
+        case UIInterfaceOrientationLandscapeRight:{
+            infoView.frame = CGRectMake(0, 45, SCREEN_HEIGHT, SCREEN_WIDTH - 45);
+            loadingView.frame = CGRectMake(SCREEN_HEIGHT - 30, 12, 20, 20);
+            
+            break;
+        }
+        case UIInterfaceOrientationPortrait:{
+            infoView.frame = CGRectMake(0, 45, SCREEN_WIDTH, SCREEN_HEIGHT - 45);
+            loadingView.frame = CGRectMake(SCREEN_WIDTH - 30, 12, 20, 20); 
+            break;
+        }
+        default:
+            break;
+    }
+    
+}
+
+- (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
+
 }
 
 @end

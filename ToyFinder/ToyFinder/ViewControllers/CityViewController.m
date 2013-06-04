@@ -8,6 +8,8 @@
 
 #import "CityViewController.h"
 #import "WallButton.h"
+#import "AppDelegate.h"
+#import "SlideViewController.h"
 
 @interface CityViewController ()
 
@@ -37,7 +39,7 @@
     
     self.title = @"筛选";
     
-    WallButton *closeButton = [WallButton buttonWithType:UIButtonTypeCustom];
+    closeButton = [WallButton buttonWithType:UIButtonTypeCustom];
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
         closeButton.frame = CGRectMake(SCREEN_WIDTH - 60, 5, 50, 35);
     }else{
@@ -50,7 +52,6 @@
     [self.view addSubview:closeButton];
     [closeButton addTarget:self action:@selector(closeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    UISegmentedControl *filterSegment = nil;
     if (self.city) {
         filterSegment = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"筛选",self.city, nil]];
     }else{
@@ -129,7 +130,7 @@
     [filterView addSubview:maxPriceField];
     [maxPriceField release];
     
-    UILabel *splitLbl = nil;
+  
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
         splitLbl = [[UILabel alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 200)/2 + 80, 60, 40, 36)];
     }else{
@@ -143,7 +144,7 @@
     [splitLbl release];
     splitLbl.text = @"~";
     
-    UIButton *actionBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+    actionBtn =[UIButton buttonWithType:UIButtonTypeCustom];
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
         actionBtn.frame = CGRectMake(SCREEN_WIDTH - 80, 140, 60, 30);
     }else{
@@ -158,7 +159,7 @@
     [filterView addSubview:actionBtn];
     [actionBtn addTarget:self action:@selector(actionButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    WallButton *cancelBtn = [WallButton buttonWithType:UIButtonTypeCustom];
+    cancelBtn = [WallButton buttonWithType:UIButtonTypeCustom];
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
         cancelBtn.frame = CGRectMake(SCREEN_WIDTH - 160, 140, 60, 30);
     }else{
@@ -316,16 +317,58 @@
 
 - (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
     
-    return NO;
+    return toInterfaceOrientation != UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
 - (BOOL) shouldAutorotate{
     
-    return NO;
+    return YES;
 }
 
 - (NSUInteger) supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskAllButUpsideDown;
 }
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    SlideViewController *slideVC = (SlideViewController *)appDelegate.window.rootViewController;
+    [slideVC willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    switch (toInterfaceOrientation) {
+        case UIInterfaceOrientationLandscapeLeft:{
+        }
+        case UIInterfaceOrientationLandscapeRight:{
+            filterSegment.frame = CGRectMake(80, 4, SCREEN_HEIGHT - 160, 36);
+            closeButton.frame = CGRectMake(SCREEN_HEIGHT - 60, 5, 50, 35);
+            cityList.frame = CGRectMake(0, 45, SCREEN_HEIGHT, SCREEN_WIDTH - 45);
+            filterView.frame = CGRectMake(0, 45, SCREEN_HEIGHT, SCREEN_WIDTH - 45);
+            minPriceField.frame = CGRectMake((SCREEN_HEIGHT - 200)/2, 60, 80, 36);
+            maxPriceField.frame = CGRectMake((SCREEN_HEIGHT - 200)/2 + 80 + 40, 60, 80, 36);
+            actionBtn.frame = CGRectMake(SCREEN_HEIGHT - 80, 140, 60, 30);
+            splitLbl.frame = CGRectMake((SCREEN_HEIGHT - 200)/2 + 80, 60, 40, 36);
+            cancelBtn.frame = CGRectMake(SCREEN_HEIGHT - 160, 140, 60, 30);
+            break;
+        }
+        case UIInterfaceOrientationPortrait:{
+            filterSegment.frame = CGRectMake(80, 4, SCREEN_WIDTH - 160, 36);
+            closeButton.frame = CGRectMake(SCREEN_WIDTH - 60, 5, 50, 35);
+            cityList.frame = CGRectMake(0, 45, SCREEN_WIDTH, SCREEN_HEIGHT - 45);
+            filterView.frame = CGRectMake(0, 45, SCREEN_WIDTH, SCREEN_HEIGHT - 45);
+            minPriceField.frame = CGRectMake((SCREEN_WIDTH - 200)/2, 60, 80, 36);
+            maxPriceField.frame = CGRectMake((SCREEN_WIDTH - 200)/2 + 80 + 40, 60, 80, 36);
+            splitLbl.frame = CGRectMake((SCREEN_WIDTH - 200)/2 + 80, 60, 40, 36);
+            actionBtn.frame = CGRectMake(SCREEN_WIDTH - 80, 140, 60, 30);
+            cancelBtn.frame = CGRectMake(SCREEN_WIDTH - 160, 140, 60, 30);
+            break;
+        }
+        default:
+            break;
+    }
+    
+}
+
+
 
 @end
