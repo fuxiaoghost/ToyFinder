@@ -9,12 +9,16 @@
 #ifndef HotelFinder_Config_h
 #define HotelFinder_Config_h
 
+// 淘宝
 #define APP_KEY         @"21501339"
 #define APP_SECRET      @"df925fc22f81305f7fe458b0c4d17486"
 #define APP_CALLBACKURL @"appcallback://"
 #define NICK            @"c半缘君c"
-
 #define TOY_PAGE_SIZE   100
+
+// UMENG
+#define UMENG_KEY       @"51aea81756240b96c1007b2c"
+#define CHANNEL_ID      @"AppStore"
 
 
 
@@ -30,6 +34,8 @@
 #define LAYOUT_LANDSCAPERIGHT   self.interfaceOrientation == UIDeviceOrientationLandscapeRight
 #define LAYOUT_FACEUP           self.interfaceOrientation == UIDeviceOrientationFaceUp
 #define LAYOUT_FACEDOWN         self.interfaceOrientation == UIDeviceOrientationFaceDown
+#define ITEM_WIDTH              (SCREEN_WIDTH > 320) ? 500 : 260
+#define ITEM_HEIGHT             (SCREEN_WIDTH > 320) ? 600 : 340
 
 // 判断系统版本是否大于x.x
 #define IOSVersion_3_2			([[[UIDevice currentDevice] systemVersion] floatValue] >= 3.2)

@@ -15,6 +15,7 @@
 		79140A14174B7A91006B4C60 /* WallButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 79140A13174B7A91006B4C60 /* WallButton.m */; };
 		79140A17174B7DBC006B4C60 /* Category.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79140A16174B7DBC006B4C60 /* Category.plist */; };
 		791BBBBB174EFB13004AAA20 /* CategoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 791BBBBA174EFB13004AAA20 /* CategoryView.m */; };
+		792DC374175EDC690006646A /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 792DC372175EDC690006646A /* libMobClickLibrary.a */; };
 		79308C1E175DA98100938212 /* FullImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79308C1D175DA98100938212 /* FullImageViewController.m */; };
 		794F0EC31744692700035EB5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794F0EC21744692700035EB5 /* UIKit.framework */; };
 		794F0EC51744692700035EB5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794F0EC41744692700035EB5 /* Foundation.framework */; };
@@ -190,6 +191,8 @@
 		79140A16174B7DBC006B4C60 /* Category.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Category.plist; sourceTree = "<group>"; };
 		791BBBB9174EFB13004AAA20 /* CategoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryView.h; sourceTree = "<group>"; };
 		791BBBBA174EFB13004AAA20 /* CategoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryView.m; sourceTree = "<group>"; };
+		792DC372175EDC690006646A /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		792DC373175EDC690006646A /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		79308C1C175DA98100938212 /* FullImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullImageViewController.h; sourceTree = "<group>"; };
 		79308C1D175DA98100938212 /* FullImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullImageViewController.m; sourceTree = "<group>"; };
 		794F0EBF1744692700035EB5 /* ToyFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToyFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -456,6 +459,7 @@
 				794F0EC71744692700035EB5 /* CoreGraphics.framework in Frameworks */,
 				794F0F091744699100035EB5 /* libTOPIOSSdk.a in Frameworks */,
 				794F0F0A1744699100035EB5 /* libTOPIOSSdk.s.a in Frameworks */,
+				792DC374175EDC690006646A /* libMobClickLibrary.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,6 +473,15 @@
 				DDBBB80C1759FF50007090B3 /* Citys.plist */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		792DC371175EDC690006646A /* UMeng */ = {
+			isa = PBXGroup;
+			children = (
+				792DC372175EDC690006646A /* libMobClickLibrary.a */,
+				792DC373175EDC690006646A /* MobClick.h */,
+			);
+			path = UMeng;
 			sourceTree = "<group>";
 		};
 		794F0EB61744692700035EB5 = {
@@ -506,6 +519,7 @@
 		794F0EC81744692700035EB5 /* ToyFinder */ = {
 			isa = PBXGroup;
 			children = (
+				792DC371175EDC690006646A /* UMeng */,
 				DD3440B517489C02003076C9 /* SDWebImage */,
 				DDA83B97174535C500562EF1 /* Utilities */,
 				794F0F1117446A6F00035EB5 /* JSON */,
@@ -1156,11 +1170,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ToyFinder/ToyFinder-Prefix.pch";
 				INFOPLIST_FILE = "ToyFinder/ToyFinder-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ToyFinder/AliSDK\"",
+					"\"$(SRCROOT)/ToyFinder/UMeng\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1171,11 +1188,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ToyFinder/ToyFinder-Prefix.pch";
 				INFOPLIST_FILE = "ToyFinder/ToyFinder-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ToyFinder/AliSDK\"",
+					"\"$(SRCROOT)/ToyFinder/UMeng\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

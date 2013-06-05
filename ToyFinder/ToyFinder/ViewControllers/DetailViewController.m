@@ -552,7 +552,7 @@
 
 
 #pragma mark -
-#pragma mark FullImageViewDelegate
+#pragma mark FullImageViewControllerDelegate
 - (void) fullImageView:(FullImageView *)fullImageView didClosedAtIndex:(NSInteger)index{
 //    [photosList scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
 }

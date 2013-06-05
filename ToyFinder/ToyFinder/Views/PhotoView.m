@@ -121,6 +121,14 @@
     return self;
 }
 
+- (void) setGestureDisabled{
+    for (UIImageView *imageView in photoArray) {
+        for (UIGestureRecognizer *gesture in imageView.gestureRecognizers) {
+            [imageView removeGestureRecognizer:gesture];
+        }
+    }
+}
+
 // 重新加载图片
 - (void)reloadPhotosWith:(NSArray *)urls{
     self.photoUrls = urls;

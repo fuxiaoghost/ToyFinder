@@ -198,9 +198,9 @@
     NSArray *dataSource = [NSArray arrayWithObjects:@"",@"",@"",@"",@"",@"",@"",@"",@"", nil];
     
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
-        itemView = [[ItemView alloc] initWithFrame:CGRectMake(0, 10 + 44 + 22, SCREEN_WIDTH, SCREEN_HEIGHT - 10 - 44 - 40 - 22) dataSource:dataSource itemWidth:260];
+        itemView = [[ItemView alloc] initWithFrame:CGRectMake(0, 10 + 44 + 22, SCREEN_WIDTH, SCREEN_HEIGHT - 10 - 44 - 40 - 22) dataSource:dataSource itemWidth:ITEM_WIDTH];
     }else{
-        itemView = [[ItemView alloc] initWithFrame:CGRectMake(0, 10 + 44 + 22, SCREEN_HEIGHT, SCREEN_WIDTH - 10 - 44 - 40 - 22) dataSource:dataSource itemWidth:340];
+        itemView = [[ItemView alloc] initWithFrame:CGRectMake(0, 10 + 44 + 22, SCREEN_HEIGHT, SCREEN_WIDTH - 10 - 44 - 40 - 22) dataSource:dataSource itemWidth:ITEM_HEIGHT];
     }
     itemView.delegate = self;
     [self.view addSubview:itemView];
@@ -550,7 +550,7 @@
         case UIInterfaceOrientationLandscapeLeft:{
         }
         case UIInterfaceOrientationLandscapeRight:{
-            itemView.itemWidth = 340;
+            itemView.itemWidth = ITEM_HEIGHT;
             itemView.frame = CGRectMake(0, 10 + 44 + 22 , SCREEN_HEIGHT,SCREEN_WIDTH - 10 - 44 - 40 - 22);
             navBgView.frame = CGRectMake(0, 0, SCREEN_HEIGHT, 66);
             splitView.frame = CGRectMake(0, 66, SCREEN_HEIGHT, 1);
@@ -562,7 +562,7 @@
             break;
         }
         case UIInterfaceOrientationPortrait:{
-            itemView.itemWidth = 260;
+            itemView.itemWidth = ITEM_WIDTH;
             itemView.frame = CGRectMake(0, 10 + 44 + 22, SCREEN_WIDTH, SCREEN_HEIGHT - 10 - 44 - 40 - 22);
             navBgView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 66);
             splitView.frame = CGRectMake(0, 66, SCREEN_WIDTH, 1);

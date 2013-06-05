@@ -11,7 +11,7 @@
 #import "TBHttRequest.h"
 #import "WallButton.h"
 
-@interface DetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,FullImageViewDelegate,TBHttRequestDelegate>{
+@interface DetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,FullImageViewControllerDelegate,TBHttRequestDelegate>{
 @private
     UITableView *detailList;
     UITableView *photosList;

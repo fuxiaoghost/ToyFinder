@@ -83,6 +83,7 @@
 
 
 - (void)cancelButtonClick:(id)sender {
+    [photoPageView setGestureDisabled];
     
     if ([delegate respondsToSelector:@selector(fullImageViewController:didClosedAtIndex:)]) {
         [delegate fullImageViewController:self didClosedAtIndex:index];

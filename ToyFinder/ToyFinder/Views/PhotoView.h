@@ -25,7 +25,7 @@
 - (id)initWithFrame:(CGRect)frame photoUrls:(NSArray *)urs;
 - (void)reloadPhotosWith:(NSArray *)urls;
 - (void) pageToIndex:(NSInteger)index;
-//- (void) reLayoutSubviews;
+- (void) setGestureDisabled;
 @end
 
 

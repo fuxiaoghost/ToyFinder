@@ -26,7 +26,7 @@
 
 @end
 
-@protocol FullImageViewDelegate <NSObject>
+@protocol FullImageViewControllerDelegate <NSObject>
 
 @optional
 - (void) fullImageViewController:(FullImageViewController *)fullImageVC didClosedAtIndex:(NSInteger)index;
