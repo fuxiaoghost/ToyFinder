@@ -283,6 +283,7 @@
 }
 
 - (void) selectKeyword:(NSString *)keyword infoUrl:(NSString *)url_{
+    keywordBar.text = keyword;
     index = 1;
     self.sort = @"default";
     self.cid = keyword;
