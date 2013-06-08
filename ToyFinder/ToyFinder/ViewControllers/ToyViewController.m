@@ -251,6 +251,9 @@
     request.delegate = self;
     [request startGetRequest];
     
+    // 记录搜索关键词
+    [MobClick event:Event_Search_Keyword label:self.cid];
+    
 }
 
 - (void) searchKeyword:(NSString *)keyword{

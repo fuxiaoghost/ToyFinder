@@ -14,6 +14,8 @@
     #import "AliSDK/Header/TopSDKBundle.h"
     #import "Config.h"
     #import "UIImage+Utils.h"
+    #import "MobClick.h"
+    #import "UMengEvent.h"
 
     //调试模式下为0，发布模式下为1
     #define RELEASE 0
