@@ -18,6 +18,7 @@
 #import "CacheManager.h"
 #import "HMSegmentedControl.h"
 #import "CityViewController.h"
+#import "NSString+URLEncoding.h"
 
 @interface ToyViewController (){
     NSInteger index;
@@ -146,7 +147,7 @@
 
 // 排序栏
 - (void) addSortBar{
-    sortControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"人气", @"信用", @"销量", @"价格↑", @"价格↓"]];
+    sortControl = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"人气", @"时间", @"销量", @"价格↑", @"价格↓"]];
     
     if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
         sortControl.frame = CGRectMake(0, 40, SCREEN_WIDTH, 26);
@@ -213,7 +214,7 @@
 
 - (void) tempSearch{
     index = 1;
-    self.sort = @"default";
+    self.sort = @"s";
     self.cid = @"连衣裙";
     [self searchMore];
     self.url = @"";
@@ -224,24 +225,11 @@
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
     
-    [params setObject:@"taobao.taobaoke.items.get" forKey:@"method"];
-    [params setObject:@"num_iid,title,nick,pic_url,price,click_url,commission,commission_rate,commission_num,commission_volume,shop_click_url,seller_credit_score,item_location,volume" forKey:@"fields"];
-    [params setObject:NICK forKey:@"nick"];
-    if (self.city) {
-        [params setObject:self.city forKey:@"area"];
-    }
-    //[params setObject:self.cid forKey:@"cid"];
-    if (self.minPrice) {
-        [params setObject:[NSString stringWithFormat:@"%d",self.minPrice] forKey:@"start_price"];
-    }
-    if (self.maxPrice) {
-        [params setObject:[NSString stringWithFormat:@"%d",self.maxPrice] forKey:@"end_price"];
-    }
+    [params setObject:@"tmall.temai.items.search" forKey:@"method"];
     [params setObject:self.sort forKey:@"sort"];
-    [params setObject:self.cid forKey:@"keyword"];
-    [params setObject:@"true" forKey:@"is_mobile"];
-    [params setObject:[NSString stringWithFormat:@"%d",index] forKey:@"page_no"];
-    [params setObject:[NSString stringWithFormat:@"%d",TOY_PAGE_SIZE] forKey:@"page_size"];
+    [params setObject:@"50101034" forKey:@"cat"];
+//    [params setObject:[NSString stringWithFormat:@"%d",index] forKey:@"page_no"];
+//    [params setObject:[NSString stringWithFormat:@"%d",TOY_PAGE_SIZE] forKey:@"page_size"];
     
     if (request) {
         [request cancelRequest];
@@ -414,7 +402,7 @@
 - (void) requestFinished:(TBHttRequest *)request_ withDict:(NSDictionary *)dict{
     if (request_ == request) {
         [contentArray removeAllObjects];
-        [contentArray addObjectsFromArray:[[[dict objectForKey:@"taobaoke_items_get_response"] objectForKey:@"taobaoke_items"] objectForKey:@"taobaoke_item"]];
+        [contentArray addObjectsFromArray:[[[dict objectForKey:@"tmall_temai_items_search_response"] objectForKey:@"item_list"] objectForKey:@"tmall_search_tm_item"]];
         itemView.dataSource = contentArray;
         [itemView reloadData];
         tipsLbl.text = [NSString stringWithFormat:@"%d/%d",1,contentArray.count];
@@ -432,32 +420,33 @@
     switch (index_) {
         case 3:{
             // 价格升序
-            self.sort = @"price_asc";
+            self.sort = @"p";
             break;
         }
         case 4:{
-            self.sort = @"price_desc";
+            self.sort = @"pd";
             // 价格降序
             break;
         }
         case 2:{
-            self.sort = @"credit_desc";
+            self.sort = @"pt";
             // 信用降序
             break;
         }
         case 1:{
             // 销量降序
-            self.sort = @"commissionNum_desc";
+            self.sort = @"d";
             break;
         }
         case 0:{
             // 人气
-            self.sort = @"default";
+            self.sort = @"s";
             break;
         }
         default:
             break;
     }
+
     
     [self searchMore];
     
@@ -497,7 +486,7 @@
             }else{
                 promotion = nil;
             }
-            NSString *numIID = [dict objectForKey:@"num_iid"];
+            NSString *numIID = [dict objectForKey:@"track_iid"];
             
             DetailViewController *detailVC = [[DetailViewController alloc] initWithTitle:titleHtml price:price promotion:promotion numIID:numIID];
             

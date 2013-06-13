@@ -197,10 +197,10 @@
         }
 
         
-        titleHtml = [NSString stringWithFormat:@"%@ [月销%@] [%@]",titleHtml,[[self.dataSource objectAtIndex:index] objectForKey:@"volume"],[[self.dataSource objectAtIndex:index] objectForKey:@"item_location"]];
+        titleHtml = [NSString stringWithFormat:@"%@ [月销%@]",titleHtml,[[self.dataSource objectAtIndex:index] objectForKey:@"volume"]];
         
         [itemCell setTitle:titleHtml];
-        [itemCell setPrice:[NSString stringWithFormat:@"¥%@",[[self.dataSource objectAtIndex:index] objectForKey:@"price"]]];
+        [itemCell setPrice:[NSString stringWithFormat:@"¥%@",[[self.dataSource objectAtIndex:index] objectForKey:@"promotion_price"]]];
         
     }else{
         [itemCell setTitle:@""];

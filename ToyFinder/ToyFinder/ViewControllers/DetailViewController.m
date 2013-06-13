@@ -161,7 +161,8 @@
 - (void) buyButtonClick:(id)sender{
     FullInfoViewController *fullInfoVC = [[FullInfoViewController alloc] init];
     fullInfoVC.titleInfo = @"订单填写";
-    fullInfoVC.navUrl = [self.detailDict objectForKey:@"click_url"];
+    fullInfoVC.navUrl = [self.detailDict objectForKey:@"detail_url"];
+    NSLog(@"%@",fullInfoVC.navUrl);
     [self.navigationController pushViewController:fullInfoVC animated:YES];
     [fullInfoVC release];
 }
@@ -172,11 +173,9 @@
 
 - (void) getDetail{
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
-    [params setObject:@"taobao.taobaoke.items.detail.get" forKey:@"method"];
+    [params setObject:@"taobao.item.get" forKey:@"method"];
     [params setObject:@"detail_url,title,nick,type,desc,pic_url,num,location,price,post_fee,express_fee,ems_fee,freight_payer,item_img.url,click_url,shop_click_url,seller_credit_score,skus" forKey:@"fields"];
-    [params setObject:NICK forKey:@"nick"];
-    [params setObject:@"true" forKey:@"is_mobile"];
-    [params setObject:self.numIID forKey:@"num_iids"];
+    [params setObject:self.numIID forKey:@"track_iid"];
     
     
     if (detailRequest) {
@@ -197,9 +196,8 @@
 
 - (void) requestFinished:(TBHttRequest *)request_ withDict:(NSDictionary *)dict{
     NSDictionary *contentDict = dict;
-     NSArray *detailArray = [[[contentDict objectForKey:@"taobaoke_items_detail_get_response"] objectForKey:@"taobaoke_item_details"] objectForKey:@"taobaoke_item_detail"];
-     self.detailDict = [detailArray objectAtIndex:0];
-     self.photoArray = [[[self.detailDict objectForKey:@"item"] objectForKey:@"item_imgs"] objectForKey:@"item_img"];
+    self.detailDict = [[contentDict objectForKey:@"item_get_response"] objectForKey:@"item"];
+    self.photoArray = [[self.detailDict objectForKey:@"item_imgs"] objectForKey:@"item_img"];
      
      [detailList reloadData];
      
@@ -317,13 +315,13 @@
                 cell.splitView.hidden = NO;
                 
                 // 刷新快递费用
-                if ([[[self.detailDict objectForKey:@"item"] objectForKey:@"freight_payer"] isEqualToString:@"seller"]) {
+                if ([[self.detailDict objectForKey:@"freight_payer"] isEqualToString:@"seller"]) {
                     cell.titleLbl.text = @"卖家承担运费";
-                }else if([[[self.detailDict objectForKey:@"item"] objectForKey:@"freight_payer"] isEqualToString:@"buyer"]){
+                }else if([[self.detailDict objectForKey:@"freight_payer"] isEqualToString:@"buyer"]){
                     NSMutableString *expressFee = [NSMutableString string];
-                    float express = [[[self.detailDict objectForKey:@"item"] objectForKey:@"express_fee"] floatValue];
-                    float ems = [[[self.detailDict objectForKey:@"item"] objectForKey:@"ems_fee"] floatValue];
-                    float post = [[[self.detailDict objectForKey:@"item"] objectForKey:@"post_fee"] floatValue];
+                    float express = [[self.detailDict objectForKey:@"express_fee"] floatValue];
+                    float ems = [[self.detailDict objectForKey:@"ems_fee"] floatValue];
+                    float post = [[self.detailDict objectForKey:@"post_fee"] floatValue];
                     if (express > 0) {
                         [expressFee appendFormat:@"快递 ¥%.2f; ",express];
                     }
@@ -339,9 +337,9 @@
                 }
                 
                 // 宝贝所在地
-                if([[self.detailDict objectForKey:@"item"] objectForKey:@"location"]){
-                    NSString *city = [[[self.detailDict objectForKey:@"item"] objectForKey:@"location"] objectForKey:@"city"];
-                    NSString *state = [[[self.detailDict objectForKey:@"item"] objectForKey:@"location"] objectForKey:@"state"];
+                if([self.detailDict objectForKey:@"location"]){
+                    NSString *city = [[self.detailDict objectForKey:@"location"] objectForKey:@"city"];
+                    NSString *state = [[self.detailDict objectForKey:@"location"] objectForKey:@"state"];
                     if ([city isEqualToString:state]) {
                         cell.detailLbl.text = [NSString stringWithFormat:@"%@",city];
                     }else{
@@ -387,7 +385,7 @@
                 cell.detailLbl.text = @"";
                 cell.splitView.hidden = NO;
 
-                NSString *nick = [[self.detailDict objectForKey:@"item"] objectForKey:@"nick"];
+                NSString *nick = [self.detailDict objectForKey:@"nick"];
                 cell.titleLbl.text = [NSString stringWithFormat:@"卖家昵称：%@",nick];
                 if (LAYOUT_PORTRAIT || LAYOUT_UPSIDEDOWN) {
                     cell.creditView.frame = CGRectMake(20, 24, SCREEN_WIDTH - 20 - 20, 12);
@@ -496,7 +494,7 @@
             priceLbl.textAlignment = UITextAlignmentLeft;
             [priceView addSubview:priceLbl];
             [priceLbl release];
-            priceLbl.text = self.price;
+            priceLbl.text = self.promotion;
             
             if (self.promotion) {
                 // 促销
@@ -507,7 +505,7 @@
                 promotionLbl.textAlignment = UITextAlignmentLeft;
                 [priceView addSubview:promotionLbl];
                 [promotionLbl release];
-                promotionLbl.text = self.promotion;
+                promotionLbl.text = self.price;
             }
             return [priceView autorelease];
         }else{
@@ -526,7 +524,7 @@
         if (indexPath.section == 1 && indexPath.row == 1) {
             FullInfoViewController *fullInfoVC = [[FullInfoViewController alloc] init];
             fullInfoVC.titleInfo = @"宝贝详情";
-            fullInfoVC.fullInfo = [[self.detailDict objectForKey:@"item"] objectForKey:@"desc"];
+            fullInfoVC.fullInfo = [self.detailDict objectForKey:@"desc"];
             [self.navigationController pushViewController:fullInfoVC animated:YES];
             [fullInfoVC release];
         }else if(indexPath.section == 2 && indexPath.row == 1){
